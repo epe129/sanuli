@@ -70,6 +70,7 @@ fun Game(modifier: Modifier = Modifier) {
     val sanat = listOf<String>("Koira")
     var sana by remember(sanat) { mutableStateOf(sanat.random()) }
 
+
     Text("WORDLE FI", color = Color.White)
 
     FlowRow(
