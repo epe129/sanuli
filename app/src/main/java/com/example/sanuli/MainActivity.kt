@@ -40,6 +40,7 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -67,6 +68,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import com.example.sanuli.ui.theme.SanuliTheme
+import kotlin.collections.mutableListOf
 import kotlin.random.Random
 
 class MainActivity : ComponentActivity() {
@@ -86,11 +88,14 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Game(modifier: Modifier = Modifier) {
-    var kirjain1 by remember { mutableStateOf("") }
-    var kirjain2 by remember { mutableStateOf("") }
-    var kirjain3 by remember { mutableStateOf("") }
-    var kirjain4 by remember { mutableStateOf("") }
-    var kirjain5 by remember { mutableStateOf("") }
+    val kirjaimet1 = remember { mutableStateListOf<String>() }
+
+    // var kirjain1 by remember { mutableStateOf("") }
+    // var kirjain2 by remember { mutableStateOf("") }
+    // var kirjain3 by remember { mutableStateOf("") }
+    // var kirjain4 by remember { mutableStateOf("") }
+    // var kirjain5 by remember { mutableStateOf("") }
+
 
     var kirjain1_2 by remember { mutableStateOf("") }
     var kirjain2_2 by remember { mutableStateOf("") }
@@ -130,8 +135,11 @@ fun Game(modifier: Modifier = Modifier) {
 
     var nykyKohta by remember { mutableStateOf(0) }
 
-    fun add_kirjain(kirjain: String) {}
-    val c =  if (kirjain1.length == 1) Color.Gray else White
+    fun add_kirjain(kirjain: String) {
+        kirjaimet1.add(kirjain)
+    }
+
+    //val c =  if (kirjain1.length == 1) Color.Gray else White
 
     fun tarkista() {
         println("moi")
@@ -161,109 +169,123 @@ fun Game(modifier: Modifier = Modifier) {
             maxItemsInEachRow = 5
         ) {
             OutlinedTextField(
-                value = kirjain1,
-                // readOnly = true,
+                value = if (kirjaimet1.size >= 1) { kirjaimet1[0] } else "",
+                readOnly = true,
                 onValueChange = {
-                    if (it.length == 0) kirjain1 = it
-                    if (it.length == 1) {
-                        focusManager.moveFocus(
-                            focusDirection = FocusDirection.Next,
-                            )
-                        kirjain1 = it
-                    } },
+                    // if (it.length == 0) kirjain1 = it
+                    // if (it.length == 1) {
+                    //    focusManager.moveFocus(
+                    //        focusDirection = FocusDirection.Next,
+                    //        )
+                    //    kirjain1 = it
+                  //  }
+                },
                 singleLine = true,
                 textStyle = TextStyle(color = Color.Black, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, fontSize = 24.sp),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Next),
                 shape = RoundedCornerShape(10.dp),
                 colors = TextFieldDefaults.colors(
-                    unfocusedContainerColor = c,
-                    focusedContainerColor = c
+                   unfocusedContainerColor = White,
+                   focusedContainerColor = White
                 ),
                 modifier = Modifier
                     .width(75.dp),
             )
+
             OutlinedTextField(
-                value = kirjain2,
-                // readOnly = true,
+                value = if (kirjaimet1.size >= 2) { kirjaimet1[1] } else "",
+                readOnly = true,
                 onValueChange = {
-                    if (it.length == 0) kirjain2 = it
-                    if (it.length == 1) {
-                        focusManager.moveFocus(
-                            focusDirection = FocusDirection.Next,
-                        )
-                        kirjain2 = it
-                    }  },
+                    // if (it.length == 0) kirjain1 = it
+                    // if (it.length == 1) {
+                    //    focusManager.moveFocus(
+                    //        focusDirection = FocusDirection.Next,
+                    //        )
+                    //    kirjain1 = it
+                    //  }
+                },
                 singleLine = true,
-                keyboardOptions = KeyboardOptions(showKeyboardOnFocus = false),
                 textStyle = TextStyle(color = Color.Black, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, fontSize = 24.sp),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Next),
                 shape = RoundedCornerShape(10.dp),
                 colors = TextFieldDefaults.colors(
                     unfocusedContainerColor = White,
                     focusedContainerColor = White
                 ),
                 modifier = Modifier
-                    .width(75.dp)
+                    .width(75.dp),
             )
+
             OutlinedTextField(
-                value = kirjain3,
-                // readOnly = true,
+                value = if (kirjaimet1.size >= 3) { kirjaimet1[2] } else "",
+                readOnly = true,
                 onValueChange = {
-                    if (it.length == 0) kirjain3 = it
-                    if (it.length == 1) {
-                        focusManager.moveFocus(
-                            focusDirection = FocusDirection.Next,
-                        )
-                        kirjain3 = it
-                    } },
+                    // if (it.length == 0) kirjain1 = it
+                    // if (it.length == 1) {
+                    //    focusManager.moveFocus(
+                    //        focusDirection = FocusDirection.Next,
+                    //        )
+                    //    kirjain1 = it
+                    //  }
+                },
                 singleLine = true,
-                keyboardOptions = KeyboardOptions(showKeyboardOnFocus = false),
                 textStyle = TextStyle(color = Color.Black, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, fontSize = 24.sp),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Next),
                 shape = RoundedCornerShape(10.dp),
                 colors = TextFieldDefaults.colors(
                     unfocusedContainerColor = White,
                     focusedContainerColor = White
                 ),
                 modifier = Modifier
-                    .width(75.dp)
+                    .width(75.dp),
             )
+
             OutlinedTextField(
-                value = kirjain4,
-                // readOnly = true,
+                value = if (kirjaimet1.size >= 4) { kirjaimet1[3] } else "",
+                readOnly = true,
                 onValueChange = {
-                    if (it.length == 0) kirjain4 = it
-                    if (it.length == 1) {
-                        focusManager.moveFocus(
-                            focusDirection = FocusDirection.Next,
-                        )
-                        kirjain4 = it
-                    } },
+                    // if (it.length == 0) kirjain1 = it
+                    // if (it.length == 1) {
+                    //    focusManager.moveFocus(
+                    //        focusDirection = FocusDirection.Next,
+                    //        )
+                    //    kirjain1 = it
+                    //  }
+                },
                 singleLine = true,
-                keyboardOptions = KeyboardOptions(showKeyboardOnFocus = false),
                 textStyle = TextStyle(color = Color.Black, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, fontSize = 24.sp),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Next),
                 shape = RoundedCornerShape(10.dp),
                 colors = TextFieldDefaults.colors(
                     unfocusedContainerColor = White,
                     focusedContainerColor = White
                 ),
                 modifier = Modifier
-                    .width(75.dp)
+                    .width(75.dp),
             )
+
             OutlinedTextField(
-                value = kirjain5,
-                // readOnly = true,
+                value = if (kirjaimet1.size >= 5) { kirjaimet1[4] } else "",
+                readOnly = true,
                 onValueChange = {
-                    if (it.length == 1) kirjain5 = it
-                     },
+                    // if (it.length == 0) kirjain1 = it
+                    // if (it.length == 1) {
+                    //    focusManager.moveFocus(
+                    //        focusDirection = FocusDirection.Next,
+                    //        )
+                    //    kirjain1 = it
+                    //  }
+                },
                 singleLine = true,
-                keyboardOptions = KeyboardOptions(showKeyboardOnFocus = false),
                 textStyle = TextStyle(color = Color.Black, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, fontSize = 24.sp),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Next),
                 shape = RoundedCornerShape(10.dp),
                 colors = TextFieldDefaults.colors(
                     unfocusedContainerColor = White,
                     focusedContainerColor = White
                 ),
                 modifier = Modifier
-                    .width(75.dp)
+                    .width(75.dp),
             )
         }
 
@@ -1127,7 +1149,12 @@ fun Game(modifier: Modifier = Modifier) {
                     .height(40.dp)
                     .clip(RoundedCornerShape(2.dp)),
                 colors = ButtonColors(containerColor = Color.Red, contentColor = Color.Red, disabledContainerColor = White, disabledContentColor = White),
-                onClick = {  },
+                onClick = {
+                    if (kirjaimet1.isNotEmpty()) {
+                        kirjaimet1[kirjaimet1.size - 1] = ""
+                    }
+
+                },
             ) {
                 Text("tyh", color = White, fontSize = 24.sp)
             }
