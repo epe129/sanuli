@@ -980,82 +980,47 @@ fun Game(modifier: Modifier = Modifier) {
                 colors = ButtonColors(containerColor = Color.Red, contentColor = Color.Red, disabledContainerColor = White, disabledContentColor = White),
                 onClick = {
                     if (arvauksienMaara == 0) {
-                        if (!kirjaimet1.isNotEmpty()) {
+                        if (!kirjaimet1.isNotEmpty() || kirjaimet1[0] == "") {
                             return@Button
                         }
-                        if (kirjaimet1[0] == "") {
-                            return@Button
-                        }
-                        if (kirjaimet1.size > 0) {
-                            nykyKohta -= 1
-                            kirjaimet1[nykyKohta] = ""
-                        }
+                        nykyKohta -= 1
+                        kirjaimet1[nykyKohta] = ""
                     }
                     if (arvauksienMaara == 1) {
-                        if (!kirjaimet2.isNotEmpty()) {
+                        if (!kirjaimet2.isNotEmpty() || kirjaimet2[0] == "") {
                             return@Button
                         }
-                        if (kirjaimet2[0] == "") {
-                            return@Button
-                        }
-                        if (kirjaimet2.size > 0) {
-                            nykyKohta -= 1
-                            kirjaimet2[nykyKohta] = ""
-                        }
+                        nykyKohta -= 1
+                        kirjaimet2[nykyKohta] = ""
                     }
-
                     if (arvauksienMaara == 2) {
-                        if (!kirjaimet3.isNotEmpty()) {
+                        if (!kirjaimet3.isNotEmpty() || kirjaimet3[0] == "") {
                             return@Button
                         }
-                        if (kirjaimet3[0] == "") {
-                            return@Button
-                        }
-                        if (kirjaimet3.size > 0) {
-                            nykyKohta -= 1
-                            kirjaimet3[nykyKohta] = ""
-                        }
+                        nykyKohta -= 1
+                        kirjaimet3[nykyKohta] = ""
                     }
-
                     if (arvauksienMaara == 3) {
-                        if (!kirjaimet4.isNotEmpty()) {
+                        if (!kirjaimet4.isNotEmpty() || kirjaimet4[0] == "") {
                             return@Button
                         }
-                        if (kirjaimet4[0] == "") {
-                            return@Button
-                        }
-                        if (kirjaimet4.size > 0) {
-                            nykyKohta -= 1
-                            kirjaimet4[nykyKohta] = ""
-                        }
+                        nykyKohta -= 1
+                        kirjaimet4[nykyKohta] = ""
                     }
-
                     if (arvauksienMaara == 4) {
-                        if (!kirjaimet5.isNotEmpty()) {
+                        if (!kirjaimet5.isNotEmpty() || kirjaimet5[0] == "") {
                             return@Button
                         }
-                        if (kirjaimet5[0] == "") {
-                            return@Button
-                        }
-                        if (kirjaimet5.size > 0) {
-                            nykyKohta -= 1
-                            kirjaimet5[nykyKohta] = ""
-                        }
+                        nykyKohta -= 1
+                        kirjaimet5[nykyKohta] = ""
                     }
-
                     if (arvauksienMaara == 5) {
-                        if (!kirjaimet6.isNotEmpty()) {
+                        if (!kirjaimet6.isNotEmpty() || kirjaimet6[0] == "") {
                             return@Button
                         }
-                        if (kirjaimet6[0] == "") {
-                            return@Button
-                        }
-                        if (kirjaimet6.size > 0) {
-                            nykyKohta -= 1
-                            kirjaimet6[nykyKohta] = ""
-                        }
+                        nykyKohta -= 1
+                        kirjaimet6[nykyKohta] = ""
                     }
-
                 },
             ) {
                 Text("tyh", color = White, fontSize = 24.sp)
