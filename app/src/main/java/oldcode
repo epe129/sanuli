@@ -1,0 +1,48 @@
+//onValueChange = {
+    // if (it.length == 0) kirjain1 = it
+    // if (it.length == 1) {
+    //    focusManager.moveFocus(
+    //        focusDirection = FocusDirection.Next,
+    //        )
+    //    kirjain1 = it
+    //  }
+//},
+
+// var kirjain1 by remember { mutableStateOf("") }
+// var kirjain2 by remember { mutableStateOf("") }
+// var kirjain3 by remember { mutableStateOf("") }
+// var kirjain4 by remember { mutableStateOf("") }
+// var kirjain5 by remember { mutableStateOf("") }
+
+
+//    var kirjain1_2 by remember { mutableStateOf("") }
+//  var kirjain2_2 by remember { mutableStateOf("") }
+//   var kirjain3_2 by remember { mutableStateOf("") }
+//  var kirjain4_2 by remember { mutableStateOf("") }
+//  var kirjain5_2 by remember { mutableStateOf("") }
+
+//var kirjain1_3 by remember { mutableStateOf("") }
+//var kirjain2_3 by remember { mutableStateOf("") }
+//var kirjain3_3 by remember { mutableStateOf("") }
+//var kirjain4_3 by remember { mutableStateOf("") }
+//var kirjain5_3 by remember { mutableStateOf("") }
+
+//    var kirjain1_4 by remember { mutableStateOf("") }
+//  var kirjain2_4 by remember { mutableStateOf("") }
+// var kirjain3_4 by remember { mutableStateOf("") }
+// var kirjain4_4 by remember { mutableStateOf("") }
+// var kirjain5_4 by remember { mutableStateOf("") }
+
+//    var kirjain1_5 by remember { mutableStateOf("") }
+//    var kirjain2_5 by remember { mutableStateOf("") }
+//    var kirjain3_5 by remember { mutableStateOf("") }
+//    var kirjain4_5 by remember { mutableStateOf("") }
+//    var kirjain5_5 by remember { mutableStateOf("") }
+
+//    var kirjain1_6 by remember { mutableStateOf("") }
+//  var kirjain2_6 by remember { mutableStateOf("") }
+//  var kirjain3_6 by remember { mutableStateOf("") }
+//  var kirjain4_6 by remember { mutableStateOf("") }
+//  var kirjain5_6 by remember { mutableStateOf("") }
+
+//val focusManager = LocalFocusManager.current

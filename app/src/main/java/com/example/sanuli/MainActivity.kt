@@ -89,48 +89,34 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Game(modifier: Modifier = Modifier) {
     val kirjaimet1 = remember { mutableStateListOf<String>() }
-
     val kirjaimet2 = remember { mutableStateListOf<String>() }
-
     val kirjaimet3 = remember { mutableStateListOf<String>() }
-
     val kirjaimet4 = remember { mutableStateListOf<String>() }
-
     val kirjaimet5 = remember { mutableStateListOf<String>() }
-
     val kirjaimet6 = remember { mutableStateListOf<String>() }
-
     var arvauksienMaara by remember { mutableIntStateOf(0) }
-
-    val sanat = listOf<String>("Koira")
-
+    val sanat = listOf<String>("koira")
     var sana by remember(sanat) { mutableStateOf(sanat.random()) }
-
     var nykyKohta by remember { mutableStateOf(0) }
-
-
+    var palautettu by remember { mutableStateOf(false) }
 
     fun add_kirjain(kirjain: String) {
         if (arvauksienMaara == 0) {
             kirjaimet1.add(nykyKohta, kirjain)
             nykyKohta += 1
         }
-
         if (arvauksienMaara == 1) {
             kirjaimet2.add(nykyKohta, kirjain)
             nykyKohta += 1
         }
-
         if (arvauksienMaara == 2) {
             kirjaimet3.add(nykyKohta, kirjain)
             nykyKohta += 1
         }
-
         if (arvauksienMaara == 3) {
             kirjaimet4.add(nykyKohta, kirjain)
             nykyKohta += 1
         }
-
         if (arvauksienMaara == 4) {
             kirjaimet5.add(nykyKohta, kirjain)
             nykyKohta += 1
@@ -140,12 +126,12 @@ fun Game(modifier: Modifier = Modifier) {
             kirjaimet6.add(nykyKohta, kirjain)
             nykyKohta += 1
         }
-
     }
 
     fun tarkista() {
         if (arvauksienMaara == 0) {
             if (kirjaimet1.size < 5) {return}
+            palautettu = true
         }
         if (arvauksienMaara == 1) {
             if (kirjaimet2.size < 5) {return}
@@ -166,8 +152,19 @@ fun Game(modifier: Modifier = Modifier) {
         nykyKohta = 0
     }
 
-
-    val c =  if (kirjaimet1.size >= 5) { if (kirjaimet1[0] in sana) { Color.Gray } else White } else White
+    val kirjain1 = if (palautettu) {
+        val d = mutableListOf<String>()
+        for (i in sana) {
+            d.add(i.toString())
+        }
+        if (kirjaimet1[0].lowercase() == d[0].lowercase()) {
+            Color.Green
+        }
+        else if (kirjaimet1[0].lowercase() in sana.lowercase()) {
+            Color.Yellow
+        }
+        else Color.Gray
+    } else Color.Gray
 
     Column(
         modifier = Modifier.fillMaxWidth().height(550.dp),
@@ -199,8 +196,8 @@ fun Game(modifier: Modifier = Modifier) {
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Next),
                 shape = RoundedCornerShape(10.dp),
                 colors = TextFieldDefaults.colors(
-                   unfocusedContainerColor = c,
-                   focusedContainerColor = c
+                   unfocusedContainerColor =  kirjain1,
+                   focusedContainerColor =  kirjain1
                 ),
                 modifier = Modifier
                     .width(75.dp),
@@ -983,6 +980,9 @@ fun Game(modifier: Modifier = Modifier) {
                 colors = ButtonColors(containerColor = Color.Red, contentColor = Color.Red, disabledContainerColor = White, disabledContentColor = White),
                 onClick = {
                     if (arvauksienMaara == 0) {
+                        if (!kirjaimet1.isNotEmpty()) {
+                            return@Button
+                        }
                         if (kirjaimet1[0] == "") {
                             return@Button
                         }
@@ -992,6 +992,9 @@ fun Game(modifier: Modifier = Modifier) {
                         }
                     }
                     if (arvauksienMaara == 1) {
+                        if (!kirjaimet2.isNotEmpty()) {
+                            return@Button
+                        }
                         if (kirjaimet2[0] == "") {
                             return@Button
                         }
@@ -1002,6 +1005,9 @@ fun Game(modifier: Modifier = Modifier) {
                     }
 
                     if (arvauksienMaara == 2) {
+                        if (!kirjaimet3.isNotEmpty()) {
+                            return@Button
+                        }
                         if (kirjaimet3[0] == "") {
                             return@Button
                         }
@@ -1012,6 +1018,9 @@ fun Game(modifier: Modifier = Modifier) {
                     }
 
                     if (arvauksienMaara == 3) {
+                        if (!kirjaimet4.isNotEmpty()) {
+                            return@Button
+                        }
                         if (kirjaimet4[0] == "") {
                             return@Button
                         }
@@ -1022,6 +1031,9 @@ fun Game(modifier: Modifier = Modifier) {
                     }
 
                     if (arvauksienMaara == 4) {
+                        if (!kirjaimet5.isNotEmpty()) {
+                            return@Button
+                        }
                         if (kirjaimet5[0] == "") {
                             return@Button
                         }
@@ -1032,6 +1044,9 @@ fun Game(modifier: Modifier = Modifier) {
                     }
 
                     if (arvauksienMaara == 5) {
+                        if (!kirjaimet6.isNotEmpty()) {
+                            return@Button
+                        }
                         if (kirjaimet6[0] == "") {
                             return@Button
                         }
@@ -1058,52 +1073,3 @@ fun Game(modifier: Modifier = Modifier) {
         }
     }
 }
-
-//onValueChange = {
-    // if (it.length == 0) kirjain1 = it
-    // if (it.length == 1) {
-    //    focusManager.moveFocus(
-    //        focusDirection = FocusDirection.Next,
-    //        )
-    //    kirjain1 = it
-    //  }
-//},
-
-// var kirjain1 by remember { mutableStateOf("") }
-// var kirjain2 by remember { mutableStateOf("") }
-// var kirjain3 by remember { mutableStateOf("") }
-// var kirjain4 by remember { mutableStateOf("") }
-// var kirjain5 by remember { mutableStateOf("") }
-
-
-//    var kirjain1_2 by remember { mutableStateOf("") }
-//  var kirjain2_2 by remember { mutableStateOf("") }
-//   var kirjain3_2 by remember { mutableStateOf("") }
-//  var kirjain4_2 by remember { mutableStateOf("") }
-//  var kirjain5_2 by remember { mutableStateOf("") }
-
-//var kirjain1_3 by remember { mutableStateOf("") }
-//var kirjain2_3 by remember { mutableStateOf("") }
-//var kirjain3_3 by remember { mutableStateOf("") }
-//var kirjain4_3 by remember { mutableStateOf("") }
-//var kirjain5_3 by remember { mutableStateOf("") }
-
-//    var kirjain1_4 by remember { mutableStateOf("") }
-//  var kirjain2_4 by remember { mutableStateOf("") }
-// var kirjain3_4 by remember { mutableStateOf("") }
-// var kirjain4_4 by remember { mutableStateOf("") }
-// var kirjain5_4 by remember { mutableStateOf("") }
-
-//    var kirjain1_5 by remember { mutableStateOf("") }
-//    var kirjain2_5 by remember { mutableStateOf("") }
-//    var kirjain3_5 by remember { mutableStateOf("") }
-//    var kirjain4_5 by remember { mutableStateOf("") }
-//    var kirjain5_5 by remember { mutableStateOf("") }
-
-//    var kirjain1_6 by remember { mutableStateOf("") }
-//  var kirjain2_6 by remember { mutableStateOf("") }
-//  var kirjain3_6 by remember { mutableStateOf("") }
-//  var kirjain4_6 by remember { mutableStateOf("") }
-//  var kirjain5_6 by remember { mutableStateOf("") }
-
-//val focusManager = LocalFocusManager.current
