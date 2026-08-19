@@ -97,7 +97,7 @@ fun Game(modifier: Modifier = Modifier) {
     var arvauksienMaara by remember { mutableIntStateOf(0) }
     val sanat = listOf<String>("koira")
     var sana by remember(sanat) { mutableStateOf(sanat.random()) }
-    var nykyKohta by remember { mutableStateOf(0) }
+    var nykyKohta by remember { mutableIntStateOf(0) }
     var palautettu by remember { mutableStateOf(false) }
 
     fun add_kirjain(kirjain: String) {
