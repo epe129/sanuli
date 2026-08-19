@@ -90,42 +90,15 @@ class MainActivity : ComponentActivity() {
 fun Game(modifier: Modifier = Modifier) {
     val kirjaimet1 = remember { mutableStateListOf<String>() }
 
-    // var kirjain1 by remember { mutableStateOf("") }
-    // var kirjain2 by remember { mutableStateOf("") }
-    // var kirjain3 by remember { mutableStateOf("") }
-    // var kirjain4 by remember { mutableStateOf("") }
-    // var kirjain5 by remember { mutableStateOf("") }
+    val kirjaimet2 = remember { mutableStateListOf<String>() }
 
+    val kirjaimet3 = remember { mutableStateListOf<String>() }
 
-    var kirjain1_2 by remember { mutableStateOf("") }
-    var kirjain2_2 by remember { mutableStateOf("") }
-    var kirjain3_2 by remember { mutableStateOf("") }
-    var kirjain4_2 by remember { mutableStateOf("") }
-    var kirjain5_2 by remember { mutableStateOf("") }
+    val kirjaimet4 = remember { mutableStateListOf<String>() }
 
-    var kirjain1_3 by remember { mutableStateOf("") }
-    var kirjain2_3 by remember { mutableStateOf("") }
-    var kirjain3_3 by remember { mutableStateOf("") }
-    var kirjain4_3 by remember { mutableStateOf("") }
-    var kirjain5_3 by remember { mutableStateOf("") }
+    val kirjaimet5 = remember { mutableStateListOf<String>() }
 
-    var kirjain1_4 by remember { mutableStateOf("") }
-    var kirjain2_4 by remember { mutableStateOf("") }
-    var kirjain3_4 by remember { mutableStateOf("") }
-    var kirjain4_4 by remember { mutableStateOf("") }
-    var kirjain5_4 by remember { mutableStateOf("") }
-
-    var kirjain1_5 by remember { mutableStateOf("") }
-    var kirjain2_5 by remember { mutableStateOf("") }
-    var kirjain3_5 by remember { mutableStateOf("") }
-    var kirjain4_5 by remember { mutableStateOf("") }
-    var kirjain5_5 by remember { mutableStateOf("") }
-
-    var kirjain1_6 by remember { mutableStateOf("") }
-    var kirjain2_6 by remember { mutableStateOf("") }
-    var kirjain3_6 by remember { mutableStateOf("") }
-    var kirjain4_6 by remember { mutableStateOf("") }
-    var kirjain5_6 by remember { mutableStateOf("") }
+    val kirjaimet6 = remember { mutableStateListOf<String>() }
 
     var arvauksienMaara by remember { mutableIntStateOf(0) }
 
@@ -135,23 +108,72 @@ fun Game(modifier: Modifier = Modifier) {
 
     var nykyKohta by remember { mutableStateOf(0) }
 
-    fun add_kirjain(kirjain: String) {
-        kirjaimet1.add(kirjain)
-    }
 
-    //val c =  if (kirjain1.length == 1) Color.Gray else White
+
+    fun add_kirjain(kirjain: String) {
+        if (arvauksienMaara == 0) {
+            kirjaimet1.add(nykyKohta, kirjain)
+            nykyKohta += 1
+        }
+
+        if (arvauksienMaara == 1) {
+            kirjaimet2.add(nykyKohta, kirjain)
+            nykyKohta += 1
+        }
+
+        if (arvauksienMaara == 2) {
+            kirjaimet3.add(nykyKohta, kirjain)
+            nykyKohta += 1
+        }
+
+        if (arvauksienMaara == 3) {
+            kirjaimet4.add(nykyKohta, kirjain)
+            nykyKohta += 1
+        }
+
+        if (arvauksienMaara == 4) {
+            kirjaimet5.add(nykyKohta, kirjain)
+            nykyKohta += 1
+        }
+
+        if (arvauksienMaara == 5) {
+            kirjaimet6.add(nykyKohta, kirjain)
+            nykyKohta += 1
+        }
+
+    }
 
     fun tarkista() {
-        println("moi")
+        if (arvauksienMaara == 0) {
+            if (kirjaimet1.size < 5) {return}
+        }
+        if (arvauksienMaara == 1) {
+            if (kirjaimet2.size < 5) {return}
+        }
+        if (arvauksienMaara == 2) {
+            if (kirjaimet3.size < 5) {return}
+        }
+        if (arvauksienMaara == 3) {
+            if (kirjaimet4.size < 5) {return}
+        }
+        if (arvauksienMaara == 4) {
+            if (kirjaimet5.size < 5) {return}
+        }
+        if (arvauksienMaara == 5) {
+            if (kirjaimet6.size < 5) {return}
+        }
+        arvauksienMaara += 1
+        nykyKohta = 0
     }
 
+
+    val c =  if (kirjaimet1.size >= 5) { if (kirjaimet1[0] in sana) { Color.Gray } else White } else White
 
     Column(
         modifier = Modifier.fillMaxWidth().height(550.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
-        val focusManager = LocalFocusManager.current
         Text("Sanuli",
             textAlign = TextAlign.Center,
             modifier = Modifier.fillMaxWidth().height(35.dp),
@@ -171,22 +193,14 @@ fun Game(modifier: Modifier = Modifier) {
             OutlinedTextField(
                 value = if (kirjaimet1.size >= 1) { kirjaimet1[0] } else "",
                 readOnly = true,
-                onValueChange = {
-                    // if (it.length == 0) kirjain1 = it
-                    // if (it.length == 1) {
-                    //    focusManager.moveFocus(
-                    //        focusDirection = FocusDirection.Next,
-                    //        )
-                    //    kirjain1 = it
-                  //  }
-                },
+                onValueChange = {},
                 singleLine = true,
                 textStyle = TextStyle(color = Color.Black, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, fontSize = 24.sp),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Next),
                 shape = RoundedCornerShape(10.dp),
                 colors = TextFieldDefaults.colors(
-                   unfocusedContainerColor = White,
-                   focusedContainerColor = White
+                   unfocusedContainerColor = c,
+                   focusedContainerColor = c
                 ),
                 modifier = Modifier
                     .width(75.dp),
@@ -195,15 +209,7 @@ fun Game(modifier: Modifier = Modifier) {
             OutlinedTextField(
                 value = if (kirjaimet1.size >= 2) { kirjaimet1[1] } else "",
                 readOnly = true,
-                onValueChange = {
-                    // if (it.length == 0) kirjain1 = it
-                    // if (it.length == 1) {
-                    //    focusManager.moveFocus(
-                    //        focusDirection = FocusDirection.Next,
-                    //        )
-                    //    kirjain1 = it
-                    //  }
-                },
+                onValueChange = {},
                 singleLine = true,
                 textStyle = TextStyle(color = Color.Black, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, fontSize = 24.sp),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Next),
@@ -219,15 +225,7 @@ fun Game(modifier: Modifier = Modifier) {
             OutlinedTextField(
                 value = if (kirjaimet1.size >= 3) { kirjaimet1[2] } else "",
                 readOnly = true,
-                onValueChange = {
-                    // if (it.length == 0) kirjain1 = it
-                    // if (it.length == 1) {
-                    //    focusManager.moveFocus(
-                    //        focusDirection = FocusDirection.Next,
-                    //        )
-                    //    kirjain1 = it
-                    //  }
-                },
+                onValueChange = {},
                 singleLine = true,
                 textStyle = TextStyle(color = Color.Black, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, fontSize = 24.sp),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Next),
@@ -243,15 +241,7 @@ fun Game(modifier: Modifier = Modifier) {
             OutlinedTextField(
                 value = if (kirjaimet1.size >= 4) { kirjaimet1[3] } else "",
                 readOnly = true,
-                onValueChange = {
-                    // if (it.length == 0) kirjain1 = it
-                    // if (it.length == 1) {
-                    //    focusManager.moveFocus(
-                    //        focusDirection = FocusDirection.Next,
-                    //        )
-                    //    kirjain1 = it
-                    //  }
-                },
+                onValueChange = {},
                 singleLine = true,
                 textStyle = TextStyle(color = Color.Black, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, fontSize = 24.sp),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Next),
@@ -267,15 +257,7 @@ fun Game(modifier: Modifier = Modifier) {
             OutlinedTextField(
                 value = if (kirjaimet1.size >= 5) { kirjaimet1[4] } else "",
                 readOnly = true,
-                onValueChange = {
-                    // if (it.length == 0) kirjain1 = it
-                    // if (it.length == 1) {
-                    //    focusManager.moveFocus(
-                    //        focusDirection = FocusDirection.Next,
-                    //        )
-                    //    kirjain1 = it
-                    //  }
-                },
+                onValueChange = {},
                 singleLine = true,
                 textStyle = TextStyle(color = Color.Black, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, fontSize = 24.sp),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Next),
@@ -299,16 +281,9 @@ fun Game(modifier: Modifier = Modifier) {
             maxItemsInEachRow = 5
         ) {
             OutlinedTextField(
-                value = kirjain1_2,
-                // readOnly = true,
-                onValueChange = {
-                    if (it.length == 0) kirjain1_2 = it
-                    if (it.length == 1) {
-                        focusManager.moveFocus(
-                            focusDirection = FocusDirection.Next,
-                        )
-                        kirjain1_2 = it
-                    } },
+                value = if (kirjaimet2.size >= 1) { kirjaimet2[0] } else "",
+                readOnly = true,
+                onValueChange = {},
                 singleLine = true,
                 textStyle = TextStyle(color = Color.Black, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, fontSize = 24.sp),
                 keyboardOptions = KeyboardOptions(showKeyboardOnFocus = false, imeAction = ImeAction.Next),
@@ -321,16 +296,9 @@ fun Game(modifier: Modifier = Modifier) {
                     .width(75.dp)
             )
             OutlinedTextField(
-                value = kirjain2_2,
-                // readOnly = true,
-                onValueChange = {
-                    if (it.length == 0) kirjain2_2 = it
-                    if (it.length == 1) {
-                        focusManager.moveFocus(
-                            focusDirection = FocusDirection.Next,
-                        )
-                        kirjain2_2 = it
-                    } },
+                value = if (kirjaimet2.size >= 2) { kirjaimet2[1] } else "",
+                readOnly = true,
+                onValueChange = {},
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(showKeyboardOnFocus = false),
                 textStyle = TextStyle(color = Color.Black, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, fontSize = 24.sp),
@@ -343,16 +311,9 @@ fun Game(modifier: Modifier = Modifier) {
                     .width(75.dp)
             )
             OutlinedTextField(
-                value = kirjain3_2,
-                // readOnly = true,
-                onValueChange = {
-                    if (it.length == 0) kirjain3_2 = it
-                    if (it.length == 1) {
-                        focusManager.moveFocus(
-                            focusDirection = FocusDirection.Next,
-                        )
-                        kirjain3_2 = it
-                    } },
+                value = if (kirjaimet2.size >= 3) { kirjaimet2[2] } else "",
+                readOnly = true,
+                onValueChange = {},
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(showKeyboardOnFocus = false),
                 textStyle = TextStyle(color = Color.Black, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, fontSize = 24.sp),
@@ -365,16 +326,9 @@ fun Game(modifier: Modifier = Modifier) {
                     .width(75.dp)
             )
             OutlinedTextField(
-                value = kirjain4_2,
-                // readOnly = true,
-                onValueChange = {
-                    if (it.length == 0) kirjain4_2 = it
-                    if (it.length == 1) {
-                        focusManager.moveFocus(
-                            focusDirection = FocusDirection.Next,
-                        )
-                        kirjain4_2 = it
-                    } },
+                value = if (kirjaimet2.size >= 4) { kirjaimet2[3] } else "",
+                readOnly = true,
+                onValueChange = {},
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(showKeyboardOnFocus = false),
                 textStyle = TextStyle(color = Color.Black, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, fontSize = 24.sp),
@@ -387,11 +341,9 @@ fun Game(modifier: Modifier = Modifier) {
                     .width(75.dp)
             )
             OutlinedTextField(
-                value = kirjain5_2,
-                // readOnly = true,
-                onValueChange = {
-                    if (it.length == 1) kirjain5_2 = it
-                     },
+                value = if (kirjaimet2.size >= 5) { kirjaimet2[4] } else "",
+                readOnly = true,
+                onValueChange = {},
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(showKeyboardOnFocus = false),
                 textStyle = TextStyle(color = Color.Black, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, fontSize = 24.sp),
@@ -415,16 +367,9 @@ fun Game(modifier: Modifier = Modifier) {
             maxItemsInEachRow = 5
         ) {
             OutlinedTextField(
-                value = kirjain1_3,
-                // readOnly = true,
-                onValueChange = {
-                    if (it.length == 0) kirjain1_3 = it
-                    if (it.length == 1) {
-                        focusManager.moveFocus(
-                            focusDirection = FocusDirection.Next,
-                        )
-                        kirjain1_3 = it
-                    } },
+                value = if (kirjaimet3.size >= 1) { kirjaimet3[0] } else "",
+                readOnly = true,
+                onValueChange = {},
                 singleLine = true,
                 textStyle = TextStyle(color = Color.Black, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, fontSize = 24.sp),
                 keyboardOptions = KeyboardOptions(showKeyboardOnFocus = false, imeAction = ImeAction.Next),
@@ -437,16 +382,9 @@ fun Game(modifier: Modifier = Modifier) {
                     .width(75.dp)
             )
             OutlinedTextField(
-                value = kirjain2_3,
-                // readOnly = true,
-                onValueChange = {
-                    if (it.length == 0) kirjain2_3 = it
-                    if (it.length == 1) {
-                        focusManager.moveFocus(
-                            focusDirection = FocusDirection.Next,
-                        )
-                        kirjain2_3 = it
-                    } },
+                value = if (kirjaimet3.size >= 2) { kirjaimet3[1] } else "",
+                readOnly = true,
+                onValueChange = {},
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(showKeyboardOnFocus = false),
                 textStyle = TextStyle(color = Color.Black, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, fontSize = 24.sp),
@@ -459,16 +397,9 @@ fun Game(modifier: Modifier = Modifier) {
                     .width(75.dp)
             )
             OutlinedTextField(
-                value = kirjain3_3,
-                // readOnly = true,
-                onValueChange = {
-                    if (it.length == 0) kirjain3_3 = it
-                    if (it.length == 1) {
-                        focusManager.moveFocus(
-                            focusDirection = FocusDirection.Next,
-                        )
-                        kirjain3_3 = it
-                    } },
+                value = if (kirjaimet3.size >= 3) { kirjaimet3[2] } else "",
+                readOnly = true,
+                onValueChange = {},
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(showKeyboardOnFocus = false),
                 textStyle = TextStyle(color = Color.Black, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, fontSize = 24.sp),
@@ -481,16 +412,9 @@ fun Game(modifier: Modifier = Modifier) {
                     .width(75.dp)
             )
             OutlinedTextField(
-                value = kirjain4_3,
-                // readOnly = true,
-                onValueChange = {
-                    if (it.length == 0) kirjain4_3 = it
-                    if (it.length == 1) {
-                        focusManager.moveFocus(
-                            focusDirection = FocusDirection.Next,
-                        )
-                        kirjain4_3 = it
-                    } },
+                value = if (kirjaimet3.size >= 4) { kirjaimet3[3] } else "",
+                readOnly = true,
+                onValueChange = {},
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(showKeyboardOnFocus = false),
                 textStyle = TextStyle(color = Color.Black, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, fontSize = 24.sp),
@@ -503,11 +427,9 @@ fun Game(modifier: Modifier = Modifier) {
                     .width(75.dp)
             )
             OutlinedTextField(
-                value = kirjain5_3,
-                // readOnly = true,
-                onValueChange = {
-                    if (it.length == 1) kirjain5_3 = it
-                     },
+                value = if (kirjaimet3.size >= 5) { kirjaimet3[4] } else "",
+                readOnly = true,
+                onValueChange = {},
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(showKeyboardOnFocus = false),
                 textStyle = TextStyle(color = Color.Black, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, fontSize = 24.sp),
@@ -531,16 +453,9 @@ fun Game(modifier: Modifier = Modifier) {
             maxItemsInEachRow = 5
         ) {
             OutlinedTextField(
-                value = kirjain1_4,
-                // readOnly = true,
-                onValueChange = {
-                    if (it.length == 0) kirjain1_4 = it
-                    if (it.length == 1) {
-                        focusManager.moveFocus(
-                            focusDirection = FocusDirection.Next,
-                        )
-                        kirjain1_4 = it
-                    } },
+                value = if (kirjaimet4.size >= 1) { kirjaimet4[0] } else "",
+                readOnly = true,
+                onValueChange = {},
                 singleLine = true,
                 textStyle = TextStyle(color = Color.Black, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, fontSize = 24.sp),
                 keyboardOptions = KeyboardOptions(showKeyboardOnFocus = false, imeAction = ImeAction.Next),
@@ -553,16 +468,9 @@ fun Game(modifier: Modifier = Modifier) {
                     .width(75.dp)
             )
             OutlinedTextField(
-                value = kirjain2_4,
-                // readOnly = true,
-                onValueChange = {
-                    if (it.length == 0) kirjain2_4 = it
-                    if (it.length == 1) {
-                        focusManager.moveFocus(
-                            focusDirection = FocusDirection.Next,
-                        )
-                        kirjain2_4 = it
-                    } },
+                value = if (kirjaimet4.size >= 2) { kirjaimet4[1] } else "",
+                readOnly = true,
+                onValueChange = {},
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(showKeyboardOnFocus = false),
                 textStyle = TextStyle(color = Color.Black, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, fontSize = 24.sp),
@@ -575,16 +483,9 @@ fun Game(modifier: Modifier = Modifier) {
                     .width(75.dp)
             )
             OutlinedTextField(
-                value = kirjain3_4,
-                // readOnly = true,
-                onValueChange = {
-                    if (it.length == 0) kirjain3_4 = it
-                    if (it.length == 1) {
-                        focusManager.moveFocus(
-                            focusDirection = FocusDirection.Next,
-                        )
-                        kirjain3_4 = it
-                    } },
+                value = if (kirjaimet4.size >= 3) { kirjaimet4[2] } else "",
+                readOnly = true,
+                onValueChange = {},
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(showKeyboardOnFocus = false),
                 textStyle = TextStyle(color = Color.Black, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, fontSize = 24.sp),
@@ -597,16 +498,9 @@ fun Game(modifier: Modifier = Modifier) {
                     .width(75.dp)
             )
             OutlinedTextField(
-                value = kirjain4_4,
-                // readOnly = true,
-                onValueChange = {
-                    if (it.length == 0) kirjain4_4 = it
-                    if (it.length == 1) {
-                        focusManager.moveFocus(
-                            focusDirection = FocusDirection.Next,
-                        )
-                        kirjain4_4 = it
-                    } },
+                value = if (kirjaimet4.size >= 4) { kirjaimet4[3] } else "",
+                readOnly = true,
+                onValueChange = {},
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(showKeyboardOnFocus = false),
                 textStyle = TextStyle(color = Color.Black, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, fontSize = 24.sp),
@@ -619,11 +513,9 @@ fun Game(modifier: Modifier = Modifier) {
                     .width(75.dp)
             )
             OutlinedTextField(
-                value = kirjain5_4,
-                // readOnly = true,
-                onValueChange = {
-                    if (it.length == 1) kirjain5_4 = it
-                    },
+                value = if (kirjaimet4.size >= 5) { kirjaimet4[4] } else "",
+                readOnly = true,
+                onValueChange = {},
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(showKeyboardOnFocus = false),
                 textStyle = TextStyle(color = Color.Black, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, fontSize = 24.sp),
@@ -647,16 +539,9 @@ fun Game(modifier: Modifier = Modifier) {
             maxItemsInEachRow = 5
         ) {
             OutlinedTextField(
-                value = kirjain1_5,
-                // readOnly = true,
-                onValueChange = {
-                    if (it.length == 0) kirjain1_5 = it
-                    if (it.length == 1) {
-                        focusManager.moveFocus(
-                            focusDirection = FocusDirection.Next,
-                        )
-                        kirjain1_5 = it
-                    } },
+                value = if (kirjaimet5.size >= 1) { kirjaimet5[0] } else "",
+                readOnly = true,
+                onValueChange = {},
                 singleLine = true,
                 textStyle = TextStyle(color = Color.Black, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, fontSize = 24.sp),
                 keyboardOptions = KeyboardOptions(showKeyboardOnFocus = false, imeAction = ImeAction.Next),
@@ -669,16 +554,9 @@ fun Game(modifier: Modifier = Modifier) {
                     .width(75.dp)
             )
             OutlinedTextField(
-                value = kirjain2_5,
-                // readOnly = true,
-                onValueChange = {
-                    if (it.length == 0) kirjain2_5 = it
-                    if (it.length == 1) {
-                        focusManager.moveFocus(
-                            focusDirection = FocusDirection.Next,
-                        )
-                        kirjain2_5 = it
-                    } },
+                value = if (kirjaimet5.size >= 2) { kirjaimet5[1] } else "",
+                readOnly = true,
+                onValueChange = {},
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(showKeyboardOnFocus = false),
                 textStyle = TextStyle(color = Color.Black, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, fontSize = 24.sp),
@@ -691,16 +569,9 @@ fun Game(modifier: Modifier = Modifier) {
                     .width(75.dp)
             )
             OutlinedTextField(
-                value = kirjain3_5,
-                // readOnly = true,
-                onValueChange = {
-                    if (it.length == 0) kirjain3_5 = it
-                    if (it.length == 1) {
-                        focusManager.moveFocus(
-                            focusDirection = FocusDirection.Next,
-                        )
-                        kirjain3_5 = it
-                    } },
+                value = if (kirjaimet5.size >= 3) { kirjaimet5[2] } else "",
+                readOnly = true,
+                onValueChange = {},
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(showKeyboardOnFocus = false),
                 textStyle = TextStyle(color = Color.Black, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, fontSize = 24.sp),
@@ -713,16 +584,9 @@ fun Game(modifier: Modifier = Modifier) {
                     .width(75.dp)
             )
             OutlinedTextField(
-                value = kirjain4_5,
-                // readOnly = true,
-                onValueChange = {
-                    if (it.length == 0) kirjain4_5 = it
-                    if (it.length == 1) {
-                        focusManager.moveFocus(
-                            focusDirection = FocusDirection.Next,
-                        )
-                        kirjain4_5 = it
-                    } },
+                value = if (kirjaimet5.size >= 4) { kirjaimet5[3] } else "",
+                readOnly = true,
+                onValueChange = {},
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(showKeyboardOnFocus = false),
                 textStyle = TextStyle(color = Color.Black, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, fontSize = 24.sp),
@@ -735,11 +599,9 @@ fun Game(modifier: Modifier = Modifier) {
                     .width(75.dp)
             )
             OutlinedTextField(
-                value = kirjain5_5,
-                // readOnly = true,
-                onValueChange = {
-                    if (it.length == 1) kirjain5_5 = it
-                    },
+                value = if (kirjaimet5.size >= 5) { kirjaimet5[4] } else "",
+                readOnly = true,
+                onValueChange = {},
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(showKeyboardOnFocus = false),
                 textStyle = TextStyle(color = Color.Black, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, fontSize = 24.sp),
@@ -763,16 +625,9 @@ fun Game(modifier: Modifier = Modifier) {
             maxItemsInEachRow = 5
         ) {
             OutlinedTextField(
-                value = kirjain1_6,
-                // readOnly = true,
-                onValueChange = {
-                    if (it.length == 0) kirjain1_6 = it
-                    if (it.length == 1) {
-                        focusManager.moveFocus(
-                            focusDirection = FocusDirection.Next,
-                        )
-                        kirjain1_6 = it
-                    } },
+                value = if (kirjaimet6.size >= 1) { kirjaimet6[0] } else "",
+                readOnly = true,
+                onValueChange = {},
                 singleLine = true,
                 textStyle = TextStyle(color = Color.Black, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, fontSize = 24.sp),
                 keyboardOptions = KeyboardOptions(showKeyboardOnFocus = false, imeAction = ImeAction.Next),
@@ -785,16 +640,9 @@ fun Game(modifier: Modifier = Modifier) {
                     .width(75.dp)
             )
             OutlinedTextField(
-                value = kirjain2_6,
-                // readOnly = true,
-                onValueChange = {
-                    if (it.length == 0) kirjain2_6 = it
-                    if (it.length == 1) {
-                        focusManager.moveFocus(
-                            focusDirection = FocusDirection.Next,
-                        )
-                        kirjain2_6 = it
-                    } },
+                value = if (kirjaimet6.size >= 2) { kirjaimet6[1] } else "",
+                readOnly = true,
+                onValueChange = {},
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(showKeyboardOnFocus = false),
                 textStyle = TextStyle(color = Color.Black, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, fontSize = 24.sp),
@@ -807,16 +655,9 @@ fun Game(modifier: Modifier = Modifier) {
                     .width(75.dp)
             )
             OutlinedTextField(
-                value = kirjain3_6,
-                // readOnly = true,
-                onValueChange = {
-                    if (it.length == 0) kirjain3_6 = it
-                    if (it.length == 1) {
-                        focusManager.moveFocus(
-                            focusDirection = FocusDirection.Next,
-                        )
-                        kirjain3_6 = it
-                    } },
+                value = if (kirjaimet6.size >= 3) { kirjaimet6[2] } else "",
+                readOnly = true,
+                onValueChange = {},
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(showKeyboardOnFocus = false),
                 textStyle = TextStyle(color = Color.Black, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, fontSize = 24.sp),
@@ -829,16 +670,9 @@ fun Game(modifier: Modifier = Modifier) {
                     .width(75.dp)
             )
             OutlinedTextField(
-                value = kirjain4_6,
-                // readOnly = true,
-                onValueChange = {
-                    if (it.length == 0) kirjain4_6 = it
-                    if (it.length == 1) {
-                        focusManager.moveFocus(
-                            focusDirection = FocusDirection.Next,
-                        )
-                        kirjain4_6 = it
-                    } },
+                value = if (kirjaimet6.size >= 4) { kirjaimet6[3] } else "",
+                readOnly = true,
+                onValueChange = {},
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(showKeyboardOnFocus = false),
                 textStyle = TextStyle(color = Color.Black, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, fontSize = 24.sp),
@@ -851,11 +685,9 @@ fun Game(modifier: Modifier = Modifier) {
                     .width(75.dp)
             )
             OutlinedTextField(
-                value = kirjain5_6,
-                // readOnly = true,
-                onValueChange = {
-                    if (it.length == 1) kirjain5_6 = it
-                    },
+                value = if (kirjaimet6.size >= 5) { kirjaimet6[4] } else "",
+                readOnly = true,
+                onValueChange = {},
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(showKeyboardOnFocus = false),
                 textStyle = TextStyle(color = Color.Black, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, fontSize = 24.sp),
@@ -1150,8 +982,63 @@ fun Game(modifier: Modifier = Modifier) {
                     .clip(RoundedCornerShape(2.dp)),
                 colors = ButtonColors(containerColor = Color.Red, contentColor = Color.Red, disabledContainerColor = White, disabledContentColor = White),
                 onClick = {
-                    if (kirjaimet1.isNotEmpty()) {
-                        kirjaimet1[kirjaimet1.size - 1] = ""
+                    if (arvauksienMaara == 0) {
+                        if (kirjaimet1[0] == "") {
+                            return@Button
+                        }
+                        if (kirjaimet1.size > 0) {
+                            nykyKohta -= 1
+                            kirjaimet1[nykyKohta] = ""
+                        }
+                    }
+                    if (arvauksienMaara == 1) {
+                        if (kirjaimet2[0] == "") {
+                            return@Button
+                        }
+                        if (kirjaimet2.size > 0) {
+                            nykyKohta -= 1
+                            kirjaimet2[nykyKohta] = ""
+                        }
+                    }
+
+                    if (arvauksienMaara == 2) {
+                        if (kirjaimet3[0] == "") {
+                            return@Button
+                        }
+                        if (kirjaimet3.size > 0) {
+                            nykyKohta -= 1
+                            kirjaimet3[nykyKohta] = ""
+                        }
+                    }
+
+                    if (arvauksienMaara == 3) {
+                        if (kirjaimet4[0] == "") {
+                            return@Button
+                        }
+                        if (kirjaimet4.size > 0) {
+                            nykyKohta -= 1
+                            kirjaimet4[nykyKohta] = ""
+                        }
+                    }
+
+                    if (arvauksienMaara == 4) {
+                        if (kirjaimet5[0] == "") {
+                            return@Button
+                        }
+                        if (kirjaimet5.size > 0) {
+                            nykyKohta -= 1
+                            kirjaimet5[nykyKohta] = ""
+                        }
+                    }
+
+                    if (arvauksienMaara == 5) {
+                        if (kirjaimet6[0] == "") {
+                            return@Button
+                        }
+                        if (kirjaimet6.size > 0) {
+                            nykyKohta -= 1
+                            kirjaimet6[nykyKohta] = ""
+                        }
                     }
 
                 },
@@ -1171,3 +1058,52 @@ fun Game(modifier: Modifier = Modifier) {
         }
     }
 }
+
+//onValueChange = {
+    // if (it.length == 0) kirjain1 = it
+    // if (it.length == 1) {
+    //    focusManager.moveFocus(
+    //        focusDirection = FocusDirection.Next,
+    //        )
+    //    kirjain1 = it
+    //  }
+//},
+
+// var kirjain1 by remember { mutableStateOf("") }
+// var kirjain2 by remember { mutableStateOf("") }
+// var kirjain3 by remember { mutableStateOf("") }
+// var kirjain4 by remember { mutableStateOf("") }
+// var kirjain5 by remember { mutableStateOf("") }
+
+
+//    var kirjain1_2 by remember { mutableStateOf("") }
+//  var kirjain2_2 by remember { mutableStateOf("") }
+//   var kirjain3_2 by remember { mutableStateOf("") }
+//  var kirjain4_2 by remember { mutableStateOf("") }
+//  var kirjain5_2 by remember { mutableStateOf("") }
+
+//var kirjain1_3 by remember { mutableStateOf("") }
+//var kirjain2_3 by remember { mutableStateOf("") }
+//var kirjain3_3 by remember { mutableStateOf("") }
+//var kirjain4_3 by remember { mutableStateOf("") }
+//var kirjain5_3 by remember { mutableStateOf("") }
+
+//    var kirjain1_4 by remember { mutableStateOf("") }
+//  var kirjain2_4 by remember { mutableStateOf("") }
+// var kirjain3_4 by remember { mutableStateOf("") }
+// var kirjain4_4 by remember { mutableStateOf("") }
+// var kirjain5_4 by remember { mutableStateOf("") }
+
+//    var kirjain1_5 by remember { mutableStateOf("") }
+//    var kirjain2_5 by remember { mutableStateOf("") }
+//    var kirjain3_5 by remember { mutableStateOf("") }
+//    var kirjain4_5 by remember { mutableStateOf("") }
+//    var kirjain5_5 by remember { mutableStateOf("") }
+
+//    var kirjain1_6 by remember { mutableStateOf("") }
+//  var kirjain2_6 by remember { mutableStateOf("") }
+//  var kirjain3_6 by remember { mutableStateOf("") }
+//  var kirjain4_6 by remember { mutableStateOf("") }
+//  var kirjain5_6 by remember { mutableStateOf("") }
+
+//val focusManager = LocalFocusManager.current
