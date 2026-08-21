@@ -93,6 +93,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Game(modifier: Modifier = Modifier) {
     var isPopupOpen by remember { mutableStateOf(false) }
+    var isRight by remember { mutableStateOf("") }
     val kirjaimet1 = remember { mutableStateListOf<String>() }
     val kirjaimet2 = remember { mutableStateListOf<String>() }
     val kirjaimet3 = remember { mutableStateListOf<String>() }
@@ -142,35 +143,62 @@ fun Game(modifier: Modifier = Modifier) {
         if (arvauksienMaara == 0) {
             if (kirjaimet1.size < 5) {return}
             palautettu = true
+            if (kirjaimet1.joinToString(separator = "").replace(",", "").lowercase().trim() == sana || palautettu) {
+                isPopupOpen = true
+                isRight = "ARVASIT OIKEIN!!!!!!"
+            }
         }
         if (arvauksienMaara == 1) {
             if (kirjaimet2.size < 5) {return}
             palautettu2 = true
+            if (kirjaimet2.joinToString(separator = "").replace(",", "").lowercase().trim() == sana || palautettu2) {
+                isPopupOpen = true
+                isRight = "ARVASIT OIKEIN!!!!!!"
+            }
         }
         if (arvauksienMaara == 2) {
             if (kirjaimet3.size < 5) {return}
             palautettu3 = true
+            if (kirjaimet3.joinToString(separator = "").replace(",", "").lowercase().trim() == sana || palautettu3) {
+                isPopupOpen = true
+                isRight = "ARVASIT OIKEIN!!!!!!"
+            }
         }
         if (arvauksienMaara == 3) {
             if (kirjaimet4.size < 5) {return}
             palautettu4 = true
+            if (kirjaimet4.joinToString(separator = "").replace(",", "").lowercase().trim() == sana || palautettu4) {
+                isPopupOpen = true
+                isRight = "ARVASIT OIKEIN!!!!!!"
+            }
         }
         if (arvauksienMaara == 4) {
             if (kirjaimet5.size < 5) {return}
             palautettu5 = true
+            if (kirjaimet5.joinToString(separator = "").replace(",", "").lowercase().trim() == sana || palautettu5) {
+                isPopupOpen = true
+                isRight = "ARVASIT OIKEIN!!!!!!"
+            }
         }
         if (arvauksienMaara == 5) {
             if (kirjaimet6.size < 5) {return}
             palautettu6 = true
+            if (kirjaimet6.joinToString(separator = "").replace(",", "").lowercase().trim() == sana || palautettu6) {
+                isPopupOpen = true
+                isRight = "ARVASIT OIKEIN!!!!!!"
+            }
         }
         arvauksienMaara += 1
         nykyKohta = 0
-        if (arvauksienMaara > 5) { isPopupOpen = true}
+        if (arvauksienMaara > 5) {
+            isPopupOpen = true
+            isRight = "ikävä kyllä tällä kertaa et arvannut oikein"
+        }
     }
     // lista jossa jokainen kirjain on yksitellen
     val d = mutableListOf<String>()
     for (i in sana) {
-        d.add(i.toString())
+        d.add(i.toString().lowercase())
     }
 
     Column(
@@ -1137,7 +1165,14 @@ fun Game(modifier: Modifier = Modifier) {
                     .width(300.dp),
                 contentAlignment = Alignment.TopCenter
             ) {
-                Text("Popup content on top of UI", textAlign = TextAlign.Center)
+                Column() {
+                    Text(isRight)
+                    Button(
+                        onClick = {}
+                    ) {
+                        Text("jatka")
+                    }
+                }
             }
         }
     }
