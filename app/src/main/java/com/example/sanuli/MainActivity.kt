@@ -1,5 +1,6 @@
 package com.example.sanuli
 
+import android.R
 import android.R.attr.onClick
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -19,6 +20,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -72,8 +74,13 @@ import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
 import com.example.sanuli.ui.theme.SanuliTheme
+import java.io.File
 import kotlin.collections.mutableListOf
 import kotlin.random.Random
+import android.content.Context
+import androidx.compose.ui.platform.LocalContext
+import java.io.FileOutputStream
+import java.io.IOException
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -93,15 +100,16 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Game(modifier: Modifier = Modifier) {
     var isPopupOpen by remember { mutableStateOf(false) }
-    var isRight by remember { mutableStateOf("") }
+    var isRight by remember { mutableStateOf("ARVASIT OIKEIN!!") }
     val kirjaimet1 = remember { mutableStateListOf<String>() }
     val kirjaimet2 = remember { mutableStateListOf<String>() }
     val kirjaimet3 = remember { mutableStateListOf<String>() }
     val kirjaimet4 = remember { mutableStateListOf<String>() }
     val kirjaimet5 = remember { mutableStateListOf<String>() }
     val kirjaimet6 = remember { mutableStateListOf<String>() }
+    val kaikkiKirjaimet = remember { mutableStateListOf<String>() }
     var arvauksienMaara by remember { mutableIntStateOf(0) }
-    val sanat = listOf<String>("koira")
+    val sanat = listOf<String>("qoira")
     var sana by remember(sanat) { mutableStateOf(sanat.random()) }
     var nykyKohta by remember { mutableIntStateOf(0) }
     var palautettu by remember { mutableStateOf(false) }
@@ -114,27 +122,32 @@ fun Game(modifier: Modifier = Modifier) {
     fun add_kirjain(kirjain: String) {
         if (arvauksienMaara == 0) {
             kirjaimet1.add(nykyKohta, kirjain)
+            kaikkiKirjaimet.add(nykyKohta, kirjain)
             nykyKohta += 1
         }
         if (arvauksienMaara == 1) {
             kirjaimet2.add(nykyKohta, kirjain)
+            kaikkiKirjaimet.add(nykyKohta, kirjain)
             nykyKohta += 1
         }
         if (arvauksienMaara == 2) {
             kirjaimet3.add(nykyKohta, kirjain)
+            kaikkiKirjaimet.add(nykyKohta, kirjain)
             nykyKohta += 1
         }
         if (arvauksienMaara == 3) {
             kirjaimet4.add(nykyKohta, kirjain)
+            kaikkiKirjaimet.add(nykyKohta, kirjain)
             nykyKohta += 1
         }
         if (arvauksienMaara == 4) {
             kirjaimet5.add(nykyKohta, kirjain)
+            kaikkiKirjaimet.add(nykyKohta, kirjain)
             nykyKohta += 1
         }
-
         if (arvauksienMaara == 5) {
             kirjaimet6.add(nykyKohta, kirjain)
+            kaikkiKirjaimet.add(nykyKohta, kirjain)
             nykyKohta += 1
         }
     }
@@ -143,56 +156,50 @@ fun Game(modifier: Modifier = Modifier) {
         if (arvauksienMaara == 0) {
             if (kirjaimet1.size < 5) {return}
             palautettu = true
-            if (kirjaimet1.joinToString(separator = "").replace(",", "").lowercase().trim() == sana || palautettu) {
+            if (kirjaimet1.joinToString(separator = "").replace(",", "").lowercase().trim() == sana && palautettu) {
                 isPopupOpen = true
-                isRight = "ARVASIT OIKEIN!!!!!!"
             }
         }
         if (arvauksienMaara == 1) {
             if (kirjaimet2.size < 5) {return}
             palautettu2 = true
-            if (kirjaimet2.joinToString(separator = "").replace(",", "").lowercase().trim() == sana || palautettu2) {
+            if (kirjaimet2.joinToString(separator = "").replace(",", "").lowercase().trim() == sana && palautettu2) {
                 isPopupOpen = true
-                isRight = "ARVASIT OIKEIN!!!!!!"
             }
         }
         if (arvauksienMaara == 2) {
             if (kirjaimet3.size < 5) {return}
             palautettu3 = true
-            if (kirjaimet3.joinToString(separator = "").replace(",", "").lowercase().trim() == sana || palautettu3) {
+            if (kirjaimet3.joinToString(separator = "").replace(",", "").lowercase().trim() == sana && palautettu3) {
                 isPopupOpen = true
-                isRight = "ARVASIT OIKEIN!!!!!!"
             }
         }
         if (arvauksienMaara == 3) {
             if (kirjaimet4.size < 5) {return}
             palautettu4 = true
-            if (kirjaimet4.joinToString(separator = "").replace(",", "").lowercase().trim() == sana || palautettu4) {
+            if (kirjaimet4.joinToString(separator = "").replace(",", "").lowercase().trim() == sana && palautettu4) {
                 isPopupOpen = true
-                isRight = "ARVASIT OIKEIN!!!!!!"
             }
         }
         if (arvauksienMaara == 4) {
             if (kirjaimet5.size < 5) {return}
             palautettu5 = true
-            if (kirjaimet5.joinToString(separator = "").replace(",", "").lowercase().trim() == sana || palautettu5) {
+            if (kirjaimet5.joinToString(separator = "").replace(",", "").lowercase().trim() == sana && palautettu5) {
                 isPopupOpen = true
-                isRight = "ARVASIT OIKEIN!!!!!!"
             }
         }
         if (arvauksienMaara == 5) {
             if (kirjaimet6.size < 5) {return}
             palautettu6 = true
-            if (kirjaimet6.joinToString(separator = "").replace(",", "").lowercase().trim() == sana || palautettu6) {
+            if (kirjaimet6.joinToString(separator = "").replace(",", "").lowercase().trim() == sana && palautettu6) {
                 isPopupOpen = true
-                isRight = "ARVASIT OIKEIN!!!!!!"
             }
         }
         arvauksienMaara += 1
         nykyKohta = 0
         if (arvauksienMaara > 5) {
+            isRight = "ikävä kyllä tällä kertaa et arvannut oikein!"
             isPopupOpen = true
-            isRight = "ikävä kyllä tällä kertaa et arvannut oikein"
         }
     }
     // lista jossa jokainen kirjain on yksitellen
@@ -759,6 +766,23 @@ fun Game(modifier: Modifier = Modifier) {
         }
     }
 
+    val qcolor = if ("Q" in kirjaimet1 && palautettu) {
+        if ("Q" in sana) {
+            for ((index, value) in kirjaimet1.withIndex()) {
+                if (value == "Q") {
+                    val indexK = sana.indexOf("Q")
+                    if (index == indexK) {
+                        Color.Green
+                    } else {
+                        Color.Yellow
+                    }
+                }
+            }
+        } else {
+            Color.Gray
+        }
+    } else Color.Blue
+
     // KEYBOARD /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Column(
         modifier = Modifier.fillMaxWidth().height(750.dp),
@@ -771,7 +795,19 @@ fun Game(modifier: Modifier = Modifier) {
             horizontalArrangement = Arrangement.Absolute.spacedBy(1.dp),
         ) {
             TextButton(
-                colors = ButtonColors(containerColor = Color.Blue, contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
+                colors = ButtonColors(containerColor =
+                    (if ("Q" in kaikkiKirjaimet && palautettu) {
+                        if ("Q" in sana.uppercase()) {
+                            val indexK = sana.indexOf("Q")
+                            if (index == indexK) {
+                                Color.Green
+                            } else {
+                                Color.Yellow
+                            }
+                        } else {
+                            Color.Gray
+                        }
+                    } else Color.Blue) as Color, contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
                 modifier = Modifier
                     .padding(1.dp)
                     .width(34.dp)
@@ -1152,10 +1188,9 @@ fun Game(modifier: Modifier = Modifier) {
             // Positions the popup relative to the button
             alignment = Alignment.TopCenter,
             // Shifts the popup by (x, y) in pixels
-            // offset = IntOffset(30, 70),
-            // Hides the popup when it is dismissed,
-            // for example, when the user clicks outside it
-            onDismissRequest = { isPopupOpen = false }
+            offset = IntOffset(0, 370),
+            // Hides the popup when it is dismissed, for example, when the user clicks outside it
+            onDismissRequest = { isPopupOpen = true }
         ) {
             Box(
                 Modifier
@@ -1163,18 +1198,33 @@ fun Game(modifier: Modifier = Modifier) {
                     .padding(12.dp)
                     .height(300.dp)
                     .width(300.dp),
-                contentAlignment = Alignment.TopCenter
+                contentAlignment = Alignment.Center,
             ) {
                 Column() {
-                    Text(isRight)
+                    Text(isRight, textAlign = TextAlign.Center)
                     Button(
-                        onClick = {}
+                        onClick = {
+                            isPopupOpen = false
+                            palautettu=false
+                            palautettu2=false
+                            palautettu3=false
+                            palautettu4=false
+                            palautettu5=false
+                            palautettu6=false
+                            kirjaimet1.clear()
+                            kirjaimet2.clear()
+                            kirjaimet3.clear()
+                            kirjaimet4.clear()
+                            kirjaimet5.clear()
+                            kirjaimet6.clear()
+                            arvauksienMaara = 0
+                        },
+                        modifier = Modifier.offset(0.dp, 30.dp)
                     ) {
-                        Text("jatka")
+                        Text("Uudestaan")
                     }
                 }
             }
         }
     }
-
 }
