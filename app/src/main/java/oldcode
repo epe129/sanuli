@@ -46,3 +46,20 @@
 //  var kirjain5_6 by remember { mutableStateOf("") }
 
 //val focusManager = LocalFocusManager.current
+
+    val qcolor = if ("Q" in kirjaimet1 && palautettu) {
+        if ("Q" in sana) {
+            for ((index, value) in kirjaimet1.withIndex()) {
+                if (value == "Q") {
+                    val indexK = sana.indexOf("Q")
+                    if (index == indexK) {
+                        Color.Green
+                    } else {
+                        Color.Yellow
+                    }
+                }
+            }
+        } else {
+            Color.Gray
+        }
+    } else Color.Blue

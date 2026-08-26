@@ -118,6 +118,12 @@ fun Game(modifier: Modifier = Modifier) {
     var palautettu4 by remember { mutableStateOf(false) }
     var palautettu5 by remember { mutableStateOf(false) }
     var palautettu6 by remember { mutableStateOf(false) }
+    val palautettuKirjaimet = remember { mutableStateListOf<String>() }
+    val paikat = remember { mutableStateListOf<String>() }
+
+    //var indexK by remember { mutableStateOf(0) }
+    //var indexKaikki by remember { mutableStateOf(0) }
+
 
     fun add_kirjain(kirjain: String) {
         if (arvauksienMaara == 0) {
@@ -156,6 +162,11 @@ fun Game(modifier: Modifier = Modifier) {
         if (arvauksienMaara == 0) {
             if (kirjaimet1.size < 5) {return}
             palautettu = true
+            for (c in kaikkiKirjaimet) {
+                if (c !in palautettuKirjaimet) {
+                    palautettuKirjaimet.add(c)
+                }
+            }
             if (kirjaimet1.joinToString(separator = "").replace(",", "").lowercase().trim() == sana && palautettu) {
                 isPopupOpen = true
             }
@@ -163,6 +174,11 @@ fun Game(modifier: Modifier = Modifier) {
         if (arvauksienMaara == 1) {
             if (kirjaimet2.size < 5) {return}
             palautettu2 = true
+            for (c in kaikkiKirjaimet) {
+                if (c !in palautettuKirjaimet) {
+                    palautettuKirjaimet.add(c)
+                }
+            }
             if (kirjaimet2.joinToString(separator = "").replace(",", "").lowercase().trim() == sana && palautettu2) {
                 isPopupOpen = true
             }
@@ -170,6 +186,11 @@ fun Game(modifier: Modifier = Modifier) {
         if (arvauksienMaara == 2) {
             if (kirjaimet3.size < 5) {return}
             palautettu3 = true
+            for (c in kaikkiKirjaimet) {
+                if (c !in palautettuKirjaimet) {
+                    palautettuKirjaimet.add(c)
+                }
+            }
             if (kirjaimet3.joinToString(separator = "").replace(",", "").lowercase().trim() == sana && palautettu3) {
                 isPopupOpen = true
             }
@@ -177,6 +198,11 @@ fun Game(modifier: Modifier = Modifier) {
         if (arvauksienMaara == 3) {
             if (kirjaimet4.size < 5) {return}
             palautettu4 = true
+            for (c in kaikkiKirjaimet) {
+                if (c !in palautettuKirjaimet) {
+                    palautettuKirjaimet.add(c)
+                }
+            }
             if (kirjaimet4.joinToString(separator = "").replace(",", "").lowercase().trim() == sana && palautettu4) {
                 isPopupOpen = true
             }
@@ -184,6 +210,11 @@ fun Game(modifier: Modifier = Modifier) {
         if (arvauksienMaara == 4) {
             if (kirjaimet5.size < 5) {return}
             palautettu5 = true
+            for (c in kaikkiKirjaimet) {
+                if (c !in palautettuKirjaimet) {
+                    palautettuKirjaimet.add(c)
+                }
+            }
             if (kirjaimet5.joinToString(separator = "").replace(",", "").lowercase().trim() == sana && palautettu5) {
                 isPopupOpen = true
             }
@@ -191,10 +222,18 @@ fun Game(modifier: Modifier = Modifier) {
         if (arvauksienMaara == 5) {
             if (kirjaimet6.size < 5) {return}
             palautettu6 = true
+            for (c in kaikkiKirjaimet) {
+                if (c !in palautettuKirjaimet) {
+                    palautettuKirjaimet.add(c)
+                }
+            }
             if (kirjaimet6.joinToString(separator = "").replace(",", "").lowercase().trim() == sana && palautettu6) {
                 isPopupOpen = true
             }
         }
+        paikat.clear()
+        paikat.add(sana.uppercase().indexOf("Q").toString())
+        paikat.add(kaikkiKirjaimet.lastIndexOf("Q").toString())
         arvauksienMaara += 1
         nykyKohta = 0
         if (arvauksienMaara > 5) {
@@ -766,23 +805,6 @@ fun Game(modifier: Modifier = Modifier) {
         }
     }
 
-    val qcolor = if ("Q" in kirjaimet1 && palautettu) {
-        if ("Q" in sana) {
-            for ((index, value) in kirjaimet1.withIndex()) {
-                if (value == "Q") {
-                    val indexK = sana.indexOf("Q")
-                    if (index == indexK) {
-                        Color.Green
-                    } else {
-                        Color.Yellow
-                    }
-                }
-            }
-        } else {
-            Color.Gray
-        }
-    } else Color.Blue
-
     // KEYBOARD /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Column(
         modifier = Modifier.fillMaxWidth().height(750.dp),
@@ -796,10 +818,9 @@ fun Game(modifier: Modifier = Modifier) {
         ) {
             TextButton(
                 colors = ButtonColors(containerColor =
-                    (if ("Q" in kaikkiKirjaimet && palautettu) {
+                    (if ("Q" in palautettuKirjaimet) {
                         if ("Q" in sana.uppercase()) {
-                            val indexK = sana.indexOf("Q")
-                            if (index == indexK) {
+                            if (paikat[0].toInt() == paikat[1].toInt()) {
                                 Color.Green
                             } else {
                                 Color.Yellow
@@ -807,7 +828,7 @@ fun Game(modifier: Modifier = Modifier) {
                         } else {
                             Color.Gray
                         }
-                    } else Color.Blue) as Color, contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
+                    } else Color.Blue), contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
                 modifier = Modifier
                     .padding(1.dp)
                     .width(34.dp)
@@ -817,7 +838,19 @@ fun Game(modifier: Modifier = Modifier) {
                 Text("Q", fontSize = 25.sp, textAlign = TextAlign.Center)
             }
             TextButton(
-                colors = ButtonColors(containerColor = Color.Blue, contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
+                colors = ButtonColors(containerColor = (if ("W" in palautettuKirjaimet) {
+                    if ("W" in sana.uppercase()) {
+                        val indexK = remember { sana.uppercase().indexOf("W") }
+                        val indexKaikki = remember { kaikkiKirjaimet.indexOf("W") }
+                        if (indexKaikki == indexK) {
+                            Color.Green
+                        } else {
+                            Color.Yellow
+                        }
+                    } else {
+                        Color.Gray
+                    }
+                } else Color.Blue), contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
                 modifier = Modifier
                     .padding(1.dp)
                     .width(34.dp)
@@ -827,7 +860,19 @@ fun Game(modifier: Modifier = Modifier) {
                 Text("W", fontSize = 25.sp, textAlign = TextAlign.Center)
             }
             TextButton(
-                colors = ButtonColors(containerColor = Color.Blue, contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
+                colors = ButtonColors(containerColor = (if ("E" in palautettuKirjaimet) {
+                    if ("E" in sana.uppercase()) {
+                        val indexK = remember { sana.uppercase().indexOf("E") }
+                        val indexKaikki = remember { kaikkiKirjaimet.indexOf("E") }
+                        if (indexKaikki == indexK) {
+                            Color.Green
+                        } else {
+                            Color.Yellow
+                        }
+                    } else {
+                        Color.Gray
+                    }
+                } else Color.Blue), contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
                 modifier = Modifier
                     .padding(1.dp)
                     .width(34.dp)
@@ -837,7 +882,19 @@ fun Game(modifier: Modifier = Modifier) {
                 Text("E", fontSize = 25.sp, textAlign = TextAlign.Center)
             }
             TextButton(
-                colors = ButtonColors(containerColor = Color.Blue, contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
+                colors = ButtonColors(containerColor = (if ("R" in palautettuKirjaimet) {
+                    if ("R" in sana.uppercase()) {
+                        val indexK = remember { sana.uppercase().indexOf("R") }
+                        val indexKaikki = remember { kaikkiKirjaimet.indexOf("R") }
+                        if (indexKaikki == indexK) {
+                            Color.Green
+                        } else {
+                            Color.Yellow
+                        }
+                    } else {
+                        Color.Gray
+                    }
+                } else Color.Blue), contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
                 modifier = Modifier
                     .padding(1.dp)
                     .width(34.dp)
@@ -847,7 +904,19 @@ fun Game(modifier: Modifier = Modifier) {
                 Text("R", fontSize = 25.sp, textAlign = TextAlign.Center)
             }
             TextButton(
-                colors = ButtonColors(containerColor = Color.Blue, contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
+                colors = ButtonColors(containerColor = (if ("T" in palautettuKirjaimet) {
+                    if ("T" in sana.uppercase()) {
+                        val indexK = remember { sana.uppercase().indexOf("T") }
+                        val indexKaikki = remember { kaikkiKirjaimet.indexOf("T") }
+                        if (indexKaikki == indexK) {
+                            Color.Green
+                        } else {
+                            Color.Yellow
+                        }
+                    } else {
+                        Color.Gray
+                    }
+                } else Color.Blue), contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
                 modifier = Modifier
                     .padding(1.dp)
                     .width(34.dp)
@@ -857,7 +926,19 @@ fun Game(modifier: Modifier = Modifier) {
                 Text("T", fontSize = 25.sp, textAlign = TextAlign.Center)
             }
             TextButton(
-                colors = ButtonColors(containerColor = Color.Blue, contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
+                colors = ButtonColors(containerColor = (if ("Y" in palautettuKirjaimet) {
+                    if ("Y" in sana.uppercase()) {
+                        val indexK = remember { sana.uppercase().indexOf("Y") }
+                        val indexKaikki = remember { kaikkiKirjaimet.indexOf("Y") }
+                        if (indexKaikki == indexK) {
+                            Color.Green
+                        } else {
+                            Color.Yellow
+                        }
+                    } else {
+                        Color.Gray
+                    }
+                } else Color.Blue), contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
                 modifier = Modifier
                     .padding(1.dp)
                     .width(34.dp)
@@ -867,7 +948,19 @@ fun Game(modifier: Modifier = Modifier) {
                 Text("Y", fontSize = 25.sp, textAlign = TextAlign.Center)
             }
             TextButton(
-                colors = ButtonColors(containerColor = Color.Blue, contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
+                colors = ButtonColors(containerColor = (if ("U" in palautettuKirjaimet) {
+                    if ("U" in sana.uppercase()) {
+                        val indexK = remember { sana.uppercase().indexOf("U") }
+                        val indexKaikki = remember { kaikkiKirjaimet.indexOf("U") }
+                        if (indexKaikki == indexK) {
+                            Color.Green
+                        } else {
+                            Color.Yellow
+                        }
+                    } else {
+                        Color.Gray
+                    }
+                } else Color.Blue), contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
                 modifier = Modifier
                     .padding(1.dp)
                     .width(34.dp)
@@ -877,7 +970,19 @@ fun Game(modifier: Modifier = Modifier) {
                 Text("U", fontSize = 25.sp, textAlign = TextAlign.Center)
             }
             TextButton(
-                colors = ButtonColors(containerColor = Color.Blue, contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
+                colors = ButtonColors(containerColor = (if ("I" in palautettuKirjaimet) {
+                    if ("I" in sana.uppercase()) {
+                        val indexK = remember { sana.uppercase().indexOf("I") }
+                        val indexKaikki = remember { kaikkiKirjaimet.indexOf("I") }
+                        if (indexKaikki == indexK) {
+                            Color.Green
+                        } else {
+                            Color.Yellow
+                        }
+                    } else {
+                        Color.Gray
+                    }
+                } else Color.Blue), contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
                 modifier = Modifier
                     .padding(1.dp)
                     .width(34.dp)
@@ -887,7 +992,19 @@ fun Game(modifier: Modifier = Modifier) {
                 Text("I", fontSize = 25.sp, textAlign = TextAlign.Center)
             }
             TextButton(
-                colors = ButtonColors(containerColor = Color.Blue, contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
+                colors = ButtonColors(containerColor = (if ("O" in palautettuKirjaimet) {
+                    if ("O" in sana.uppercase()) {
+                        val indexK = remember { sana.uppercase().indexOf("O") }
+                        val indexKaikki = remember { kaikkiKirjaimet.indexOf("O") }
+                        if (indexKaikki == indexK) {
+                            Color.Green
+                        } else {
+                            Color.Yellow
+                        }
+                    } else {
+                        Color.Gray
+                    }
+                } else Color.Blue), contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
                 modifier = Modifier
                     .padding(1.dp)
                     .width(34.dp)
@@ -897,7 +1014,19 @@ fun Game(modifier: Modifier = Modifier) {
                 Text("O", fontSize = 25.sp, textAlign = TextAlign.Center)
             }
             TextButton(
-                colors = ButtonColors(containerColor = Color.Blue, contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
+                colors = ButtonColors(containerColor = (if ("P" in palautettuKirjaimet) {
+                    if ("P" in sana.uppercase()) {
+                        val indexK = remember { sana.uppercase().indexOf("P") }
+                        val indexKaikki = remember { kaikkiKirjaimet.indexOf("P") }
+                        if (indexKaikki == indexK) {
+                            Color.Green
+                        } else {
+                            Color.Yellow
+                        }
+                    } else {
+                        Color.Gray
+                    }
+                } else Color.Blue), contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
                 modifier = Modifier
                     .padding(1.dp)
                     .width(34.dp)
@@ -907,7 +1036,19 @@ fun Game(modifier: Modifier = Modifier) {
                 Text("P", fontSize = 25.sp, textAlign = TextAlign.Center)
             }
             TextButton(
-                colors = ButtonColors(containerColor = Color.Blue, contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
+                colors = ButtonColors(containerColor = (if ("Å" in palautettuKirjaimet) {
+                    if ("Å" in sana.uppercase()) {
+                        val indexK = remember { sana.uppercase().indexOf("Å") }
+                        val indexKaikki = remember { kaikkiKirjaimet.indexOf("Å") }
+                        if (indexKaikki == indexK) {
+                            Color.Green
+                        } else {
+                            Color.Yellow
+                        }
+                    } else {
+                        Color.Gray
+                    }
+                } else Color.Blue), contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
                 modifier = Modifier
                     .padding(1.dp)
                     .width(34.dp)
@@ -924,7 +1065,19 @@ fun Game(modifier: Modifier = Modifier) {
             horizontalArrangement = Arrangement.Absolute.spacedBy(1.dp),
         ) {
             TextButton(
-                colors = ButtonColors(containerColor = Color.Blue, contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
+                colors = ButtonColors(containerColor = (if ("A" in palautettuKirjaimet) {
+                    if ("A" in sana.uppercase()) {
+                        val indexK = remember { sana.uppercase().indexOf("A") }
+                        val indexKaikki = remember { kaikkiKirjaimet.indexOf("A") }
+                        if (indexKaikki == indexK) {
+                            Color.Green
+                        } else {
+                            Color.Yellow
+                        }
+                    } else {
+                        Color.Gray
+                    }
+                } else Color.Blue), contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
                 modifier = Modifier
                     .padding(1.dp)
                     .width(34.dp)
@@ -934,7 +1087,19 @@ fun Game(modifier: Modifier = Modifier) {
                 Text("A", fontSize = 25.sp, textAlign = TextAlign.Center)
             }
             TextButton(
-                colors = ButtonColors(containerColor = Color.Blue, contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
+                colors = ButtonColors(containerColor = (if ("S" in palautettuKirjaimet) {
+                    if ("S" in sana.uppercase()) {
+                        val indexK = remember { sana.uppercase().indexOf("S") }
+                        val indexKaikki = remember { kaikkiKirjaimet.indexOf("S") }
+                        if (indexKaikki == indexK) {
+                            Color.Green
+                        } else {
+                            Color.Yellow
+                        }
+                    } else {
+                        Color.Gray
+                    }
+                } else Color.Blue), contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
                 modifier = Modifier
                     .padding(1.dp)
                     .width(34.dp)
@@ -944,7 +1109,19 @@ fun Game(modifier: Modifier = Modifier) {
                 Text("S", fontSize = 25.sp, textAlign = TextAlign.Center)
             }
             TextButton(
-                colors = ButtonColors(containerColor = Color.Blue, contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
+                colors = ButtonColors(containerColor = (if ("D" in palautettuKirjaimet) {
+                    if ("D" in sana.uppercase()) {
+                        val indexK = remember { sana.uppercase().indexOf("D") }
+                        val indexKaikki = remember { kaikkiKirjaimet.indexOf("D") }
+                        if (indexKaikki == indexK) {
+                            Color.Green
+                        } else {
+                            Color.Yellow
+                        }
+                    } else {
+                        Color.Gray
+                    }
+                } else Color.Blue), contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
                 modifier = Modifier
                     .padding(1.dp)
                     .width(34.dp)
@@ -954,7 +1131,19 @@ fun Game(modifier: Modifier = Modifier) {
                 Text("D", fontSize = 25.sp, textAlign = TextAlign.Center)
             }
             TextButton(
-                colors = ButtonColors(containerColor = Color.Blue, contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
+                colors = ButtonColors(containerColor = (if ("F" in palautettuKirjaimet) {
+                    if ("F" in sana.uppercase()) {
+                        val indexK = remember { sana.uppercase().indexOf("F") }
+                        val indexKaikki = remember { kaikkiKirjaimet.indexOf("F") }
+                        if (indexKaikki == indexK) {
+                            Color.Green
+                        } else {
+                            Color.Yellow
+                        }
+                    } else {
+                        Color.Gray
+                    }
+                } else Color.Blue), contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
                 modifier = Modifier
                     .padding(1.dp)
                     .width(34.dp)
@@ -964,7 +1153,19 @@ fun Game(modifier: Modifier = Modifier) {
                 Text("F", fontSize = 25.sp, textAlign = TextAlign.Center)
             }
             TextButton(
-                colors = ButtonColors(containerColor = Color.Blue, contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
+                colors = ButtonColors(containerColor = (if ("G" in palautettuKirjaimet) {
+                    if ("G" in sana.uppercase()) {
+                        val indexK = remember { sana.uppercase().indexOf("G") }
+                        val indexKaikki = remember { kaikkiKirjaimet.indexOf("G") }
+                        if (indexKaikki == indexK) {
+                            Color.Green
+                        } else {
+                            Color.Yellow
+                        }
+                    } else {
+                        Color.Gray
+                    }
+                } else Color.Blue), contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
                 modifier = Modifier
                     .padding(1.dp)
                     .width(34.dp)
@@ -974,7 +1175,19 @@ fun Game(modifier: Modifier = Modifier) {
                 Text("G", fontSize = 25.sp, textAlign = TextAlign.Center)
             }
             TextButton(
-                colors = ButtonColors(containerColor = Color.Blue, contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
+                colors = ButtonColors(containerColor = (if ("H" in palautettuKirjaimet) {
+                    if ("H" in sana.uppercase()) {
+                        val indexK = remember { sana.uppercase().indexOf("H") }
+                        val indexKaikki = remember { kaikkiKirjaimet.indexOf("H") }
+                        if (indexKaikki == indexK) {
+                            Color.Green
+                        } else {
+                            Color.Yellow
+                        }
+                    } else {
+                        Color.Gray
+                    }
+                } else Color.Blue), contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
                 modifier = Modifier
                     .padding(1.dp)
                     .width(34.dp)
@@ -984,7 +1197,19 @@ fun Game(modifier: Modifier = Modifier) {
                 Text("H", fontSize = 25.sp, textAlign = TextAlign.Center)
             }
             TextButton(
-                colors = ButtonColors(containerColor = Color.Blue, contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
+                colors = ButtonColors(containerColor = (if ("J" in palautettuKirjaimet) {
+                    if ("J" in sana.uppercase()) {
+                        val indexK = remember { sana.uppercase().indexOf("J") }
+                        val indexKaikki = remember { kaikkiKirjaimet.indexOf("J") }
+                        if (indexKaikki == indexK) {
+                            Color.Green
+                        } else {
+                            Color.Yellow
+                        }
+                    } else {
+                        Color.Gray
+                    }
+                } else Color.Blue), contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
                 modifier = Modifier
                     .padding(1.dp)
                     .width(34.dp)
@@ -994,7 +1219,19 @@ fun Game(modifier: Modifier = Modifier) {
                 Text("J", fontSize = 25.sp, textAlign = TextAlign.Center)
             }
             TextButton(
-                colors = ButtonColors(containerColor = Color.Blue, contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
+                colors = ButtonColors(containerColor = (if ("K" in palautettuKirjaimet) {
+                    if ("K" in sana.uppercase()) {
+                        val indexK = remember { sana.uppercase().indexOf("K") }
+                        val indexKaikki = remember { kaikkiKirjaimet.indexOf("K") }
+                        if (indexKaikki == indexK) {
+                            Color.Green
+                        } else {
+                            Color.Yellow
+                        }
+                    } else {
+                        Color.Gray
+                    }
+                } else Color.Blue), contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
                 modifier = Modifier
                     .padding(1.dp)
                     .width(34.dp)
@@ -1004,7 +1241,19 @@ fun Game(modifier: Modifier = Modifier) {
                 Text("K", fontSize = 25.sp, textAlign = TextAlign.Center)
             }
             TextButton(
-                colors = ButtonColors(containerColor = Color.Blue, contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
+                colors = ButtonColors(containerColor = (if ("L" in palautettuKirjaimet) {
+                    if ("L" in sana.uppercase()) {
+                        val indexK = remember { sana.uppercase().indexOf("L") }
+                        val indexKaikki = remember { kaikkiKirjaimet.indexOf("L") }
+                        if (indexKaikki == indexK) {
+                            Color.Green
+                        } else {
+                            Color.Yellow
+                        }
+                    } else {
+                        Color.Gray
+                    }
+                } else Color.Blue), contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
                 modifier = Modifier
                     .padding(1.dp)
                     .width(34.dp)
@@ -1014,7 +1263,19 @@ fun Game(modifier: Modifier = Modifier) {
                 Text("L", fontSize = 25.sp, textAlign = TextAlign.Center)
             }
             TextButton(
-                colors = ButtonColors(containerColor = Color.Blue, contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
+                colors = ButtonColors(containerColor = (if ("Ö" in palautettuKirjaimet) {
+                    if ("Ö" in sana.uppercase()) {
+                        val indexK = remember { sana.uppercase().indexOf("Ö") }
+                        val indexKaikki = remember { kaikkiKirjaimet.indexOf("Ö") }
+                        if (indexKaikki == indexK) {
+                            Color.Green
+                        } else {
+                            Color.Yellow
+                        }
+                    } else {
+                        Color.Gray
+                    }
+                } else Color.Blue), contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
                 modifier = Modifier
                     .padding(1.dp)
                     .width(34.dp)
@@ -1024,7 +1285,19 @@ fun Game(modifier: Modifier = Modifier) {
                 Text("Ö", fontSize = 25.sp, textAlign = TextAlign.Center)
             }
             TextButton(
-                colors = ButtonColors(containerColor = Color.Blue, contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
+                colors = ButtonColors(containerColor = (if ("Ä" in palautettuKirjaimet) {
+                    if ("Ä" in sana.uppercase()) {
+                        val indexK = remember { sana.uppercase().indexOf("Ä") }
+                        val indexKaikki = remember { kaikkiKirjaimet.indexOf("Ä") }
+                        if (indexKaikki == indexK) {
+                            Color.Green
+                        } else {
+                            Color.Yellow
+                        }
+                    } else {
+                        Color.Gray
+                    }
+                } else Color.Blue), contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
                 modifier = Modifier
                     .padding(1.dp)
                     .width(34.dp)
@@ -1041,7 +1314,19 @@ fun Game(modifier: Modifier = Modifier) {
             horizontalArrangement = Arrangement.Center,
         ) {
             TextButton(
-                colors = ButtonColors(containerColor = Color.Blue, contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
+                colors = ButtonColors(containerColor = (if ("Z" in palautettuKirjaimet) {
+                    if ("Z" in sana.uppercase()) {
+                        val indexK = remember { sana.uppercase().indexOf("Z") }
+                        val indexKaikki = remember { kaikkiKirjaimet.indexOf("Z") }
+                        if (indexKaikki == indexK) {
+                            Color.Green
+                        } else {
+                            Color.Yellow
+                        }
+                    } else {
+                        Color.Gray
+                    }
+                } else Color.Blue), contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
                 modifier = Modifier
                     .padding(1.dp)
                     .width(34.dp)
@@ -1051,7 +1336,19 @@ fun Game(modifier: Modifier = Modifier) {
                 Text("Z", fontSize = 25.sp, textAlign = TextAlign.Center)
             }
             TextButton(
-                colors = ButtonColors(containerColor = Color.Blue, contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
+                colors = ButtonColors(containerColor = (if ("X" in palautettuKirjaimet) {
+                    if ("X" in sana.uppercase()) {
+                        val indexK = remember { sana.uppercase().indexOf("X") }
+                        val indexKaikki = remember { kaikkiKirjaimet.indexOf("X") }
+                        if (indexKaikki == indexK) {
+                            Color.Green
+                        } else {
+                            Color.Yellow
+                        }
+                    } else {
+                        Color.Gray
+                    }
+                } else Color.Blue), contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
                 modifier = Modifier
                     .padding(1.dp)
                     .width(34.dp)
@@ -1061,7 +1358,19 @@ fun Game(modifier: Modifier = Modifier) {
                 Text("X", fontSize = 25.sp, textAlign = TextAlign.Center)
             }
             TextButton(
-                colors = ButtonColors(containerColor = Color.Blue, contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
+                colors = ButtonColors(containerColor = (if ("C" in palautettuKirjaimet) {
+                    if ("C" in sana.uppercase()) {
+                        val indexK = remember { sana.uppercase().indexOf("C") }
+                        val indexKaikki = remember { kaikkiKirjaimet.indexOf("C") }
+                        if (indexKaikki == indexK) {
+                            Color.Green
+                        } else {
+                            Color.Yellow
+                        }
+                    } else {
+                        Color.Gray
+                    }
+                } else Color.Blue), contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
                 modifier = Modifier
                     .padding(1.dp)
                     //.height(40.dp)
@@ -1072,7 +1381,19 @@ fun Game(modifier: Modifier = Modifier) {
                 Text("C", fontSize = 25.sp, textAlign = TextAlign.Center)
             }
             TextButton(
-                colors = ButtonColors(containerColor = Color.Blue, contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
+                colors = ButtonColors(containerColor = (if ("V" in palautettuKirjaimet) {
+                    if ("V" in sana.uppercase()) {
+                        val indexK = remember { sana.uppercase().indexOf("V") }
+                        val indexKaikki = remember { kaikkiKirjaimet.indexOf("V") }
+                        if (indexKaikki == indexK) {
+                            Color.Green
+                        } else {
+                            Color.Yellow
+                        }
+                    } else {
+                        Color.Gray
+                    }
+                } else Color.Blue), contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
                 modifier = Modifier
                     .padding(1.dp)
                     .width(34.dp)
@@ -1082,7 +1403,19 @@ fun Game(modifier: Modifier = Modifier) {
                 Text("V", fontSize = 25.sp, textAlign = TextAlign.Center)
             }
             TextButton(
-                colors = ButtonColors(containerColor = Color.Blue, contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
+                colors = ButtonColors(containerColor = (if ("B" in palautettuKirjaimet) {
+                    if ("B" in sana.uppercase()) {
+                        val indexK = remember { sana.uppercase().indexOf("B") }
+                        val indexKaikki = remember { kaikkiKirjaimet.indexOf("B") }
+                        if (indexKaikki == indexK) {
+                            Color.Green
+                        } else {
+                            Color.Yellow
+                        }
+                    } else {
+                        Color.Gray
+                    }
+                } else Color.Blue), contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
                 modifier = Modifier
                     .padding(1.dp)
                     .width(34.dp)
@@ -1092,7 +1425,19 @@ fun Game(modifier: Modifier = Modifier) {
                 Text("B", fontSize = 25.sp, textAlign = TextAlign.Center)
             }
             TextButton(
-                colors = ButtonColors(containerColor = Color.Blue, contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
+                colors = ButtonColors(containerColor = (if ("N" in palautettuKirjaimet) {
+                    if ("N" in sana.uppercase()) {
+                        val indexK = remember { sana.uppercase().indexOf("N") }
+                        val indexKaikki = remember { kaikkiKirjaimet.indexOf("N") }
+                        if (indexKaikki == indexK) {
+                            Color.Green
+                        } else {
+                            Color.Yellow
+                        }
+                    } else {
+                        Color.Gray
+                    }
+                } else Color.Blue), contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
                 modifier = Modifier
                     .padding(1.dp)
                     .width(34.dp)
@@ -1102,7 +1447,19 @@ fun Game(modifier: Modifier = Modifier) {
                 Text("N", fontSize = 25.sp, textAlign = TextAlign.Center)
             }
             TextButton(
-                colors = ButtonColors(containerColor = Color.Blue, contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
+                colors = ButtonColors(containerColor = (if ("M" in palautettuKirjaimet) {
+                    if ("M" in sana.uppercase()) {
+                        val indexK = remember { sana.uppercase().indexOf("M") }
+                        val indexKaikki = remember { kaikkiKirjaimet.indexOf("M") }
+                        if (indexKaikki == indexK) {
+                            Color.Green
+                        } else {
+                            Color.Yellow
+                        }
+                    } else {
+                        Color.Gray
+                    }
+                } else Color.Blue), contentColor = White, disabledContainerColor = Color.Blue, disabledContentColor = White),
                 modifier = Modifier
                     .padding(1.dp)
                     .width(34.dp)
