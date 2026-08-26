@@ -109,7 +109,7 @@ fun Game(modifier: Modifier = Modifier) {
     val kirjaimet6 = remember { mutableStateListOf<String>() }
     val kaikkiKirjaimet = remember { mutableStateListOf<String>() }
     var arvauksienMaara by remember { mutableIntStateOf(0) }
-    val sanat = listOf<String>("qoira")
+    val sanat = listOf<String>("qwira")
     var sana by remember(sanat) { mutableStateOf(sanat.random()) }
     var nykyKohta by remember { mutableIntStateOf(0) }
     var palautettu by remember { mutableStateOf(false) }
@@ -120,6 +120,7 @@ fun Game(modifier: Modifier = Modifier) {
     var palautettu6 by remember { mutableStateOf(false) }
     val palautettuKirjaimet = remember { mutableStateListOf<String>() }
     val paikat = remember { mutableStateListOf<String>() }
+    val kirjaimet = listOf<String>("Q", "W", "E","R","T","Y","U","I","O","P","Å","A","S","D","F","G","H","J","K","L","Ö","Ä","Z","X","C","V","B","N","M")
 
     //var indexK by remember { mutableStateOf(0) }
     //var indexKaikki by remember { mutableStateOf(0) }
@@ -231,9 +232,39 @@ fun Game(modifier: Modifier = Modifier) {
                 isPopupOpen = true
             }
         }
-        paikat.clear()
-        paikat.add(sana.uppercase().indexOf("Q").toString())
-        paikat.add(kaikkiKirjaimet.lastIndexOf("Q").toString())
+
+
+        if (paikat.isEmpty()) {
+            for (c in kirjaimet) {
+                paikat.add(sana.uppercase().indexOf(c).toString())
+                paikat.add(kaikkiKirjaimet.indexOf(c).toString())
+            }
+        }
+        // EI TOIMI OIKEIN JATKA TÄSTÄ
+        for (i in kirjaimet) {
+            for (c in 0 .. paikat.size) {
+                if (c == 57){break}
+                paikat[c] = sana.uppercase().indexOf(i).toString()
+                paikat[c+1] = kaikkiKirjaimet.indexOf(i).toString()
+            }
+        }
+
+      //  if (paikat.size >= 2) {
+    //        if (paikat[0] != paikat[1]) {
+            //    paikat[0] = sana.uppercase().indexOf("Q").toString()
+          //      paikat[1] = kaikkiKirjaimet.indexOf("Q").toString()
+        //    }
+            //if (paikat[2] != paikat[3]) {
+          //      paikat[2] = sana.uppercase().indexOf("W").toString()
+        //        paikat[3] = kaikkiKirjaimet.indexOf("W").toString()
+          //  }
+        //    if (paikat[4] != paikat[5]) {
+      //          paikat[4] = sana.uppercase().indexOf("E").toString()
+    //            paikat[5] = kaikkiKirjaimet.indexOf("E").toString()
+  //          }
+//        }
+
+
         arvauksienMaara += 1
         nykyKohta = 0
         if (arvauksienMaara > 5) {
@@ -241,6 +272,7 @@ fun Game(modifier: Modifier = Modifier) {
             isPopupOpen = true
         }
     }
+
     // lista jossa jokainen kirjain on yksitellen
     val d = mutableListOf<String>()
     for (i in sana) {
@@ -818,7 +850,7 @@ fun Game(modifier: Modifier = Modifier) {
         ) {
             TextButton(
                 colors = ButtonColors(containerColor =
-                    (if ("Q" in palautettuKirjaimet) {
+                    (if ("Q" in palautettuKirjaimet && paikat.size >= 2) {
                         if ("Q" in sana.uppercase()) {
                             if (paikat[0].toInt() == paikat[1].toInt()) {
                                 Color.Green
@@ -838,11 +870,9 @@ fun Game(modifier: Modifier = Modifier) {
                 Text("Q", fontSize = 25.sp, textAlign = TextAlign.Center)
             }
             TextButton(
-                colors = ButtonColors(containerColor = (if ("W" in palautettuKirjaimet) {
+                colors = ButtonColors(containerColor = (if ("W" in palautettuKirjaimet && paikat.size >= 3) {
                     if ("W" in sana.uppercase()) {
-                        val indexK = remember { sana.uppercase().indexOf("W") }
-                        val indexKaikki = remember { kaikkiKirjaimet.indexOf("W") }
-                        if (indexKaikki == indexK) {
+                        if (paikat[2].toInt() == paikat[3].toInt()) {
                             Color.Green
                         } else {
                             Color.Yellow
