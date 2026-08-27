@@ -1,45 +1,28 @@
 package com.example.sanuli
 
-import android.R
-import android.R.attr.onClick
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.annotation.Size
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.focusable
-import androidx.compose.foundation.hoverable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.text.input.rememberTextFieldState
-import androidx.compose.material3.AlertDialogDefaults.containerColor
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.LocalTextStyle
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -51,35 +34,20 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.White
-import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.OffsetMapping
-import androidx.compose.ui.text.input.TransformedText
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
 import com.example.sanuli.ui.theme.SanuliTheme
-import java.io.File
 import kotlin.collections.mutableListOf
-import kotlin.random.Random
 import android.content.Context
-import androidx.compose.ui.platform.LocalContext
-import java.io.FileOutputStream
 import java.io.IOException
 
 class MainActivity : ComponentActivity() {
@@ -90,7 +58,10 @@ class MainActivity : ComponentActivity() {
             SanuliTheme {
                 Scaffold(modifier = Modifier.fillMaxSize(),
                     containerColor = Color.Gray) { innerPadding ->
-                    Game( modifier = Modifier.padding(innerPadding))
+                    Game(
+                        modifier = Modifier.padding(innerPadding),
+                        context = this
+                    )
                 }
             }
         }
@@ -98,7 +69,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Game(modifier: Modifier = Modifier) {
+fun Game(context: Context, modifier: Modifier = Modifier) {
     var isPopupOpen by remember { mutableStateOf(false) }
     var isRight by remember { mutableStateOf("ARVASIT OIKEIN!!") }
     val kirjaimet1 = remember { mutableStateListOf<String>() }
@@ -121,7 +92,18 @@ fun Game(modifier: Modifier = Modifier) {
     val palautettuKirjaimet = remember { mutableStateListOf<String>() }
     val paikat = remember { mutableStateListOf<String>() }
     val kirjaimet = listOf<String>("Q", "W", "E","R","T","Y","U","I","O","P","Å","A","S","D","F","G","H","J","K","L","Ö","Ä","Z","X","C","V","B","N","M")
+    var jsonString = ""
 
+    try {
+        jsonString = context.assets.open("sanat.json").bufferedReader().use { it.readText() }
+    } catch (ioException: IOException) {
+        ioException.printStackTrace()
+    }
+    var sanatTOlist = jsonString.replace("""[{}:"]""".toRegex(), "").replace("sanat", "").replace("]", "").replace("[", "").lowercase().trim().split(",")
+    println(sanatTOlist[1])
+    for (c in sanatTOlist) {
+        println(c)
+    }
     //var indexK by remember { mutableStateOf(0) }
     //var indexKaikki by remember { mutableStateOf(0) }
 
@@ -1657,6 +1639,9 @@ fun Game(modifier: Modifier = Modifier) {
                             kirjaimet4.clear()
                             kirjaimet5.clear()
                             kirjaimet6.clear()
+                            kaikkiKirjaimet.clear()
+                            palautettuKirjaimet.clear()
+                            paikat.clear()
                             arvauksienMaara = 0
                         },
                         modifier = Modifier.offset(0.dp, 30.dp)
