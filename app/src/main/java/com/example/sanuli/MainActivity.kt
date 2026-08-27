@@ -276,85 +276,85 @@ fun Game(modifier: Modifier = Modifier) {
             paikat[16] = sana.uppercase().indexOf("O").toString()
             paikat[17] = kaikkiKirjaimet.indexOf("O").toString()
         }
-        if (paikat[16] != paikat[17]) {
-            paikat[16] = sana.uppercase().indexOf("P").toString()
-            paikat[17] = kaikkiKirjaimet.indexOf("P").toString()
-        }
         if (paikat[18] != paikat[19]) {
-            paikat[18] = sana.uppercase().indexOf("Å").toString()
-            paikat[19] = kaikkiKirjaimet.indexOf("Å").toString()
+            paikat[18] = sana.uppercase().indexOf("P").toString()
+            paikat[19] = kaikkiKirjaimet.indexOf("P").toString()
         }
         if (paikat[20] != paikat[21]) {
-            paikat[20] = sana.uppercase().indexOf("A").toString()
-            paikat[21] = kaikkiKirjaimet.indexOf("A").toString()
+            paikat[20] = sana.uppercase().indexOf("Å").toString()
+            paikat[21] = kaikkiKirjaimet.indexOf("Å").toString()
         }
         if (paikat[22] != paikat[23]) {
-            paikat[22] = sana.uppercase().indexOf("S").toString()
-            paikat[23] = kaikkiKirjaimet.indexOf("S").toString()
+            paikat[22] = sana.uppercase().indexOf("A").toString()
+            paikat[23] = kaikkiKirjaimet.indexOf("A").toString()
         }
         if (paikat[24] != paikat[25]) {
-            paikat[24] = sana.uppercase().indexOf("D").toString()
-            paikat[25] = kaikkiKirjaimet.indexOf("D").toString()
+            paikat[24] = sana.uppercase().indexOf("S").toString()
+            paikat[25] = kaikkiKirjaimet.indexOf("S").toString()
         }
         if (paikat[26] != paikat[27]) {
-            paikat[26] = sana.uppercase().indexOf("F").toString()
-            paikat[27] = kaikkiKirjaimet.indexOf("F").toString()
+            paikat[26] = sana.uppercase().indexOf("D").toString()
+            paikat[27] = kaikkiKirjaimet.indexOf("D").toString()
         }
         if (paikat[28] != paikat[29]) {
-            paikat[28] = sana.uppercase().indexOf("G").toString()
-            paikat[29] = kaikkiKirjaimet.indexOf("G").toString()
+            paikat[28] = sana.uppercase().indexOf("F").toString()
+            paikat[29] = kaikkiKirjaimet.indexOf("F").toString()
         }
         if (paikat[30] != paikat[31]) {
-            paikat[30] = sana.uppercase().indexOf("H").toString()
-            paikat[31] = kaikkiKirjaimet.indexOf("H").toString()
+            paikat[30] = sana.uppercase().indexOf("G").toString()
+            paikat[31] = kaikkiKirjaimet.indexOf("G").toString()
         }
         if (paikat[32] != paikat[33]) {
-            paikat[32] = sana.uppercase().indexOf("J").toString()
-            paikat[33] = kaikkiKirjaimet.indexOf("J").toString()
+            paikat[32] = sana.uppercase().indexOf("H").toString()
+            paikat[33] = kaikkiKirjaimet.indexOf("H").toString()
         }
         if (paikat[34] != paikat[35]) {
-            paikat[34] = sana.uppercase().indexOf("K").toString()
-            paikat[35] = kaikkiKirjaimet.indexOf("K").toString()
+            paikat[34] = sana.uppercase().indexOf("J").toString()
+            paikat[35] = kaikkiKirjaimet.indexOf("J").toString()
         }
         if (paikat[36] != paikat[37]) {
-            paikat[36] = sana.uppercase().indexOf("L").toString()
-            paikat[37] = kaikkiKirjaimet.indexOf("L").toString()
+            paikat[36] = sana.uppercase().indexOf("K").toString()
+            paikat[37] = kaikkiKirjaimet.indexOf("K").toString()
         }
         if (paikat[38] != paikat[39]) {
-            paikat[38] = sana.uppercase().indexOf("Ö").toString()
-            paikat[39] = kaikkiKirjaimet.indexOf("Ö").toString()
+            paikat[38] = sana.uppercase().indexOf("L").toString()
+            paikat[39] = kaikkiKirjaimet.indexOf("L").toString()
         }
         if (paikat[40] != paikat[41]) {
-            paikat[40] = sana.uppercase().indexOf("Ä").toString()
-            paikat[41] = kaikkiKirjaimet.indexOf("Ä").toString()
+            paikat[40] = sana.uppercase().indexOf("Ö").toString()
+            paikat[41] = kaikkiKirjaimet.indexOf("Ö").toString()
         }
         if (paikat[42] != paikat[43]) {
-            paikat[42] = sana.uppercase().indexOf("Z").toString()
-            paikat[43] = kaikkiKirjaimet.indexOf("Z").toString()
+            paikat[42] = sana.uppercase().indexOf("Ä").toString()
+            paikat[43] = kaikkiKirjaimet.indexOf("Ä").toString()
         }
         if (paikat[44] != paikat[45]) {
-            paikat[44] = sana.uppercase().indexOf("X").toString()
-            paikat[45] = kaikkiKirjaimet.indexOf("X").toString()
+            paikat[44] = sana.uppercase().indexOf("Z").toString()
+            paikat[45] = kaikkiKirjaimet.indexOf("Z").toString()
         }
         if (paikat[46] != paikat[47]) {
-            paikat[46] = sana.uppercase().indexOf("C").toString()
-            paikat[47] = kaikkiKirjaimet.indexOf("C").toString()
+            paikat[46] = sana.uppercase().indexOf("X").toString()
+            paikat[47] = kaikkiKirjaimet.indexOf("X").toString()
         }
         if (paikat[48] != paikat[49]) {
-            paikat[48] = sana.uppercase().indexOf("V").toString()
-            paikat[49] = kaikkiKirjaimet.indexOf("V").toString()
+            paikat[48] = sana.uppercase().indexOf("C").toString()
+            paikat[49] = kaikkiKirjaimet.indexOf("C").toString()
         }
         if (paikat[50] != paikat[51]) {
-            paikat[50] = sana.uppercase().indexOf("B").toString()
-            paikat[51] = kaikkiKirjaimet.indexOf("B").toString()
+            paikat[50] = sana.uppercase().indexOf("V").toString()
+            paikat[51] = kaikkiKirjaimet.indexOf("V").toString()
         }
         if (paikat[52] != paikat[53]) {
-            paikat[52] = sana.uppercase().indexOf("N").toString()
-            paikat[53] = kaikkiKirjaimet.indexOf("N").toString()
+            paikat[52] = sana.uppercase().indexOf("B").toString()
+            paikat[53] = kaikkiKirjaimet.indexOf("B").toString()
         }
         if (paikat[54] != paikat[55]) {
-            paikat[54] = sana.uppercase().indexOf("M").toString()
-            paikat[55] = kaikkiKirjaimet.indexOf("M").toString()
+            paikat[54] = sana.uppercase().indexOf("N").toString()
+            paikat[55] = kaikkiKirjaimet.indexOf("N").toString()
+        }
+        if (paikat[56] != paikat[57]) {
+            paikat[56] = sana.uppercase().indexOf("M").toString()
+            paikat[57] = kaikkiKirjaimet.indexOf("M").toString()
         }
 
         arvauksienMaara += 1
