@@ -163,6 +163,7 @@ fun Game(modifier: Modifier = Modifier) {
         if (arvauksienMaara == 0) {
             if (kirjaimet1.size < 5) {return}
             palautettu = true
+            println(kaikkiKirjaimet)
             for (c in kaikkiKirjaimet) {
                 if (c !in palautettuKirjaimet) {
                     palautettuKirjaimet.add(c)
@@ -175,6 +176,7 @@ fun Game(modifier: Modifier = Modifier) {
         if (arvauksienMaara == 1) {
             if (kirjaimet2.size < 5) {return}
             palautettu2 = true
+            println(kaikkiKirjaimet)
             for (c in kaikkiKirjaimet) {
                 if (c !in palautettuKirjaimet) {
                     palautettuKirjaimet.add(c)
@@ -187,6 +189,7 @@ fun Game(modifier: Modifier = Modifier) {
         if (arvauksienMaara == 2) {
             if (kirjaimet3.size < 5) {return}
             palautettu3 = true
+            println(kaikkiKirjaimet)
             for (c in kaikkiKirjaimet) {
                 if (c !in palautettuKirjaimet) {
                     palautettuKirjaimet.add(c)
@@ -199,6 +202,7 @@ fun Game(modifier: Modifier = Modifier) {
         if (arvauksienMaara == 3) {
             if (kirjaimet4.size < 5) {return}
             palautettu4 = true
+            println(kaikkiKirjaimet)
             for (c in kaikkiKirjaimet) {
                 if (c !in palautettuKirjaimet) {
                     palautettuKirjaimet.add(c)
@@ -211,6 +215,7 @@ fun Game(modifier: Modifier = Modifier) {
         if (arvauksienMaara == 4) {
             if (kirjaimet5.size < 5) {return}
             palautettu5 = true
+            println(kaikkiKirjaimet)
             for (c in kaikkiKirjaimet) {
                 if (c !in palautettuKirjaimet) {
                     palautettuKirjaimet.add(c)
@@ -223,6 +228,7 @@ fun Game(modifier: Modifier = Modifier) {
         if (arvauksienMaara == 5) {
             if (kirjaimet6.size < 5) {return}
             palautettu6 = true
+            println(kaikkiKirjaimet)
             for (c in kaikkiKirjaimet) {
                 if (c !in palautettuKirjaimet) {
                     palautettuKirjaimet.add(c)
@@ -1551,42 +1557,48 @@ fun Game(modifier: Modifier = Modifier) {
                             return@Button
                         }
                         nykyKohta -= 1
-                        kirjaimet1[nykyKohta] = ""
+                        kirjaimet1.removeAt(nykyKohta)
+                        kaikkiKirjaimet.removeAt(nykyKohta)
                     }
                     if (arvauksienMaara == 1) {
                         if (!kirjaimet2.isNotEmpty() || kirjaimet2[0] == "") {
                             return@Button
                         }
                         nykyKohta -= 1
-                        kirjaimet2[nykyKohta] = ""
+                        kirjaimet2.removeAt(nykyKohta)
+                        kaikkiKirjaimet.removeAt(nykyKohta)
                     }
                     if (arvauksienMaara == 2) {
                         if (!kirjaimet3.isNotEmpty() || kirjaimet3[0] == "") {
                             return@Button
                         }
                         nykyKohta -= 1
-                        kirjaimet3[nykyKohta] = ""
+                        kirjaimet3.removeAt(nykyKohta)
+                        kaikkiKirjaimet.removeAt(nykyKohta)
                     }
                     if (arvauksienMaara == 3) {
                         if (!kirjaimet4.isNotEmpty() || kirjaimet4[0] == "") {
                             return@Button
                         }
                         nykyKohta -= 1
-                        kirjaimet4[nykyKohta] = ""
+                        kirjaimet4.removeAt(nykyKohta)
+                        kaikkiKirjaimet.removeAt(nykyKohta)
                     }
                     if (arvauksienMaara == 4) {
                         if (!kirjaimet5.isNotEmpty() || kirjaimet5[0] == "") {
                             return@Button
                         }
                         nykyKohta -= 1
-                        kirjaimet5[nykyKohta] = ""
+                        kirjaimet5.removeAt(nykyKohta)
+                        kaikkiKirjaimet.removeAt(nykyKohta)
                     }
                     if (arvauksienMaara == 5) {
                         if (!kirjaimet6.isNotEmpty() || kirjaimet6[0] == "") {
                             return@Button
                         }
                         nykyKohta -= 1
-                        kirjaimet6[nykyKohta] = ""
+                        kirjaimet6.removeAt(nykyKohta)
+                        kaikkiKirjaimet.removeAt(nykyKohta)
                     }
                 },
             ) {
