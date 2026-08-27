@@ -63,3 +63,31 @@
             Color.Gray
         }
     } else Color.Blue
+
+println(paikat.size)
+        println(paikat)
+        // EI TOIMI OIKEIN JATKA TÄSTÄ
+        //for (i in kirjaimet) {
+           // val pa = sana.uppercase().indexOf(i).toString()
+         //   val pa2 = kaikkiKirjaimet.indexOf(i).toString()
+         //   if (pa != "-1" && pa2 != "-1") {
+              //  paikat[pa] = sana.uppercase().indexOf(i).toString()
+            //    paikat[pa2] = kaikkiKirjaimet.indexOf(i).toString()
+          //  }
+        //}
+
+
+ //paikat.clear()
+       /// if (paikat.isNotEmpty()) {
+          //  for (d in kirjaimet) {
+            //    for (c in 0..paikat.size) {
+              //      if(c+1 == paikat.size) {break}
+                //    if (paikat[c] != paikat[c + 1] || paikat[c] == "-1" && paikat[c + 1] == "-1" && paikat[c] != "0" || paikat[c+1] != "0") {
+                  //      paikat[c] =
+                    //    paikat[c + 1] = kaikkiKirjaimet.indexOf(d).toString()
+             //       }
+              //  }
+           // }
+        //}
+
+

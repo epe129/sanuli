@@ -233,37 +233,129 @@ fun Game(modifier: Modifier = Modifier) {
             }
         }
 
-
         if (paikat.isEmpty()) {
-            for (c in kirjaimet) {
-                paikat.add(sana.uppercase().indexOf(c).toString())
-                paikat.add(kaikkiKirjaimet.indexOf(c).toString())
-            }
-        }
-        // EI TOIMI OIKEIN JATKA TÄSTÄ
-        for (i in kirjaimet) {
-            for (c in 0 .. paikat.size) {
-                if (c == 57){break}
-                paikat[c] = sana.uppercase().indexOf(i).toString()
-                paikat[c+1] = kaikkiKirjaimet.indexOf(i).toString()
+            for (g in kirjaimet) {
+                paikat.add(sana.uppercase().indexOf(g).toString())
+                paikat.add(kaikkiKirjaimet.indexOf(g).toString())
             }
         }
 
-      //  if (paikat.size >= 2) {
-    //        if (paikat[0] != paikat[1]) {
-            //    paikat[0] = sana.uppercase().indexOf("Q").toString()
-          //      paikat[1] = kaikkiKirjaimet.indexOf("Q").toString()
-        //    }
-            //if (paikat[2] != paikat[3]) {
-          //      paikat[2] = sana.uppercase().indexOf("W").toString()
-        //        paikat[3] = kaikkiKirjaimet.indexOf("W").toString()
-          //  }
-        //    if (paikat[4] != paikat[5]) {
-      //          paikat[4] = sana.uppercase().indexOf("E").toString()
-    //            paikat[5] = kaikkiKirjaimet.indexOf("E").toString()
-  //          }
-//        }
-
+        if (paikat[0] != paikat[1]) {
+            paikat[0] = sana.uppercase().indexOf("Q").toString()
+            paikat[1] = kaikkiKirjaimet.indexOf("Q").toString()
+          }
+        if (paikat[2] != paikat[3]) {
+            paikat[2] = sana.uppercase().indexOf("W").toString()
+            paikat[3] = kaikkiKirjaimet.indexOf("W").toString()
+        }
+        if (paikat[4] != paikat[5]) {
+            paikat[4] = sana.uppercase().indexOf("E").toString()
+            paikat[5] = kaikkiKirjaimet.indexOf("E").toString()
+        }
+        if (paikat[6] != paikat[7]) {
+            paikat[6] = sana.uppercase().indexOf("R").toString()
+            paikat[7] = kaikkiKirjaimet.indexOf("R").toString()
+        }
+        if (paikat[8] != paikat[9]) {
+            paikat[8] = sana.uppercase().indexOf("T").toString()
+            paikat[9] = kaikkiKirjaimet.indexOf("T").toString()
+        }
+        if (paikat[10] != paikat[11]) {
+            paikat[10] = sana.uppercase().indexOf("Y").toString()
+            paikat[11] = kaikkiKirjaimet.indexOf("Y").toString()
+        }
+        if (paikat[12] != paikat[13]) {
+            paikat[12] = sana.uppercase().indexOf("U").toString()
+            paikat[13] = kaikkiKirjaimet.indexOf("U").toString()
+        }
+        if (paikat[14] != paikat[15]) {
+            paikat[14] = sana.uppercase().indexOf("I").toString()
+            paikat[15] = kaikkiKirjaimet.indexOf("I").toString()
+        }
+        if (paikat[16] != paikat[17]) {
+            paikat[16] = sana.uppercase().indexOf("O").toString()
+            paikat[17] = kaikkiKirjaimet.indexOf("O").toString()
+        }
+        if (paikat[16] != paikat[17]) {
+            paikat[16] = sana.uppercase().indexOf("P").toString()
+            paikat[17] = kaikkiKirjaimet.indexOf("P").toString()
+        }
+        if (paikat[18] != paikat[19]) {
+            paikat[18] = sana.uppercase().indexOf("Å").toString()
+            paikat[19] = kaikkiKirjaimet.indexOf("Å").toString()
+        }
+        if (paikat[20] != paikat[21]) {
+            paikat[20] = sana.uppercase().indexOf("A").toString()
+            paikat[21] = kaikkiKirjaimet.indexOf("A").toString()
+        }
+        if (paikat[22] != paikat[23]) {
+            paikat[22] = sana.uppercase().indexOf("S").toString()
+            paikat[23] = kaikkiKirjaimet.indexOf("S").toString()
+        }
+        if (paikat[24] != paikat[25]) {
+            paikat[24] = sana.uppercase().indexOf("D").toString()
+            paikat[25] = kaikkiKirjaimet.indexOf("D").toString()
+        }
+        if (paikat[26] != paikat[27]) {
+            paikat[26] = sana.uppercase().indexOf("F").toString()
+            paikat[27] = kaikkiKirjaimet.indexOf("F").toString()
+        }
+        if (paikat[28] != paikat[29]) {
+            paikat[28] = sana.uppercase().indexOf("G").toString()
+            paikat[29] = kaikkiKirjaimet.indexOf("G").toString()
+        }
+        if (paikat[30] != paikat[31]) {
+            paikat[30] = sana.uppercase().indexOf("H").toString()
+            paikat[31] = kaikkiKirjaimet.indexOf("H").toString()
+        }
+        if (paikat[32] != paikat[33]) {
+            paikat[32] = sana.uppercase().indexOf("J").toString()
+            paikat[33] = kaikkiKirjaimet.indexOf("J").toString()
+        }
+        if (paikat[34] != paikat[35]) {
+            paikat[34] = sana.uppercase().indexOf("K").toString()
+            paikat[35] = kaikkiKirjaimet.indexOf("K").toString()
+        }
+        if (paikat[36] != paikat[37]) {
+            paikat[36] = sana.uppercase().indexOf("L").toString()
+            paikat[37] = kaikkiKirjaimet.indexOf("L").toString()
+        }
+        if (paikat[38] != paikat[39]) {
+            paikat[38] = sana.uppercase().indexOf("Ö").toString()
+            paikat[39] = kaikkiKirjaimet.indexOf("Ö").toString()
+        }
+        if (paikat[40] != paikat[41]) {
+            paikat[40] = sana.uppercase().indexOf("Ä").toString()
+            paikat[41] = kaikkiKirjaimet.indexOf("Ä").toString()
+        }
+        if (paikat[42] != paikat[43]) {
+            paikat[42] = sana.uppercase().indexOf("Z").toString()
+            paikat[43] = kaikkiKirjaimet.indexOf("Z").toString()
+        }
+        if (paikat[44] != paikat[45]) {
+            paikat[44] = sana.uppercase().indexOf("X").toString()
+            paikat[45] = kaikkiKirjaimet.indexOf("X").toString()
+        }
+        if (paikat[46] != paikat[47]) {
+            paikat[46] = sana.uppercase().indexOf("C").toString()
+            paikat[47] = kaikkiKirjaimet.indexOf("C").toString()
+        }
+        if (paikat[48] != paikat[49]) {
+            paikat[48] = sana.uppercase().indexOf("V").toString()
+            paikat[49] = kaikkiKirjaimet.indexOf("V").toString()
+        }
+        if (paikat[50] != paikat[51]) {
+            paikat[50] = sana.uppercase().indexOf("B").toString()
+            paikat[51] = kaikkiKirjaimet.indexOf("B").toString()
+        }
+        if (paikat[52] != paikat[53]) {
+            paikat[52] = sana.uppercase().indexOf("N").toString()
+            paikat[53] = kaikkiKirjaimet.indexOf("N").toString()
+        }
+        if (paikat[54] != paikat[55]) {
+            paikat[54] = sana.uppercase().indexOf("M").toString()
+            paikat[55] = kaikkiKirjaimet.indexOf("M").toString()
+        }
 
         arvauksienMaara += 1
         nykyKohta = 0
@@ -852,6 +944,9 @@ fun Game(modifier: Modifier = Modifier) {
                 colors = ButtonColors(containerColor =
                     (if ("Q" in palautettuKirjaimet && paikat.size >= 2) {
                         if ("Q" in sana.uppercase()) {
+                            if (paikat[0] == "-1" && paikat[1] == "-1") {
+                                Color.Blue
+                            }
                             if (paikat[0].toInt() == paikat[1].toInt()) {
                                 Color.Green
                             } else {
@@ -870,7 +965,7 @@ fun Game(modifier: Modifier = Modifier) {
                 Text("Q", fontSize = 25.sp, textAlign = TextAlign.Center)
             }
             TextButton(
-                colors = ButtonColors(containerColor = (if ("W" in palautettuKirjaimet && paikat.size >= 3) {
+                colors = ButtonColors(containerColor = (if ("W" in palautettuKirjaimet && paikat.size >= 4) {
                     if ("W" in sana.uppercase()) {
                         if (paikat[2].toInt() == paikat[3].toInt()) {
                             Color.Green
@@ -890,11 +985,9 @@ fun Game(modifier: Modifier = Modifier) {
                 Text("W", fontSize = 25.sp, textAlign = TextAlign.Center)
             }
             TextButton(
-                colors = ButtonColors(containerColor = (if ("E" in palautettuKirjaimet) {
+                colors = ButtonColors(containerColor = (if ("E" in palautettuKirjaimet && paikat.size >= 6) {
                     if ("E" in sana.uppercase()) {
-                        val indexK = remember { sana.uppercase().indexOf("E") }
-                        val indexKaikki = remember { kaikkiKirjaimet.indexOf("E") }
-                        if (indexKaikki == indexK) {
+                        if (paikat[4].toInt() == paikat[5].toInt()) {
                             Color.Green
                         } else {
                             Color.Yellow
@@ -912,11 +1005,9 @@ fun Game(modifier: Modifier = Modifier) {
                 Text("E", fontSize = 25.sp, textAlign = TextAlign.Center)
             }
             TextButton(
-                colors = ButtonColors(containerColor = (if ("R" in palautettuKirjaimet) {
+                colors = ButtonColors(containerColor = (if ("R" in palautettuKirjaimet  && paikat.size >= 8) {
                     if ("R" in sana.uppercase()) {
-                        val indexK = remember { sana.uppercase().indexOf("R") }
-                        val indexKaikki = remember { kaikkiKirjaimet.indexOf("R") }
-                        if (indexKaikki == indexK) {
+                        if (paikat[6].toInt() == paikat[7].toInt()) {
                             Color.Green
                         } else {
                             Color.Yellow
@@ -934,11 +1025,9 @@ fun Game(modifier: Modifier = Modifier) {
                 Text("R", fontSize = 25.sp, textAlign = TextAlign.Center)
             }
             TextButton(
-                colors = ButtonColors(containerColor = (if ("T" in palautettuKirjaimet) {
+                colors = ButtonColors(containerColor = (if ("T" in palautettuKirjaimet && paikat.size >= 10) {
                     if ("T" in sana.uppercase()) {
-                        val indexK = remember { sana.uppercase().indexOf("T") }
-                        val indexKaikki = remember { kaikkiKirjaimet.indexOf("T") }
-                        if (indexKaikki == indexK) {
+                        if (paikat[8].toInt() == paikat[9].toInt()) {
                             Color.Green
                         } else {
                             Color.Yellow
@@ -956,11 +1045,9 @@ fun Game(modifier: Modifier = Modifier) {
                 Text("T", fontSize = 25.sp, textAlign = TextAlign.Center)
             }
             TextButton(
-                colors = ButtonColors(containerColor = (if ("Y" in palautettuKirjaimet) {
+                colors = ButtonColors(containerColor = (if ("Y" in palautettuKirjaimet && paikat.size >= 12) {
                     if ("Y" in sana.uppercase()) {
-                        val indexK = remember { sana.uppercase().indexOf("Y") }
-                        val indexKaikki = remember { kaikkiKirjaimet.indexOf("Y") }
-                        if (indexKaikki == indexK) {
+                        if (paikat[10].toInt() == paikat[11].toInt()) {
                             Color.Green
                         } else {
                             Color.Yellow
@@ -978,11 +1065,9 @@ fun Game(modifier: Modifier = Modifier) {
                 Text("Y", fontSize = 25.sp, textAlign = TextAlign.Center)
             }
             TextButton(
-                colors = ButtonColors(containerColor = (if ("U" in palautettuKirjaimet) {
+                colors = ButtonColors(containerColor = (if ("U" in palautettuKirjaimet && paikat.size >= 14) {
                     if ("U" in sana.uppercase()) {
-                        val indexK = remember { sana.uppercase().indexOf("U") }
-                        val indexKaikki = remember { kaikkiKirjaimet.indexOf("U") }
-                        if (indexKaikki == indexK) {
+                        if (paikat[12].toInt() == paikat[13].toInt()) {
                             Color.Green
                         } else {
                             Color.Yellow
@@ -1000,11 +1085,9 @@ fun Game(modifier: Modifier = Modifier) {
                 Text("U", fontSize = 25.sp, textAlign = TextAlign.Center)
             }
             TextButton(
-                colors = ButtonColors(containerColor = (if ("I" in palautettuKirjaimet) {
+                colors = ButtonColors(containerColor = (if ("I" in palautettuKirjaimet && paikat.size >= 16) {
                     if ("I" in sana.uppercase()) {
-                        val indexK = remember { sana.uppercase().indexOf("I") }
-                        val indexKaikki = remember { kaikkiKirjaimet.indexOf("I") }
-                        if (indexKaikki == indexK) {
+                        if (paikat[14].toInt() == paikat[15].toInt()) {
                             Color.Green
                         } else {
                             Color.Yellow
@@ -1022,11 +1105,9 @@ fun Game(modifier: Modifier = Modifier) {
                 Text("I", fontSize = 25.sp, textAlign = TextAlign.Center)
             }
             TextButton(
-                colors = ButtonColors(containerColor = (if ("O" in palautettuKirjaimet) {
+                colors = ButtonColors(containerColor = (if ("O" in palautettuKirjaimet && paikat.size >= 18) {
                     if ("O" in sana.uppercase()) {
-                        val indexK = remember { sana.uppercase().indexOf("O") }
-                        val indexKaikki = remember { kaikkiKirjaimet.indexOf("O") }
-                        if (indexKaikki == indexK) {
+                        if (paikat[16].toInt() == paikat[17].toInt()) {
                             Color.Green
                         } else {
                             Color.Yellow
@@ -1044,11 +1125,9 @@ fun Game(modifier: Modifier = Modifier) {
                 Text("O", fontSize = 25.sp, textAlign = TextAlign.Center)
             }
             TextButton(
-                colors = ButtonColors(containerColor = (if ("P" in palautettuKirjaimet) {
+                colors = ButtonColors(containerColor = (if ("P" in palautettuKirjaimet && paikat.size >= 20) {
                     if ("P" in sana.uppercase()) {
-                        val indexK = remember { sana.uppercase().indexOf("P") }
-                        val indexKaikki = remember { kaikkiKirjaimet.indexOf("P") }
-                        if (indexKaikki == indexK) {
+                        if (paikat[18].toInt() == paikat[19].toInt()) {
                             Color.Green
                         } else {
                             Color.Yellow
@@ -1066,11 +1145,9 @@ fun Game(modifier: Modifier = Modifier) {
                 Text("P", fontSize = 25.sp, textAlign = TextAlign.Center)
             }
             TextButton(
-                colors = ButtonColors(containerColor = (if ("Å" in palautettuKirjaimet) {
+                colors = ButtonColors(containerColor = (if ("Å" in palautettuKirjaimet && paikat.size >= 22) {
                     if ("Å" in sana.uppercase()) {
-                        val indexK = remember { sana.uppercase().indexOf("Å") }
-                        val indexKaikki = remember { kaikkiKirjaimet.indexOf("Å") }
-                        if (indexKaikki == indexK) {
+                        if (paikat[20].toInt() == paikat[21].toInt()) {
                             Color.Green
                         } else {
                             Color.Yellow
@@ -1095,11 +1172,9 @@ fun Game(modifier: Modifier = Modifier) {
             horizontalArrangement = Arrangement.Absolute.spacedBy(1.dp),
         ) {
             TextButton(
-                colors = ButtonColors(containerColor = (if ("A" in palautettuKirjaimet) {
+                colors = ButtonColors(containerColor = (if ("A" in palautettuKirjaimet && paikat.size >= 24) {
                     if ("A" in sana.uppercase()) {
-                        val indexK = remember { sana.uppercase().indexOf("A") }
-                        val indexKaikki = remember { kaikkiKirjaimet.indexOf("A") }
-                        if (indexKaikki == indexK) {
+                        if (paikat[22].toInt() == paikat[23].toInt()) {
                             Color.Green
                         } else {
                             Color.Yellow
@@ -1117,11 +1192,9 @@ fun Game(modifier: Modifier = Modifier) {
                 Text("A", fontSize = 25.sp, textAlign = TextAlign.Center)
             }
             TextButton(
-                colors = ButtonColors(containerColor = (if ("S" in palautettuKirjaimet) {
+                colors = ButtonColors(containerColor = (if ("S" in palautettuKirjaimet && paikat.size >= 26) {
                     if ("S" in sana.uppercase()) {
-                        val indexK = remember { sana.uppercase().indexOf("S") }
-                        val indexKaikki = remember { kaikkiKirjaimet.indexOf("S") }
-                        if (indexKaikki == indexK) {
+                        if (paikat[24].toInt() == paikat[25].toInt()) {
                             Color.Green
                         } else {
                             Color.Yellow
@@ -1139,11 +1212,9 @@ fun Game(modifier: Modifier = Modifier) {
                 Text("S", fontSize = 25.sp, textAlign = TextAlign.Center)
             }
             TextButton(
-                colors = ButtonColors(containerColor = (if ("D" in palautettuKirjaimet) {
+                colors = ButtonColors(containerColor = (if ("D" in palautettuKirjaimet && paikat.size >= 28) {
                     if ("D" in sana.uppercase()) {
-                        val indexK = remember { sana.uppercase().indexOf("D") }
-                        val indexKaikki = remember { kaikkiKirjaimet.indexOf("D") }
-                        if (indexKaikki == indexK) {
+                        if (paikat[26].toInt() == paikat[27].toInt()) {
                             Color.Green
                         } else {
                             Color.Yellow
@@ -1161,11 +1232,9 @@ fun Game(modifier: Modifier = Modifier) {
                 Text("D", fontSize = 25.sp, textAlign = TextAlign.Center)
             }
             TextButton(
-                colors = ButtonColors(containerColor = (if ("F" in palautettuKirjaimet) {
+                colors = ButtonColors(containerColor = (if ("F" in palautettuKirjaimet && paikat.size >= 30) {
                     if ("F" in sana.uppercase()) {
-                        val indexK = remember { sana.uppercase().indexOf("F") }
-                        val indexKaikki = remember { kaikkiKirjaimet.indexOf("F") }
-                        if (indexKaikki == indexK) {
+                        if (paikat[28].toInt() == paikat[29].toInt()) {
                             Color.Green
                         } else {
                             Color.Yellow
@@ -1183,11 +1252,9 @@ fun Game(modifier: Modifier = Modifier) {
                 Text("F", fontSize = 25.sp, textAlign = TextAlign.Center)
             }
             TextButton(
-                colors = ButtonColors(containerColor = (if ("G" in palautettuKirjaimet) {
+                colors = ButtonColors(containerColor = (if ("G" in palautettuKirjaimet && paikat.size >= 32) {
                     if ("G" in sana.uppercase()) {
-                        val indexK = remember { sana.uppercase().indexOf("G") }
-                        val indexKaikki = remember { kaikkiKirjaimet.indexOf("G") }
-                        if (indexKaikki == indexK) {
+                        if (paikat[30].toInt() == paikat[31].toInt()) {
                             Color.Green
                         } else {
                             Color.Yellow
@@ -1205,11 +1272,9 @@ fun Game(modifier: Modifier = Modifier) {
                 Text("G", fontSize = 25.sp, textAlign = TextAlign.Center)
             }
             TextButton(
-                colors = ButtonColors(containerColor = (if ("H" in palautettuKirjaimet) {
+                colors = ButtonColors(containerColor = (if ("H" in palautettuKirjaimet && paikat.size >= 34) {
                     if ("H" in sana.uppercase()) {
-                        val indexK = remember { sana.uppercase().indexOf("H") }
-                        val indexKaikki = remember { kaikkiKirjaimet.indexOf("H") }
-                        if (indexKaikki == indexK) {
+                        if (paikat[32].toInt() == paikat[33].toInt()) {
                             Color.Green
                         } else {
                             Color.Yellow
@@ -1227,11 +1292,9 @@ fun Game(modifier: Modifier = Modifier) {
                 Text("H", fontSize = 25.sp, textAlign = TextAlign.Center)
             }
             TextButton(
-                colors = ButtonColors(containerColor = (if ("J" in palautettuKirjaimet) {
+                colors = ButtonColors(containerColor = (if ("J" in palautettuKirjaimet && paikat.size >= 36) {
                     if ("J" in sana.uppercase()) {
-                        val indexK = remember { sana.uppercase().indexOf("J") }
-                        val indexKaikki = remember { kaikkiKirjaimet.indexOf("J") }
-                        if (indexKaikki == indexK) {
+                        if (paikat[34].toInt() == paikat[35].toInt()) {
                             Color.Green
                         } else {
                             Color.Yellow
@@ -1249,11 +1312,9 @@ fun Game(modifier: Modifier = Modifier) {
                 Text("J", fontSize = 25.sp, textAlign = TextAlign.Center)
             }
             TextButton(
-                colors = ButtonColors(containerColor = (if ("K" in palautettuKirjaimet) {
+                colors = ButtonColors(containerColor = (if ("K" in palautettuKirjaimet && paikat.size >= 38) {
                     if ("K" in sana.uppercase()) {
-                        val indexK = remember { sana.uppercase().indexOf("K") }
-                        val indexKaikki = remember { kaikkiKirjaimet.indexOf("K") }
-                        if (indexKaikki == indexK) {
+                        if (paikat[36].toInt() == paikat[37].toInt()) {
                             Color.Green
                         } else {
                             Color.Yellow
@@ -1271,11 +1332,9 @@ fun Game(modifier: Modifier = Modifier) {
                 Text("K", fontSize = 25.sp, textAlign = TextAlign.Center)
             }
             TextButton(
-                colors = ButtonColors(containerColor = (if ("L" in palautettuKirjaimet) {
+                colors = ButtonColors(containerColor = (if ("L" in palautettuKirjaimet && paikat.size >= 40) {
                     if ("L" in sana.uppercase()) {
-                        val indexK = remember { sana.uppercase().indexOf("L") }
-                        val indexKaikki = remember { kaikkiKirjaimet.indexOf("L") }
-                        if (indexKaikki == indexK) {
+                        if (paikat[38].toInt() == paikat[39].toInt()) {
                             Color.Green
                         } else {
                             Color.Yellow
@@ -1293,11 +1352,9 @@ fun Game(modifier: Modifier = Modifier) {
                 Text("L", fontSize = 25.sp, textAlign = TextAlign.Center)
             }
             TextButton(
-                colors = ButtonColors(containerColor = (if ("Ö" in palautettuKirjaimet) {
+                colors = ButtonColors(containerColor = (if ("Ö" in palautettuKirjaimet && paikat.size >= 42) {
                     if ("Ö" in sana.uppercase()) {
-                        val indexK = remember { sana.uppercase().indexOf("Ö") }
-                        val indexKaikki = remember { kaikkiKirjaimet.indexOf("Ö") }
-                        if (indexKaikki == indexK) {
+                        if (paikat[40].toInt() == paikat[41].toInt()) {
                             Color.Green
                         } else {
                             Color.Yellow
@@ -1315,11 +1372,9 @@ fun Game(modifier: Modifier = Modifier) {
                 Text("Ö", fontSize = 25.sp, textAlign = TextAlign.Center)
             }
             TextButton(
-                colors = ButtonColors(containerColor = (if ("Ä" in palautettuKirjaimet) {
+                colors = ButtonColors(containerColor = (if ("Ä" in palautettuKirjaimet && paikat.size >= 44) {
                     if ("Ä" in sana.uppercase()) {
-                        val indexK = remember { sana.uppercase().indexOf("Ä") }
-                        val indexKaikki = remember { kaikkiKirjaimet.indexOf("Ä") }
-                        if (indexKaikki == indexK) {
+                        if (paikat[42].toInt() == paikat[43].toInt()) {
                             Color.Green
                         } else {
                             Color.Yellow
@@ -1344,11 +1399,9 @@ fun Game(modifier: Modifier = Modifier) {
             horizontalArrangement = Arrangement.Center,
         ) {
             TextButton(
-                colors = ButtonColors(containerColor = (if ("Z" in palautettuKirjaimet) {
+                colors = ButtonColors(containerColor = (if ("Z" in palautettuKirjaimet && paikat.size >= 46) {
                     if ("Z" in sana.uppercase()) {
-                        val indexK = remember { sana.uppercase().indexOf("Z") }
-                        val indexKaikki = remember { kaikkiKirjaimet.indexOf("Z") }
-                        if (indexKaikki == indexK) {
+                        if (paikat[44].toInt() == paikat[45].toInt()) {
                             Color.Green
                         } else {
                             Color.Yellow
@@ -1366,11 +1419,9 @@ fun Game(modifier: Modifier = Modifier) {
                 Text("Z", fontSize = 25.sp, textAlign = TextAlign.Center)
             }
             TextButton(
-                colors = ButtonColors(containerColor = (if ("X" in palautettuKirjaimet) {
+                colors = ButtonColors(containerColor = (if ("X" in palautettuKirjaimet && paikat.size >= 48) {
                     if ("X" in sana.uppercase()) {
-                        val indexK = remember { sana.uppercase().indexOf("X") }
-                        val indexKaikki = remember { kaikkiKirjaimet.indexOf("X") }
-                        if (indexKaikki == indexK) {
+                        if (paikat[46].toInt() == paikat[47].toInt()) {
                             Color.Green
                         } else {
                             Color.Yellow
@@ -1388,11 +1439,9 @@ fun Game(modifier: Modifier = Modifier) {
                 Text("X", fontSize = 25.sp, textAlign = TextAlign.Center)
             }
             TextButton(
-                colors = ButtonColors(containerColor = (if ("C" in palautettuKirjaimet) {
+                colors = ButtonColors(containerColor = (if ("C" in palautettuKirjaimet && paikat.size >= 50) {
                     if ("C" in sana.uppercase()) {
-                        val indexK = remember { sana.uppercase().indexOf("C") }
-                        val indexKaikki = remember { kaikkiKirjaimet.indexOf("C") }
-                        if (indexKaikki == indexK) {
+                        if (paikat[48].toInt() == paikat[49].toInt()) {
                             Color.Green
                         } else {
                             Color.Yellow
@@ -1411,11 +1460,9 @@ fun Game(modifier: Modifier = Modifier) {
                 Text("C", fontSize = 25.sp, textAlign = TextAlign.Center)
             }
             TextButton(
-                colors = ButtonColors(containerColor = (if ("V" in palautettuKirjaimet) {
+                colors = ButtonColors(containerColor = (if ("V" in palautettuKirjaimet && paikat.size >= 52) {
                     if ("V" in sana.uppercase()) {
-                        val indexK = remember { sana.uppercase().indexOf("V") }
-                        val indexKaikki = remember { kaikkiKirjaimet.indexOf("V") }
-                        if (indexKaikki == indexK) {
+                        if (paikat[50].toInt() == paikat[51].toInt()) {
                             Color.Green
                         } else {
                             Color.Yellow
@@ -1433,11 +1480,9 @@ fun Game(modifier: Modifier = Modifier) {
                 Text("V", fontSize = 25.sp, textAlign = TextAlign.Center)
             }
             TextButton(
-                colors = ButtonColors(containerColor = (if ("B" in palautettuKirjaimet) {
+                colors = ButtonColors(containerColor = (if ("B" in palautettuKirjaimet && paikat.size >= 54) {
                     if ("B" in sana.uppercase()) {
-                        val indexK = remember { sana.uppercase().indexOf("B") }
-                        val indexKaikki = remember { kaikkiKirjaimet.indexOf("B") }
-                        if (indexKaikki == indexK) {
+                        if (paikat[52].toInt() == paikat[53].toInt()) {
                             Color.Green
                         } else {
                             Color.Yellow
@@ -1455,11 +1500,9 @@ fun Game(modifier: Modifier = Modifier) {
                 Text("B", fontSize = 25.sp, textAlign = TextAlign.Center)
             }
             TextButton(
-                colors = ButtonColors(containerColor = (if ("N" in palautettuKirjaimet) {
+                colors = ButtonColors(containerColor = (if ("N" in palautettuKirjaimet && paikat.size >= 56) {
                     if ("N" in sana.uppercase()) {
-                        val indexK = remember { sana.uppercase().indexOf("N") }
-                        val indexKaikki = remember { kaikkiKirjaimet.indexOf("N") }
-                        if (indexKaikki == indexK) {
+                        if (paikat[54].toInt() == paikat[55].toInt()) {
                             Color.Green
                         } else {
                             Color.Yellow
@@ -1477,11 +1520,9 @@ fun Game(modifier: Modifier = Modifier) {
                 Text("N", fontSize = 25.sp, textAlign = TextAlign.Center)
             }
             TextButton(
-                colors = ButtonColors(containerColor = (if ("M" in palautettuKirjaimet) {
+                colors = ButtonColors(containerColor = (if ("M" in palautettuKirjaimet && paikat.size >= 58) {
                     if ("M" in sana.uppercase()) {
-                        val indexK = remember { sana.uppercase().indexOf("M") }
-                        val indexKaikki = remember { kaikkiKirjaimet.indexOf("M") }
-                        if (indexKaikki == indexK) {
+                        if (paikat[56].toInt() == paikat[57].toInt()) {
                             Color.Green
                         } else {
                             Color.Yellow
