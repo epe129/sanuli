@@ -80,8 +80,7 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
     val kirjaimet6 = remember { mutableStateListOf<String>() }
     val kaikkiKirjaimet = remember { mutableStateListOf<String>() }
     var arvauksienMaara by remember { mutableIntStateOf(0) }
-    val sanat = listOf<String>("qwira")
-    var sana by remember(sanat) { mutableStateOf(sanat.random()) }
+    val sanat = mutableListOf<String>()
     var nykyKohta by remember { mutableIntStateOf(0) }
     var palautettu by remember { mutableStateOf(false) }
     var palautettu2 by remember { mutableStateOf(false) }
@@ -99,14 +98,14 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
     } catch (ioException: IOException) {
         ioException.printStackTrace()
     }
-    var sanatTOlist = jsonString.replace("""[{}:"]""".toRegex(), "").replace("sanat", "").replace("]", "").replace("[", "").lowercase().trim().split(",")
-    println(sanatTOlist[1])
-    for (c in sanatTOlist) {
-        println(c)
-    }
-    //var indexK by remember { mutableStateOf(0) }
-    //var indexKaikki by remember { mutableStateOf(0) }
 
+    val sanatTOlist = jsonString.replace("""[{}:"]""".toRegex(), "").replace("sanat", "").replace("]", "").replace("[", "").lowercase().trim().split(",")
+
+    for (c in sanatTOlist) {
+        sanat.add(c.trim())
+    }
+
+    var sana by remember(sanat) { mutableStateOf(sanat.random()) }
 
     fun add_kirjain(kirjain: String) {
         if (arvauksienMaara == 0) {
@@ -152,6 +151,8 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                 }
             }
             if (kirjaimet1.joinToString(separator = "").replace(",", "").lowercase().trim() == sana && palautettu) {
+                println(kirjaimet1.joinToString(separator = "").replace(",", "").lowercase().trim())
+                println(sana)
                 isPopupOpen = true
             }
         }
@@ -166,6 +167,8 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
             }
             if (kirjaimet2.joinToString(separator = "").replace(",", "").lowercase().trim() == sana && palautettu2) {
                 isPopupOpen = true
+                println(kirjaimet2.joinToString(separator = "").replace(",", "").lowercase().trim())
+                println(sana)
             }
         }
         if (arvauksienMaara == 2) {
@@ -179,6 +182,8 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
             }
             if (kirjaimet3.joinToString(separator = "").replace(",", "").lowercase().trim() == sana && palautettu3) {
                 isPopupOpen = true
+                println(kirjaimet3.joinToString(separator = "").replace(",", "").lowercase().trim())
+                println(sana)
             }
         }
         if (arvauksienMaara == 3) {
@@ -192,6 +197,8 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
             }
             if (kirjaimet4.joinToString(separator = "").replace(",", "").lowercase().trim() == sana && palautettu4) {
                 isPopupOpen = true
+                println(kirjaimet4.joinToString(separator = "").replace(",", "").lowercase().trim())
+                println(sana)
             }
         }
         if (arvauksienMaara == 4) {
@@ -205,6 +212,8 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
             }
             if (kirjaimet5.joinToString(separator = "").replace(",", "").lowercase().trim() == sana && palautettu5) {
                 isPopupOpen = true
+                println(kirjaimet5.joinToString(separator = "").replace(",", "").lowercase().trim())
+                println(sana)
             }
         }
         if (arvauksienMaara == 5) {
@@ -216,8 +225,11 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                     palautettuKirjaimet.add(c)
                 }
             }
+
             if (kirjaimet6.joinToString(separator = "").replace(",", "").lowercase().trim() == sana && palautettu6) {
                 isPopupOpen = true
+                println(kirjaimet6.joinToString(separator = "").replace(",", "").lowercase().trim())
+                println(sana)
             }
         }
 
@@ -228,129 +240,335 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
             }
         }
 
-        if (paikat[0] != paikat[1]) {
-            paikat[0] = sana.uppercase().indexOf("Q").toString()
-            paikat[1] = kaikkiKirjaimet.indexOf("Q").toString()
-          }
-        if (paikat[2] != paikat[3]) {
-            paikat[2] = sana.uppercase().indexOf("W").toString()
-            paikat[3] = kaikkiKirjaimet.indexOf("W").toString()
+        for ((index, value) in kaikkiKirjaimet.withIndex()) {
+            println(value)
+            println(index)
+            println(sana.uppercase().indexOf("Q"))
+            if (sana.uppercase().indexOf("Q") == index && value == "Q") {
+                paikat[0] = sana.uppercase().indexOf("Q").toString()
+                paikat[1] = index.toString()
+                break
+            }
+
         }
-        if (paikat[4] != paikat[5]) {
-            paikat[4] = sana.uppercase().indexOf("E").toString()
-            paikat[5] = kaikkiKirjaimet.indexOf("E").toString()
+
+        for ((index, value) in kaikkiKirjaimet.withIndex()) {
+            println(value)
+            println(index)
+            println(sana.uppercase().indexOf("W"))
+            if (sana.uppercase().indexOf("W") == index && value == "W") {
+                paikat[2] = sana.uppercase().indexOf("W").toString()
+                paikat[3] = index.toString()
+                break
+            }
+
         }
-        if (paikat[6] != paikat[7]) {
-            paikat[6] = sana.uppercase().indexOf("R").toString()
-            paikat[7] = kaikkiKirjaimet.indexOf("R").toString()
+
+        for ((index, value) in kaikkiKirjaimet.withIndex()) {
+            println(value)
+            println(index)
+            println(sana.uppercase().indexOf("E"))
+            if (sana.uppercase().indexOf("E") == index && value == "E") {
+                paikat[4] = sana.uppercase().indexOf("E").toString()
+                paikat[5] = index.toString()
+                break
+            }
+
         }
-        if (paikat[8] != paikat[9]) {
-            paikat[8] = sana.uppercase().indexOf("T").toString()
-            paikat[9] = kaikkiKirjaimet.indexOf("T").toString()
+
+        for ((index, value) in kaikkiKirjaimet.withIndex()) {
+            println(value)
+            println(index)
+            println(sana.uppercase().indexOf("R"))
+            if (sana.uppercase().indexOf("R") == index && value == "R") {
+                paikat[6] = sana.uppercase().indexOf("R").toString()
+                paikat[7] = index.toString()
+                break
+            }
+
         }
-        if (paikat[10] != paikat[11]) {
-            paikat[10] = sana.uppercase().indexOf("Y").toString()
-            paikat[11] = kaikkiKirjaimet.indexOf("Y").toString()
+
+        for ((index, value) in kaikkiKirjaimet.withIndex()) {
+            println(value)
+            println(index)
+            println(sana.uppercase().indexOf("T"))
+            if (sana.uppercase().indexOf("T") == index && value == "T") {
+                paikat[8] = sana.uppercase().indexOf("T").toString()
+                paikat[9] = index.toString()
+                break
+            }
         }
-        if (paikat[12] != paikat[13]) {
-            paikat[12] = sana.uppercase().indexOf("U").toString()
-            paikat[13] = kaikkiKirjaimet.indexOf("U").toString()
+
+        for ((index, value) in kaikkiKirjaimet.withIndex()) {
+            println(value)
+            println(index)
+            println(sana.uppercase().indexOf("Y"))
+            if (sana.uppercase().indexOf("Y") == index && value == "Y") {
+                paikat[10] = sana.uppercase().indexOf("Y").toString()
+                paikat[11] = index.toString()
+                break
+            }
         }
-        if (paikat[14] != paikat[15]) {
-            paikat[14] = sana.uppercase().indexOf("I").toString()
-            paikat[15] = kaikkiKirjaimet.indexOf("I").toString()
+
+        for ((index, value) in kaikkiKirjaimet.withIndex()) {
+            println(value)
+            println(index)
+            println(sana.uppercase().indexOf("U"))
+            if (sana.uppercase().indexOf("U") == index && value == "U") {
+                paikat[12] = sana.uppercase().indexOf("U").toString()
+                paikat[13] = kaikkiKirjaimet.indexOf("U").toString()
+                break
+            }
         }
-        if (paikat[16] != paikat[17]) {
-            paikat[16] = sana.uppercase().indexOf("O").toString()
-            paikat[17] = kaikkiKirjaimet.indexOf("O").toString()
+
+        for ((index, value) in kaikkiKirjaimet.withIndex()) {
+            println(value)
+            println(index)
+            println(sana.uppercase().indexOf("I"))
+            if (sana.uppercase().indexOf("I") == index && value == "I") {
+                paikat[14] = sana.uppercase().indexOf("I").toString()
+                paikat[15] = index.toString()
+                break
+            }
         }
-        if (paikat[18] != paikat[19]) {
-            paikat[18] = sana.uppercase().indexOf("P").toString()
-            paikat[19] = kaikkiKirjaimet.indexOf("P").toString()
+
+        for ((index, value) in kaikkiKirjaimet.withIndex()) {
+            println(value)
+            println(index)
+            println(sana.uppercase().indexOf("O"))
+            if (sana.uppercase().indexOf("O") == index && value == "O") {
+                paikat[16] = sana.uppercase().indexOf("O").toString()
+                paikat[17] = index.toString()
+                break
+            }
         }
-        if (paikat[20] != paikat[21]) {
-            paikat[20] = sana.uppercase().indexOf("Å").toString()
-            paikat[21] = kaikkiKirjaimet.indexOf("Å").toString()
+
+        for ((index, value) in kaikkiKirjaimet.withIndex()) {
+            println(value)
+            println(index)
+            println(sana.uppercase().indexOf("P"))
+            if (sana.uppercase().indexOf("P") == index && value == "P") {
+                paikat[18] = sana.uppercase().indexOf("P").toString()
+                paikat[19] = index.toString()
+                break
+            }
         }
-        if (paikat[22] != paikat[23]) {
-            paikat[22] = sana.uppercase().indexOf("A").toString()
-            paikat[23] = kaikkiKirjaimet.indexOf("A").toString()
+
+        for ((index, value) in kaikkiKirjaimet.withIndex()) {
+            println(value)
+            println(index)
+            println(sana.uppercase().indexOf("Å"))
+            if (sana.uppercase().indexOf("Å") == index && value == "Å") {
+                paikat[20] = sana.uppercase().indexOf("Å").toString()
+                paikat[21] = index.toString()
+                break
+            }
         }
-        if (paikat[24] != paikat[25]) {
-            paikat[24] = sana.uppercase().indexOf("S").toString()
-            paikat[25] = kaikkiKirjaimet.indexOf("S").toString()
+        for ((index, value) in kaikkiKirjaimet.withIndex()) {
+            println(value)
+            println(index)
+            println(sana.uppercase().indexOf("A"))
+            if (sana.uppercase().indexOf("A") == index && value == "A") {
+                paikat[22] = sana.uppercase().indexOf("A").toString()
+                paikat[23] = index.toString()
+                break
+            }
         }
-        if (paikat[26] != paikat[27]) {
-            paikat[26] = sana.uppercase().indexOf("D").toString()
-            paikat[27] = kaikkiKirjaimet.indexOf("D").toString()
+
+        for ((index, value) in kaikkiKirjaimet.withIndex()) {
+            println(value)
+            println(index)
+            println(sana.uppercase().indexOf("S"))
+            if (sana.uppercase().indexOf("S") == index && value == "S") {
+                paikat[24] = sana.uppercase().indexOf("S").toString()
+                paikat[25] = index.toString()
+                break
+            }
         }
-        if (paikat[28] != paikat[29]) {
-            paikat[28] = sana.uppercase().indexOf("F").toString()
-            paikat[29] = kaikkiKirjaimet.indexOf("F").toString()
+
+        for ((index, value) in kaikkiKirjaimet.withIndex()) {
+            println(value)
+            println(index)
+            println(sana.uppercase().indexOf("D"))
+            if (sana.uppercase().indexOf("D") == index && value == "D") {
+                paikat[26] = sana.uppercase().indexOf("D").toString()
+                paikat[27] = index.toString()
+                break
+            }
         }
-        if (paikat[30] != paikat[31]) {
-            paikat[30] = sana.uppercase().indexOf("G").toString()
-            paikat[31] = kaikkiKirjaimet.indexOf("G").toString()
+
+        for ((index, value) in kaikkiKirjaimet.withIndex()) {
+            println(value)
+            println(index)
+            println(sana.uppercase().indexOf("F"))
+            if (sana.uppercase().indexOf("F") == index && value == "F") {
+                paikat[28] = sana.uppercase().indexOf("F").toString()
+                paikat[29] = index.toString()
+                break
+            }
         }
-        if (paikat[32] != paikat[33]) {
-            paikat[32] = sana.uppercase().indexOf("H").toString()
-            paikat[33] = kaikkiKirjaimet.indexOf("H").toString()
+
+        for ((index, value) in kaikkiKirjaimet.withIndex()) {
+            println(value)
+            println(index)
+            println(sana.uppercase().indexOf("G"))
+            if (sana.uppercase().indexOf("G") == index && value == "G") {
+                paikat[30] = sana.uppercase().indexOf("G").toString()
+                paikat[31] = index.toString()
+                break
+            }
         }
-        if (paikat[34] != paikat[35]) {
-            paikat[34] = sana.uppercase().indexOf("J").toString()
-            paikat[35] = kaikkiKirjaimet.indexOf("J").toString()
+
+        for ((index, value) in kaikkiKirjaimet.withIndex()) {
+            println(value)
+            println(index)
+            println(sana.uppercase().indexOf("H"))
+            if (sana.uppercase().indexOf("H") == index && value == "H") {
+                paikat[32] = sana.uppercase().indexOf("H").toString()
+                paikat[33] = index.toString()
+                break
+            }
         }
-        if (paikat[36] != paikat[37]) {
-            paikat[36] = sana.uppercase().indexOf("K").toString()
-            paikat[37] = kaikkiKirjaimet.indexOf("K").toString()
+
+        for ((index, value) in kaikkiKirjaimet.withIndex()) {
+            println(value)
+            println(index)
+            println(sana.uppercase().indexOf("J"))
+            if (sana.uppercase().indexOf("J") == index && value == "J") {
+                paikat[34] = sana.uppercase().indexOf("J").toString()
+                paikat[35] = index.toString()
+                break
+            }
         }
-        if (paikat[38] != paikat[39]) {
-            paikat[38] = sana.uppercase().indexOf("L").toString()
-            paikat[39] = kaikkiKirjaimet.indexOf("L").toString()
+
+        for ((index, value) in kaikkiKirjaimet.withIndex()) {
+            println(value)
+            println(index)
+            println(sana.uppercase().indexOf("K"))
+            if (sana.uppercase().indexOf("K") == index && value == "K") {
+                paikat[36] = sana.uppercase().indexOf("K").toString()
+                paikat[37] = index.toString()
+                break
+            }
         }
-        if (paikat[40] != paikat[41]) {
-            paikat[40] = sana.uppercase().indexOf("Ö").toString()
-            paikat[41] = kaikkiKirjaimet.indexOf("Ö").toString()
+
+        for ((index, value) in kaikkiKirjaimet.withIndex()) {
+            println(value)
+            println(index)
+            println(sana.uppercase().indexOf("L"))
+            if (sana.uppercase().indexOf("L") == index && value == "L") {
+                paikat[38] = sana.uppercase().indexOf("L").toString()
+                paikat[39] = index.toString()
+                break
+            }
         }
-        if (paikat[42] != paikat[43]) {
-            paikat[42] = sana.uppercase().indexOf("Ä").toString()
-            paikat[43] = kaikkiKirjaimet.indexOf("Ä").toString()
+
+        for ((index, value) in kaikkiKirjaimet.withIndex()) {
+            println(value)
+            println(index)
+            println(sana.uppercase().indexOf("Ö"))
+            if (sana.uppercase().indexOf("Ö") == index && value == "Ö") {
+                paikat[40] = sana.uppercase().indexOf("Ö").toString()
+                paikat[41] = index.toString()
+                break
+            }
         }
-        if (paikat[44] != paikat[45]) {
-            paikat[44] = sana.uppercase().indexOf("Z").toString()
-            paikat[45] = kaikkiKirjaimet.indexOf("Z").toString()
+
+        for ((index, value) in kaikkiKirjaimet.withIndex()) {
+            println(value)
+            println(index)
+            println(sana.uppercase().indexOf("Ä"))
+            if (sana.uppercase().indexOf("Ä") == index && value == "Ä") {
+                paikat[42] = sana.uppercase().indexOf("Ä").toString()
+                paikat[43] = index.toString()
+                break
+            }
         }
-        if (paikat[46] != paikat[47]) {
-            paikat[46] = sana.uppercase().indexOf("X").toString()
-            paikat[47] = kaikkiKirjaimet.indexOf("X").toString()
+
+        for ((index, value) in kaikkiKirjaimet.withIndex()) {
+            println(value)
+            println(index)
+            println(sana.uppercase().indexOf("Z"))
+            if (sana.uppercase().indexOf("Z") == index && value == "Z") {
+                paikat[44] = sana.uppercase().indexOf("Z").toString()
+                paikat[45] = index.toString()
+                break
+            }
         }
-        if (paikat[48] != paikat[49]) {
-            paikat[48] = sana.uppercase().indexOf("C").toString()
-            paikat[49] = kaikkiKirjaimet.indexOf("C").toString()
+
+        for ((index, value) in kaikkiKirjaimet.withIndex()) {
+            println(value)
+            println(index)
+            println(sana.uppercase().indexOf("X"))
+            if (sana.uppercase().indexOf("X") == index && value == "X") {
+                paikat[46] = sana.uppercase().indexOf("X").toString()
+                paikat[47] = index.toString()
+                break
+            }
         }
-        if (paikat[50] != paikat[51]) {
-            paikat[50] = sana.uppercase().indexOf("V").toString()
-            paikat[51] = kaikkiKirjaimet.indexOf("V").toString()
+
+        for ((index, value) in kaikkiKirjaimet.withIndex()) {
+            println(value)
+            println(index)
+            println(sana.uppercase().indexOf("C"))
+            if (sana.uppercase().indexOf("C") == index && value == "C") {
+                paikat[48] = sana.uppercase().indexOf("C").toString()
+                paikat[49] = index.toString()
+                break
+            }
         }
-        if (paikat[52] != paikat[53]) {
-            paikat[52] = sana.uppercase().indexOf("B").toString()
-            paikat[53] = kaikkiKirjaimet.indexOf("B").toString()
+
+        for ((index, value) in kaikkiKirjaimet.withIndex()) {
+            println(value)
+            println(index)
+            println(sana.uppercase().indexOf("V"))
+            if (sana.uppercase().indexOf("V") == index && value == "V") {
+                paikat[50] = sana.uppercase().indexOf("V").toString()
+                paikat[51] = index.toString()
+                break
+            }
         }
-        if (paikat[54] != paikat[55]) {
-            paikat[54] = sana.uppercase().indexOf("N").toString()
-            paikat[55] = kaikkiKirjaimet.indexOf("N").toString()
+
+        for ((index, value) in kaikkiKirjaimet.withIndex()) {
+            println(value)
+            println(index)
+            println(sana.uppercase().indexOf("B"))
+            if (sana.uppercase().indexOf("B") == index && value == "B") {
+                paikat[52] = sana.uppercase().indexOf("B").toString()
+                paikat[53] = index.toString()
+                break
+            }
         }
-        if (paikat[56] != paikat[57]) {
-            paikat[56] = sana.uppercase().indexOf("M").toString()
-            paikat[57] = kaikkiKirjaimet.indexOf("M").toString()
+
+        for ((index, value) in kaikkiKirjaimet.withIndex()) {
+            println(value)
+            println(index)
+            println(sana.uppercase().indexOf("N"))
+            if (sana.uppercase().indexOf("N") == index && value == "N") {
+                paikat[54] = sana.uppercase().indexOf("N").toString()
+                paikat[55] = index.toString()
+                break
+            }
+        }
+
+        for ((index, value) in kaikkiKirjaimet.withIndex()) {
+            println(value)
+            println(index)
+            println(sana.uppercase().indexOf("M"))
+            if (sana.uppercase().indexOf("M") == index && value == "M") {
+                paikat[56] = sana.uppercase().indexOf("M").toString()
+                paikat[57] = index.toString()
+                break
+            }
         }
 
         arvauksienMaara += 1
         nykyKohta = 0
-        if (arvauksienMaara > 5) {
+        if (arvauksienMaara >= 6 && !isPopupOpen) {
             isRight = "ikävä kyllä tällä kertaa et arvannut oikein!"
             isPopupOpen = true
         }
+
     }
 
     // lista jossa jokainen kirjain on yksitellen
