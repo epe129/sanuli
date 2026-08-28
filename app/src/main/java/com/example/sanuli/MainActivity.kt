@@ -289,13 +289,27 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
             }
         }
 
-        for ((index, value) in kaikkiKirjaimet.withIndex()) {
-            if (sana.uppercase().indexOf("I") == index && value == "I") {
-                paikat[14] = sana.uppercase().indexOf("I").toString()
+        for ((index, value) in sana.withIndex()) {
+            if (value.uppercaseChar() == 'I' && kaikkiKirjaimet[index] == "I") {
+                paikat[14] = index.toString()
                 paikat[15] = index.toString()
                 break
             }
         }
+        //val i_list = mutableListOf<String>()
+        //for ((index, value) in sana.withIndex()) {
+            //if (value.uppercase() == "I")
+          //  i_list.add(index.toString())
+        //}
+        //for ((index, value) in kaikkiKirjaimet.withIndex()) {
+          //  for (c in i_list) {
+            //    if (c.toInt() == index && value == "I") {
+                  //  paikat[14] = c.toString()
+                //    paikat[15] = index.toString()
+              //      break
+            //    }
+          //  }
+        //}
 
         for ((index, value) in kaikkiKirjaimet.withIndex()) {
             if (sana.uppercase().indexOf("O") == index && value == "O") {
@@ -1198,6 +1212,9 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                 TextButton(
                     colors = ButtonColors(containerColor = (if ("I" in palautettuKirjaimet && paikat.size >= 16) {
                         if ("I" in sana.uppercase()) {
+                            println("DSF")
+                            println(paikat[14])
+                            println(paikat[15])
                             if (paikat[14].toInt() == paikat[15].toInt()) {
                                 Color.Green
                             } else {
@@ -1736,7 +1753,7 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
             // Shifts the popup by (x, y) in pixels
             offset = IntOffset(0, 370),
             // Hides the popup when it is dismissed, for example, when the user clicks outside it
-            // onDismissRequest = { isPopupOpen = true }
+            onDismissRequest = { isPopupOpen = true }
         ) {
             Box(
                 Modifier
@@ -1772,6 +1789,7 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                             arvauksienMaara = 0
                             showContent = true
                             isRight = "ARVASIT OKEIN!!"
+                            sana = sanat.random()
                         },
                         modifier = Modifier.offset(0.dp, 20.dp),
                     ) {
