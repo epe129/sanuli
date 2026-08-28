@@ -5,7 +5,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
@@ -48,6 +47,7 @@ import androidx.compose.ui.window.Popup
 import com.example.sanuli.ui.theme.SanuliTheme
 import kotlin.collections.mutableListOf
 import android.content.Context
+import androidx.compose.foundation.layout.Arrangement
 import java.io.IOException
 
 class MainActivity : ComponentActivity() {
@@ -1743,10 +1743,13 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                     .background(Color.LightGray, RoundedCornerShape(4.dp))
                     .padding(12.dp)
                     .height(300.dp)
-                    .width(300.dp),
+                    .fillMaxWidth(),
                 contentAlignment = Alignment.Center,
             ) {
-                Column() {
+                Column(
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
                     Text(isRight, textAlign = TextAlign.Center)
                     Button(
                         onClick = {
@@ -1770,7 +1773,7 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                             showContent = true
                             isRight = "ARVASIT OKEIN!!"
                         },
-                        modifier = Modifier.offset(0.dp, 30.dp)
+                        modifier = Modifier.offset(0.dp, 20.dp),
                     ) {
                         Text("Uudestaan")
                     }
