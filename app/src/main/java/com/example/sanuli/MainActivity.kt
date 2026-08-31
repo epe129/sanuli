@@ -94,20 +94,21 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
     val kirjaimet = listOf<String>("Q", "W", "E","R","T","Y","U","I","O","P","Å","A","S","D","F","G","H","J","K","L","Ö","Ä","Z","X","C","V","B","N","M")
     var jsonString = ""
 
+    // gets words from json file
     try {
         jsonString = context.assets.open("sanat.json").bufferedReader().use { it.readText() }
     } catch (ioException: IOException) {
         ioException.printStackTrace()
     }
-
+    // makes the json to list
     val sanatTOlist = jsonString.replace("""[{}:"]""".toRegex(), "").replace("sanat", "").replace("]", "").replace("[", "").lowercase().trim().split(",")
-
+    // add every word to sanat list
     for (c in sanatTOlist) {
         sanat.add(c.trim())
     }
-
+    // gets the random word from sanat list
     var sana by remember(sanat) { mutableStateOf(sanat.random()) }
-
+    // adds kirjain to the list's
     fun add_kirjain(kirjain: String) {
         if (arvauksienMaara == 0) {
             kirjaimet1.add(nykyKohta, kirjain)
@@ -140,7 +141,7 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
             nykyKohta += 1
         }
     }
-
+    // check if user got the word correct
     fun tarkista() {
         if (arvauksienMaara == 0) {
             if (kirjaimet1.size < 5) {return}
@@ -221,21 +222,20 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                 showContent = false
             }
         }
-
+        // adds every characters indes to the paikat list even if it's -1
         if (paikat.isEmpty()) {
             for (g in kirjaimet) {
                 paikat.add(sana.uppercase().indexOf(g).toString())
                 paikat.add(kaikkiKirjaimet.indexOf(g).toString())
             }
         }
-
+        // checks if character is in sana and user has typed the character adds the index of the character to the list
         for ((index, value) in sana.withIndex()) {
             if (value.uppercaseChar() == 'Q' && kaikkiKirjaimet[index] =="Q") {
                 paikat[0] = index.toString()
                 paikat[1] = index.toString()
                 break
             }
-
         }
 
         for ((index, value) in sana.withIndex()) {
@@ -467,7 +467,7 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
 
         arvauksienMaara += 1
         nykyKohta = 0
-
+        // if user didn't get the word right
         if (arvauksienMaara >= 6 && isPopupOpen == false) {
             isRight = "ikävä kyllä tällä kertaa et arvannut oikein!"
             isPopupOpen = true
@@ -476,14 +476,15 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
         }
     }
 
-    // lista jossa jokainen kirjain on yksitellen
+    // list where every character is in individually
     val d = mutableListOf<String>()
     for (i in sana) {
         d.add(i.toString().lowercase())
     }
-
+    // cheat when testing
     println(sana)
 
+    // shows the sanuli game if game is over doesn't show
     if (showContent) {
         Column(
             modifier = Modifier.fillMaxWidth().height(550.dp),
@@ -1664,6 +1665,7 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                     colors = ButtonColors(containerColor = Color.Red, contentColor = Color.Red, disabledContainerColor = White, disabledContentColor = White),
                     onClick = {
                         if (arvauksienMaara == 0) {
+                            // check that is not empty and if the first is empty also returns
                             if (!kirjaimet1.isNotEmpty() || kirjaimet1[0] == "") {
                                 return@Button
                             }
@@ -1760,6 +1762,7 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                     Text(sana)
                     Button(
                         onClick = {
+                            // clears all the values
                             isPopupOpen = false
                             palautettu=false
                             palautettu2=false
