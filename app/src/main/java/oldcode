@@ -94,4 +94,19 @@ println(paikat.size)
     //var indexK by remember { mutableStateOf(0) }
     //var indexKaikki by remember { mutableStateOf(0) }
 
+        //val i_list = mutableListOf<String>()
+        //for ((index, value) in sana.withIndex()) {
+            //if (value.uppercase() == "I")
+          //  i_list.add(index.toString())
+        //}
+        //for ((index, value) in kaikkiKirjaimet.withIndex()) {
+          //  for (c in i_list) {
+            //    if (c.toInt() == index && value == "I") {
+                  //  paikat[14] = c.toString()
+                //    paikat[15] = index.toString()
+              //      break
+            //    }
+          //  }
+        //}
+
 
