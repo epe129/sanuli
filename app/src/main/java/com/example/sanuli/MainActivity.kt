@@ -2288,7 +2288,7 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
             }
             // instructions how to play
             Column(
-                modifier = Modifier.fillMaxWidth().height(450.dp).padding(0.dp, 0.dp, 0.dp, 50.dp),
+                modifier = Modifier.fillMaxWidth().height(640.dp).padding(0.dp, 0.dp, 0.dp, 50.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Bottom,
             ) {
