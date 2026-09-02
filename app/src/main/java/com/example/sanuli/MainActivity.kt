@@ -84,7 +84,6 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
     val kirjaimet6 = remember { mutableStateListOf<String>() }
     val kaikkiKirjaimet = remember { mutableStateListOf<String>() }
     var arvauksienMaara by remember { mutableIntStateOf(0) }
-    //val sanat = mutableListOf<String>()
     var nykyKohta by remember { mutableIntStateOf(0) }
     var palautettu by remember { mutableStateOf(false) }
     var palautettu2 by remember { mutableStateOf(false) }
@@ -96,7 +95,8 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
     val paikat = remember { mutableStateListOf<String>() }
     val kirjaimet = listOf<String>("Q", "W", "E","R","T","Y","U","I","O","P","Å","A","S","D","F","G","H","J","K","L","Ö","Ä","Z","X","C","V","B","N","M")
     var jsonString = ""
-
+    val kaydytNumerot = remember { mutableStateListOf<String>() }
+    val kaydytKirjaimet = remember { mutableStateListOf<String>() }
     // gets words from json file
     try {
         jsonString = context.assets.open("sanat.json").bufferedReader().use { it.readText() }
@@ -105,14 +105,8 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
     }
     // makes the json to list
     val sanatTOlist = remember { jsonString.replace("""[{}:"]""".toRegex(), "").replace("sanat", "").replace("]", "").replace("[", "").lowercase().trim().split(",") }
-    println(sanatTOlist.random().trim())
-    // add every word to sanat list
-    //for (c in sanatTOlist) {
-      //  sanat.add(c.trim())
-   ///}
     // gets the random word from sanat sanatTOList
-    // tässä vika
-    var sana by remember(sanatTOlist.random().trim()) { mutableStateOf(sanatTOlist.random().trim()) }
+    var sana by remember(sanatTOlist) { mutableStateOf(sanatTOlist.random().trim()) }
     // adds kirjain to the list's
     fun add_kirjain(kirjain: String) {
         if (arvauksienMaara == 0) {
@@ -148,6 +142,8 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
     }
     // check if user got the word correct
     fun tarkista() {
+        kaydytNumerot.clear()
+        kaydytKirjaimet.clear()
         if (arvauksienMaara == 0) {
             if (kirjaimet1.size < 5) {return}
             palautettu = true
@@ -227,7 +223,7 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                 showContent = false
             }
         }
-        // adds every characters indes to the paikat list even if it's -1
+        // adds every characters index to the paikat list even if it's -1
         if (paikat.isEmpty()) {
             for (g in kirjaimet) {
                 paikat.add(sana.uppercase().indexOf(g).toString())
@@ -235,241 +231,27 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
             }
         }
         // checks if character is in sana and user has typed the character adds the index of the character to the list
-        for ((index, value) in sana.withIndex()) {
-            if (value.uppercaseChar() == 'Q' && kaikkiKirjaimet[index] =="Q") {
-                paikat[0] = index.toString()
-                paikat[1] = index.toString()
-                break
+        for (i in 0..57) {
+            for (k in kirjaimet) {
+                // if a letter has been check, move on to the next letter
+                if (i.toString() in kaydytNumerot || (i + 1).toString() in kaydytNumerot || k in kaydytKirjaimet) {
+                    continue
+                }
+                // loops trough sana and check if kirjaimet are in same place in sana and what user has typed
+                for ((index, value) in sana.withIndex()) {
+                    if (value.uppercase() == k && kaikkiKirjaimet[index].uppercase() == k) {
+                        println("$i" + k.toString())
+                        println((i + 1).toString() + k.toString())
+                        paikat[i] = index.toString()
+                        paikat[i+1] = index.toString()
+                        break
+                    }
+                }
+                kaydytNumerot.add(i.toString())
+                kaydytNumerot.add((i + 1).toString())
+                kaydytKirjaimet.add(k)
             }
         }
-
-        for ((index, value) in sana.withIndex()) {
-            if (value.uppercaseChar() == 'W' && kaikkiKirjaimet[index] == "W") {
-                paikat[2] = index.toString()
-                paikat[3] = index.toString()
-                break
-            }
-
-        }
-
-        for ((index, value) in sana.withIndex()) {
-            if (value.uppercaseChar() == 'E' && kaikkiKirjaimet[index] == "E") {
-                paikat[4] = index.toString()
-                paikat[5] = index.toString()
-                break
-            }
-
-        }
-
-        for ((index, value) in sana.withIndex()) {
-            if (value.uppercaseChar() == 'R' && kaikkiKirjaimet[index] == "R") {
-                paikat[6] = index.toString()
-                paikat[7] = index.toString()
-                break
-            }
-
-        }
-
-        for ((index, value) in sana.withIndex()) {
-            if (value.uppercaseChar() == 'T' && kaikkiKirjaimet[index] == "T") {
-                paikat[8] = index.toString()
-                paikat[9] = index.toString()
-                break
-            }
-        }
-
-        for ((index, value) in sana.withIndex()) {
-            if (value.uppercaseChar() == 'Y' && kaikkiKirjaimet[index] == "Y") {
-                paikat[10] = index.toString()
-                paikat[11] = index.toString()
-                break
-            }
-        }
-
-        for ((index, value) in sana.withIndex()) {
-            if (value.uppercaseChar() == 'U' && kaikkiKirjaimet[index] == "U") {
-                paikat[12] = index.toString()
-                paikat[13] = index.toString()
-                break
-            }
-        }
-
-        for ((index, value) in sana.withIndex()) {
-            if (value.uppercaseChar() == 'I' && kaikkiKirjaimet[index] == "I") {
-                paikat[14] = index.toString()
-                paikat[15] = index.toString()
-                break
-            }
-        }
-
-        for ((index, value) in sana.withIndex()) {
-            if (value.uppercaseChar() == 'O' && kaikkiKirjaimet[index] == "O") {
-                paikat[16] = index.toString()
-                paikat[17] = index.toString()
-                break
-            }
-        }
-
-        for ((index, value) in sana.withIndex()) {
-            if (value.uppercaseChar() == 'P' && kaikkiKirjaimet[index] == "P") {
-                paikat[18] = index.toString()
-                paikat[19] = index.toString()
-                break
-            }
-        }
-
-        for ((index, value) in sana.withIndex()) {
-            if (value.uppercaseChar() == 'Å' && kaikkiKirjaimet[index] == "Å") {
-                paikat[20] = index.toString()
-                paikat[21] = index.toString()
-                break
-            }
-        }
-
-        for ((index, value) in sana.withIndex()) {
-            if (value.uppercaseChar() == 'A' && kaikkiKirjaimet[index] == "A") {
-                paikat[22] = index.toString()
-                paikat[23] = index.toString()
-                break
-            }
-        }
-
-        for ((index, value) in sana.withIndex()) {
-            if (value.uppercaseChar() == 'S' && kaikkiKirjaimet[index] == "S") {
-                paikat[24] = index.toString()
-                paikat[25] = index.toString()
-                break
-            }
-        }
-
-        for ((index, value) in sana.withIndex()) {
-            if (value.uppercaseChar() == 'D' && kaikkiKirjaimet[index] == "D") {
-                paikat[26] = index.toString()
-                paikat[27] = index.toString()
-                break
-            }
-        }
-
-        for ((index, value) in sana.withIndex()) {
-            if (value.uppercaseChar() == 'F' && kaikkiKirjaimet[index] == "F") {
-                paikat[28] = index.toString()
-                paikat[29] = index.toString()
-                break
-            }
-        }
-
-        for ((index, value) in sana.withIndex()) {
-            if (value.uppercaseChar() == 'G' && kaikkiKirjaimet[index] == "G") {
-                paikat[30] = index.toString()
-                paikat[31] = index.toString()
-                break
-            }
-        }
-
-        for ((index, value) in sana.withIndex()) {
-            if (value.uppercaseChar() == 'H' && kaikkiKirjaimet[index] == "H") {
-                paikat[32] = index.toString()
-                paikat[33] = index.toString()
-                break
-            }
-        }
-
-        for ((index, value) in sana.withIndex()) {
-            if (value.uppercaseChar() == 'J' && kaikkiKirjaimet[index] == "J") {
-                paikat[34] = index.toString()
-                paikat[35] = index.toString()
-                break
-            }
-        }
-
-        for ((index, value) in sana.withIndex()) {
-            if (value.uppercaseChar() == 'K' && kaikkiKirjaimet[index] == "K") {
-                paikat[36] = index.toString()
-                paikat[37] = index.toString()
-                break
-            }
-        }
-
-        for ((index, value) in sana.withIndex()) {
-            if (value.uppercaseChar() == 'L' && kaikkiKirjaimet[index] == "L") {
-                paikat[38] = index.toString()
-                paikat[39] = index.toString()
-                break
-            }
-        }
-
-        for ((index, value) in sana.withIndex()) {
-            if (value.uppercaseChar() == 'Ö' && kaikkiKirjaimet[index] == "Ö") {
-                paikat[40] = index.toString()
-                paikat[41] = index.toString()
-                break
-            }
-        }
-
-        for ((index, value) in sana.withIndex()) {
-            if (value.uppercaseChar() == 'Ä' && kaikkiKirjaimet[index] == "Ä") {
-                paikat[42] = index.toString()
-                paikat[43] = index.toString()
-                break
-            }
-        }
-
-        for ((index, value) in sana.withIndex()) {
-            if (value.uppercaseChar() == 'Z' && kaikkiKirjaimet[index] == "Z") {
-                paikat[44] = index.toString()
-                paikat[45] = index.toString()
-                break
-            }
-        }
-
-        for ((index, value) in sana.withIndex()) {
-            if (value.uppercaseChar() == 'X' && kaikkiKirjaimet[index] == "X") {
-                paikat[46] = index.toString()
-                paikat[47] = index.toString()
-                break
-            }
-        }
-
-        for ((index, value) in sana.withIndex()) {
-            if (value.uppercaseChar() == 'C' && kaikkiKirjaimet[index] == "C") {
-                paikat[48] = index.toString()
-                paikat[49] = index.toString()
-                break
-            }
-        }
-
-        for ((index, value) in sana.withIndex()) {
-            if (value.uppercaseChar() == 'V' && kaikkiKirjaimet[index] == "V") {
-                paikat[50] = index.toString()
-                paikat[51] = index.toString()
-                break
-            }
-        }
-
-        for ((index, value) in sana.withIndex()) {
-            if (value.uppercaseChar() == 'B' && kaikkiKirjaimet[index] == "B") {
-                paikat[52] = index.toString()
-                paikat[53] = index.toString()
-                break
-            }
-        }
-
-        for ((index, value) in sana.withIndex()) {
-            if (value.uppercaseChar() == 'N' && kaikkiKirjaimet[index] == "N") {
-                paikat[54] = index.toString()
-                paikat[55] = index.toString()
-                break
-            }
-        }
-
-        for ((index, value) in sana.withIndex()) {
-            if (value.uppercaseChar() == 'M' && kaikkiKirjaimet[index] == "M") {
-                paikat[56] = index.toString()
-                paikat[57] = index.toString()
-                break
-            }
-        }
-
         arvauksienMaara += 1
         nykyKohta = 0
         // if user didn't get the word right
