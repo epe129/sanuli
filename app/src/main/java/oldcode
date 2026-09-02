@@ -351,3 +351,83 @@ for ((index, value) in sana.withIndex()) {
                 break
             }
         }
+
+         if (arvauksienMaara == 0) {
+                    if (kirjaimet1.size < 5) {return}
+                    palautettu = true
+                    for (c in kaikkiKirjaimet) {
+                        if (c !in palautettuKirjaimet) {
+                            palautettuKirjaimet.add(c)
+                        }
+                    }
+                    if (kirjaimet1.joinToString(separator = "").replace(",", "").lowercase().trim() == sana && palautettu) {
+                        isPopupOpen = true
+                        showContent = false
+                    }
+                }
+                if (arvauksienMaara == 1) {
+                    if (kirjaimet2.size < 5) {return}
+                    palautettu2 = true
+                    for (c in kaikkiKirjaimet) {
+                        if (c !in palautettuKirjaimet) {
+                            palautettuKirjaimet.add(c)
+                        }
+                    }
+                    if (kirjaimet2.joinToString(separator = "").replace(",", "").lowercase().trim() == sana && palautettu2) {
+                        isPopupOpen = true
+                        showContent = false
+                    }
+                }
+                if (arvauksienMaara == 2) {
+                    if (kirjaimet3.size < 5) {return}
+                    palautettu3 = true
+                    for (c in kaikkiKirjaimet) {
+                        if (c !in palautettuKirjaimet) {
+                            palautettuKirjaimet.add(c)
+                        }
+                    }
+                    if (kirjaimet3.joinToString(separator = "").replace(",", "").lowercase().trim() == sana && palautettu3) {
+                        isPopupOpen = true
+                        showContent = false
+                    }
+                }
+                if (arvauksienMaara == 3) {
+                    if (kirjaimet4.size < 5) {return}
+                    palautettu4 = true
+                    for (c in kaikkiKirjaimet) {
+                        if (c !in palautettuKirjaimet) {
+                            palautettuKirjaimet.add(c)
+                        }
+                    }
+                    if (kirjaimet4.joinToString(separator = "").replace(",", "").lowercase().trim() == sana && palautettu4) {
+                        isPopupOpen = true
+                        showContent = false
+                    }
+                }
+                if (arvauksienMaara == 4) {
+                    if (kirjaimet5.size < 5) {return}
+                    palautettu5 = true
+                    for (c in kaikkiKirjaimet) {
+                        if (c !in palautettuKirjaimet) {
+                            palautettuKirjaimet.add(c)
+                        }
+                    }
+                    if (kirjaimet5.joinToString(separator = "").replace(",", "").lowercase().trim() == sana && palautettu5) {
+                        isPopupOpen = true
+                        showContent = false
+                    }
+                }
+                if (arvauksienMaara == 5) {
+                    if (kirjaimet6.size < 5) {return}
+                    palautettu6 = true
+                    for (c in kaikkiKirjaimet) {
+                        if (c !in palautettuKirjaimet) {
+                            palautettuKirjaimet.add(c)
+                        }
+                    }
+
+                    if (kirjaimet6.joinToString(separator = "").replace(",", "").lowercase().trim() == sana && palautettu6) {
+                        isPopupOpen = true
+                        showContent = false
+                    }
+                }
