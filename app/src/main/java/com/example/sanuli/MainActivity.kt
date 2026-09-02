@@ -260,14 +260,14 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         ),
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if (arvauksienMaara == 1) {
+                            unfocusedContainerColor = if ("1" in palautetut) {
                                 if (kirjaimet1[0].lowercase() == d[0].lowercase()) {
                                     Color.Green
                                 } else if (kirjaimet1[0].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
-                            focusedContainerColor = if (arvauksienMaara == 1) {
+                            focusedContainerColor = if ("1" in palautetut) {
                                 if (kirjaimet1[0].lowercase() == d[0].lowercase()) {
                                     Color.Green
                                 } else if (kirjaimet1[0].lowercase() in sana.lowercase()) {
@@ -298,14 +298,14 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         ),
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if (arvauksienMaara == 1) {
+                            unfocusedContainerColor = if ("1" in palautetut) {
                                 if (kirjaimet1[1].lowercase() == d[1].lowercase()) {
                                     Color.Green
                                 } else if (kirjaimet1[1].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
-                            focusedContainerColor = if (arvauksienMaara == 1) {
+                            focusedContainerColor = if ("1" in palautetut) {
                                 if (kirjaimet1[1].lowercase() == d[1].lowercase()) {
                                     Color.Green
                                 } else if (kirjaimet1[1].lowercase() in sana.lowercase()) {
@@ -336,14 +336,14 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         ),
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if (arvauksienMaara == 1) {
+                            unfocusedContainerColor = if ("1" in palautetut) {
                                 if (kirjaimet1[2].lowercase() == d[2].lowercase()) {
                                     Color.Green
                                 } else if (kirjaimet1[2].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
-                            focusedContainerColor = if (arvauksienMaara == 1) {
+                            focusedContainerColor = if ("1" in palautetut) {
                                 if (kirjaimet1[2].lowercase() == d[2].lowercase()) {
                                     Color.Green
                                 } else if (kirjaimet1[2].lowercase() in sana.lowercase()) {
