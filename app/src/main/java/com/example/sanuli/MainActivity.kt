@@ -617,16 +617,16 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = if ("3" in palautetut) {
-                                if (KayttajaSanat[2][0].lowercase() == d[0].lowercase()) {
+                                if (KayttajaSanat[10].lowercase() == d[0].lowercase()) {
                                     Color.Green
-                                } else if (KayttajaSanat[2][0].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[10].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
                             focusedContainerColor = if ("3" in palautetut) {
-                                if (KayttajaSanat[2][0].lowercase() == d[0].lowercase()) {
+                                if (KayttajaSanat[10].lowercase() == d[0].lowercase()) {
                                     Color.Green
-                                } else if (KayttajaSanat[2][0].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[10].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
@@ -650,16 +650,16 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = if ("3" in palautetut) {
-                                if (KayttajaSanat[2][1].lowercase() == d[1].lowercase()) {
+                                if (KayttajaSanat[11].lowercase() == d[1].lowercase()) {
                                     Color.Green
-                                } else if (KayttajaSanat[2][1].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[11].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
                             focusedContainerColor = if ("3" in palautetut) {
-                                if (KayttajaSanat[2][1].lowercase() == d[1].lowercase()) {
+                                if (KayttajaSanat[11].lowercase() == d[1].lowercase()) {
                                     Color.Green
-                                } else if (KayttajaSanat[2][1].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[11].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
@@ -683,16 +683,16 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = if ("3" in palautetut) {
-                                if (KayttajaSanat[2][2].lowercase() == d[2].lowercase()) {
+                                if (KayttajaSanat[12].lowercase() == d[2].lowercase()) {
                                     Color.Green
-                                } else if (KayttajaSanat[2][2].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[12].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
                             focusedContainerColor = if ("3" in palautetut) {
-                                if (KayttajaSanat[2][2].lowercase() == d[2].lowercase()) {
+                                if (KayttajaSanat[12].lowercase() == d[2].lowercase()) {
                                     Color.Green
-                                } else if (KayttajaSanat[2][2].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[12].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
@@ -716,16 +716,16 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = if ("3" in palautetut) {
-                                if (KayttajaSanat[2][3].lowercase() == d[3].lowercase()) {
+                                if (KayttajaSanat[13].lowercase() == d[3].lowercase()) {
                                     Color.Green
-                                } else if (KayttajaSanat[2][3].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[13].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
                             focusedContainerColor = if ("3" in palautetut) {
-                                if (KayttajaSanat[2][3].lowercase() == d[3].lowercase()) {
+                                if (KayttajaSanat[13].lowercase() == d[3].lowercase()) {
                                     Color.Green
-                                } else if (KayttajaSanat[2][3].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[13].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
@@ -749,16 +749,16 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = if ("3" in palautetut) {
-                                if (KayttajaSanat[2][4].lowercase() == d[4].lowercase()) {
+                                if (KayttajaSanat[14].lowercase() == d[4].lowercase()) {
                                     Color.Green
-                                } else if (KayttajaSanat[2][4].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[14].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
                             focusedContainerColor = if ("3" in palautetut) {
-                                if (KayttajaSanat[2][4].lowercase() == d[4].lowercase()) {
+                                if (KayttajaSanat[14].lowercase() == d[4].lowercase()) {
                                     Color.Green
-                                } else if (KayttajaSanat[2][4].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[14].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
@@ -796,16 +796,16 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = if ("4" in palautetut) {
-                                if (KayttajaSanat[3][0].lowercase() == d[0].lowercase()) {
+                                if (KayttajaSanat[15].lowercase() == d[0].lowercase()) {
                                     Color.Green
-                                } else if (KayttajaSanat[3][0].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[15].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
                             focusedContainerColor = if ("4" in palautetut) {
-                                if (KayttajaSanat[3][0].lowercase() == d[0].lowercase()) {
+                                if (KayttajaSanat[15].lowercase() == d[0].lowercase()) {
                                     Color.Green
-                                } else if (KayttajaSanat[3][0].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[15].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
@@ -829,16 +829,16 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = if ("4" in palautetut) {
-                                if (KayttajaSanat[3][1].lowercase() == d[1].lowercase()) {
+                                if (KayttajaSanat[16].lowercase() == d[1].lowercase()) {
                                     Color.Green
-                                } else if (KayttajaSanat[3][1].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[16].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
                             focusedContainerColor = if ("4" in palautetut) {
-                                if (KayttajaSanat[3][1].lowercase() == d[1].lowercase()) {
+                                if (KayttajaSanat[16].lowercase() == d[1].lowercase()) {
                                     Color.Green
-                                } else if (KayttajaSanat[3][1].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[16].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
@@ -862,16 +862,16 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = if ("4" in palautetut) {
-                                if (KayttajaSanat[3][2].lowercase() == d[2].lowercase()) {
+                                if (KayttajaSanat[17].lowercase() == d[2].lowercase()) {
                                     Color.Green
-                                } else if (KayttajaSanat[3][2].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[17].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
                             focusedContainerColor = if ("4" in palautetut) {
-                                if (KayttajaSanat[3][2].lowercase() == d[2].lowercase()) {
+                                if (KayttajaSanat[17].lowercase() == d[2].lowercase()) {
                                     Color.Green
-                                } else if (KayttajaSanat[3][2].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[17].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
@@ -895,16 +895,16 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = if ("4" in palautetut) {
-                                if (KayttajaSanat[3][3].lowercase() == d[3].lowercase()) {
+                                if (KayttajaSanat[18].lowercase() == d[3].lowercase()) {
                                     Color.Green
-                                } else if (KayttajaSanat[3][3].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[18].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
                             focusedContainerColor = if ("4" in palautetut) {
-                                if (KayttajaSanat[3][3].lowercase() == d[3].lowercase()) {
+                                if (KayttajaSanat[18].lowercase() == d[3].lowercase()) {
                                     Color.Green
-                                } else if (KayttajaSanat[3][3].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[18].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
@@ -928,16 +928,16 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = if ("4" in palautetut) {
-                                if (KayttajaSanat[3][4].lowercase() == d[4].lowercase()) {
+                                if (KayttajaSanat[19].lowercase() == d[4].lowercase()) {
                                     Color.Green
-                                } else if (KayttajaSanat[3][4].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[19].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
                             focusedContainerColor = if ("4" in palautetut) {
-                                if (KayttajaSanat[3][4].lowercase() == d[4].lowercase()) {
+                                if (KayttajaSanat[19].lowercase() == d[4].lowercase()) {
                                     Color.Green
-                                } else if (KayttajaSanat[3][4].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[19].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
@@ -975,16 +975,16 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = if ("5" in palautetut) {
-                                if (KayttajaSanat[4][0].lowercase() == d[0].lowercase()) {
+                                if (KayttajaSanat[20].lowercase() == d[0].lowercase()) {
                                     Color.Green
-                                } else if (KayttajaSanat[4][0].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[20].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
                             focusedContainerColor = if ("5" in palautetut) {
-                                if (KayttajaSanat[4][0].lowercase() == d[0].lowercase()) {
+                                if (KayttajaSanat[20].lowercase() == d[0].lowercase()) {
                                     Color.Green
-                                } else if (KayttajaSanat[4][0].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[20].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
@@ -1008,16 +1008,16 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = if ("5" in palautetut) {
-                                if (KayttajaSanat[4][1].lowercase() == d[1].lowercase()) {
+                                if (KayttajaSanat[21].lowercase() == d[1].lowercase()) {
                                     Color.Green
-                                } else if (KayttajaSanat[4][1].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[21].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
                             focusedContainerColor = if ("5" in palautetut) {
-                                if (KayttajaSanat[4][1].lowercase() == d[1].lowercase()) {
+                                if (KayttajaSanat[21].lowercase() == d[1].lowercase()) {
                                     Color.Green
-                                } else if (KayttajaSanat[4][1].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[21].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
@@ -1041,16 +1041,16 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = if ("5" in palautetut) {
-                                if (KayttajaSanat[4][2].lowercase() == d[2].lowercase()) {
+                                if (KayttajaSanat[22].lowercase() == d[2].lowercase()) {
                                     Color.Green
-                                } else if (KayttajaSanat[4][2].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[22].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
                             focusedContainerColor = if ("5" in palautetut) {
-                                if (KayttajaSanat[4][2].lowercase() == d[2].lowercase()) {
+                                if (KayttajaSanat[22].lowercase() == d[2].lowercase()) {
                                     Color.Green
-                                } else if (KayttajaSanat[4][2].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[22].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
@@ -1074,16 +1074,16 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = if ("5" in palautetut) {
-                                if (KayttajaSanat[4][3].lowercase() == d[3].lowercase()) {
+                                if (KayttajaSanat[23].lowercase() == d[3].lowercase()) {
                                     Color.Green
-                                } else if (KayttajaSanat[4][3].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[23].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
                             focusedContainerColor = if ("5" in palautetut) {
-                                if (KayttajaSanat[4][3].lowercase() == d[3].lowercase()) {
+                                if (KayttajaSanat[23].lowercase() == d[3].lowercase()) {
                                     Color.Green
-                                } else if (KayttajaSanat[4][3].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[23].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
@@ -1107,16 +1107,16 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = if ("5" in palautetut) {
-                                if (KayttajaSanat[4][4].lowercase() == d[4].lowercase()) {
+                                if (KayttajaSanat[24].lowercase() == d[4].lowercase()) {
                                     Color.Green
-                                } else if (KayttajaSanat[4][4].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[24].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
                             focusedContainerColor = if ("5" in palautetut) {
-                                if (KayttajaSanat[4][4].lowercase() == d[4].lowercase()) {
+                                if (KayttajaSanat[24].lowercase() == d[4].lowercase()) {
                                     Color.Green
-                                } else if (KayttajaSanat[4][4].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[24].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
@@ -1154,16 +1154,16 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = if ("6" in palautetut) {
-                                if (KayttajaSanat[5][0].lowercase() == d[0].lowercase()) {
+                                if (KayttajaSanat[25].lowercase() == d[0].lowercase()) {
                                     Color.Green
-                                } else if (KayttajaSanat[5][0].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[25].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
                             focusedContainerColor = if ("6" in palautetut) {
-                                if (KayttajaSanat[5][0].lowercase() == d[0].lowercase()) {
+                                if (KayttajaSanat[25].lowercase() == d[0].lowercase()) {
                                     Color.Green
-                                } else if (KayttajaSanat[5][0].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[25].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
@@ -1187,16 +1187,16 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = if ("6" in palautetut) {
-                                if (KayttajaSanat[5][1].lowercase() == d[1].lowercase()) {
+                                if (KayttajaSanat[26].lowercase() == d[1].lowercase()) {
                                     Color.Green
-                                } else if (KayttajaSanat[5][1].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[26].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
                             focusedContainerColor = if ("6" in palautetut) {
-                                if (KayttajaSanat[5][1].lowercase() == d[1].lowercase()) {
+                                if (KayttajaSanat[26].lowercase() == d[1].lowercase()) {
                                     Color.Green
-                                } else if (KayttajaSanat[5][1].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[26].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
@@ -1220,16 +1220,16 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = if ("6" in palautetut) {
-                                if (KayttajaSanat[5][2].lowercase() == d[2].lowercase()) {
+                                if (KayttajaSanat[27].lowercase() == d[2].lowercase()) {
                                     Color.Green
-                                } else if (KayttajaSanat[5][2].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[27].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
                             focusedContainerColor = if ("6" in palautetut) {
-                                if (KayttajaSanat[5][2].lowercase() == d[2].lowercase()) {
+                                if (KayttajaSanat[27].lowercase() == d[2].lowercase()) {
                                     Color.Green
-                                } else if (KayttajaSanat[5][2].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[27].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
@@ -1253,16 +1253,16 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = if ("6" in palautetut) {
-                                if (KayttajaSanat[5][3].lowercase() == d[3].lowercase()) {
+                                if (KayttajaSanat[28].lowercase() == d[3].lowercase()) {
                                     Color.Green
-                                } else if (KayttajaSanat[5][3].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[28].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
                             focusedContainerColor = if ("6" in palautetut) {
-                                if (KayttajaSanat[5][3].lowercase() == d[3].lowercase()) {
+                                if (KayttajaSanat[28].lowercase() == d[3].lowercase()) {
                                     Color.Green
-                                } else if (KayttajaSanat[5][3].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[28].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
@@ -1286,16 +1286,16 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = if ("6" in palautetut) {
-                                if (KayttajaSanat[5][4].lowercase() == d[4].lowercase()) {
+                                if (KayttajaSanat[29].lowercase() == d[4].lowercase()) {
                                     Color.Green
-                                } else if (KayttajaSanat[5][4].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[29].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
                             focusedContainerColor = if ("6" in palautetut) {
-                                if (KayttajaSanat[5][4].lowercase() == d[4].lowercase()) {
+                                if (KayttajaSanat[29].lowercase() == d[4].lowercase()) {
                                     Color.Green
-                                } else if (KayttajaSanat[5][4].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[29].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
