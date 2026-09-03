@@ -9,6 +9,6 @@ All the words are finnish words.
 
 ## Need to install
 - Android Studio
-- Kotlin extensions
+- Kotlin extensions (Should be automatically installed to Android Studio)
 
-then clone the repository to android studio and you can run the app.
+then clone the repository to Android Studio and you can run the app.
