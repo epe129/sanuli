@@ -76,21 +76,9 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
     var showContent by remember { mutableStateOf(true) }
     var isPopupOpen by remember { mutableStateOf(false) }
     var isRight by remember { mutableStateOf("ARVASIT OIKEIN!!") }
-    val kirjaimet1 = remember { mutableStateListOf<String>() }
-    val kirjaimet2 = remember { mutableStateListOf<String>() }
-    val kirjaimet3 = remember { mutableStateListOf<String>() }
-    val kirjaimet4 = remember { mutableStateListOf<String>() }
-    val kirjaimet5 = remember { mutableStateListOf<String>() }
-    val kirjaimet6 = remember { mutableStateListOf<String>() }
     val kaikkiKirjaimet = remember { mutableStateListOf<String>() }
     var arvauksienMaara by remember { mutableIntStateOf(0) }
     var nykyKohta by remember { mutableIntStateOf(0) }
-    var palautettu by remember { mutableStateOf(false) }
-    var palautettu2 by remember { mutableStateOf(false) }
-    var palautettu3 by remember { mutableStateOf(false) }
-    var palautettu4 by remember { mutableStateOf(false) }
-    var palautettu5 by remember { mutableStateOf(false) }
-    var palautettu6 by remember { mutableStateOf(false) }
     val palautetut = remember { mutableStateListOf<String>() }
     val palautettuKirjaimet = remember { mutableStateListOf<String>() }
     val paikat = remember { mutableStateListOf<String>() }
@@ -98,70 +86,55 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
     var jsonString = ""
     val kaydytNumerot = remember { mutableStateListOf<String>() }
     val kaydytKirjaimet = remember { mutableStateListOf<String>() }
+    var KayttajaSanat = remember { emptyArray<String>() }
+    val nakyvatKirjaimet = remember { mutableStateListOf<String>() }
+    var nakyvatKirjaimetKohta by remember { mutableIntStateOf(0) }
+
     // gets words from json file
     try {
         jsonString = context.assets.open("sanat.json").bufferedReader().use { it.readText() }
     } catch (ioException: IOException) {
         ioException.printStackTrace()
     }
+
     // makes the json to list
     val sanatTOlist = remember { jsonString.replace("""[{}:"]""".toRegex(), "").replace("sanat", "").replace("]", "").replace("[", "").lowercase().trim().split(",") }
+
     // gets the random word from sanat sanatTOList
     var sana by remember(sanatTOlist) { mutableStateOf(sanatTOlist.random().trim()) }
+
     // adds kirjain to the list's
     fun add_kirjain(kirjain: String) {
         if (kaikkiKirjaimet.size == 5) {
             return
         }
-        if (arvauksienMaara == 0) {
-            kirjaimet1.add(nykyKohta, kirjain)
-            kaikkiKirjaimet.add(nykyKohta, kirjain)
-            nykyKohta += 1
-        }
-        if (arvauksienMaara == 1) {
-            kirjaimet2.add(nykyKohta, kirjain)
-            kaikkiKirjaimet.add(nykyKohta, kirjain)
-            nykyKohta += 1
-        }
-        if (arvauksienMaara == 2) {
-            kirjaimet3.add(nykyKohta, kirjain)
-            kaikkiKirjaimet.add(nykyKohta, kirjain)
-            nykyKohta += 1
-        }
-        if (arvauksienMaara == 3) {
-            kirjaimet4.add(nykyKohta, kirjain)
-            kaikkiKirjaimet.add(nykyKohta, kirjain)
-            nykyKohta += 1
-        }
-        if (arvauksienMaara == 4) {
-            kirjaimet5.add(nykyKohta, kirjain)
-            kaikkiKirjaimet.add(nykyKohta, kirjain)
-            nykyKohta += 1
-        }
-        if (arvauksienMaara == 5) {
-            kirjaimet6.add(nykyKohta, kirjain)
-            kaikkiKirjaimet.add(nykyKohta, kirjain)
-            nykyKohta += 1
-        }
+        kaikkiKirjaimet.add(nykyKohta, kirjain)
+        nakyvatKirjaimet.add(kirjain)
+        nykyKohta += 1
+        nakyvatKirjaimetKohta += 1
     }
+
     // check if user got the word correct
     fun tarkista() {
+        if (kaikkiKirjaimet.size < 5) {
+            return
+        }
+        KayttajaSanat += kaikkiKirjaimet
+        println("\n")
+        println(KayttajaSanat[0][0])
         kaydytNumerot.clear()
         kaydytKirjaimet.clear()
         val sub = kaikkiKirjaimet.toList().subList(0, 5)
-        println(sub)
-        println(kaikkiKirjaimet)
         // check if right
         if (sub.size < 5) {
             return
         } else {
-            palautettu = true
             for (c in kaikkiKirjaimet) {
                 if (c !in palautettuKirjaimet) {
                     palautettuKirjaimet.add(c)
                 }
             }
-            if (sub.joinToString(separator = "").replace(",", "").lowercase().trim() == sana && palautettu) {
+            if (sub.joinToString(separator = "").replace(",", "").lowercase().trim() == sana) {
                 isPopupOpen = true
                 showContent = false
             }
@@ -214,6 +187,18 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
         d.add(i.toString().lowercase())
     }
     // cheat when testing
+    println("\n")
+    println("\n")
+    println("\n")
+    println("\n")
+    println("\n")
+    println("\n")
+    println("\n")
+    println("\n")
+    println("\n")
+    println("\n")
+    println("\n")
+    println("\n")
     println(sana)
 
     // shows the sanuli game if game is over doesn't show
@@ -245,9 +230,7 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                     maxItemsInEachRow = 5
                 ) {
                     OutlinedTextField(
-                        value = if (kirjaimet1.size >= 1) {
-                            kirjaimet1[0]
-                        } else "",
+                        value = if (nakyvatKirjaimet.size >= 1) { nakyvatKirjaimet[0] } else "",
                         readOnly = true,
                         onValueChange = {},
                         singleLine = true,
@@ -263,17 +246,17 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         ),
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("1" in palautetut) {
-                                if (kirjaimet1[0].lowercase() == d[0].lowercase()) {
+                            unfocusedContainerColor = if ("1" in palautetut && KayttajaSanat.size >= 1) {
+                                if (KayttajaSanat[0].lowercase() == d[0].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet1[0].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[0].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
-                            focusedContainerColor = if ("1" in palautetut) {
-                                if (kirjaimet1[0].lowercase() == d[0].lowercase()) {
+                            focusedContainerColor = if ("1" in palautetut && KayttajaSanat.size >= 1) {
+                                if (KayttajaSanat[0].lowercase() == d[0].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet1[0].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[0].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
@@ -283,9 +266,7 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                             .width(75.dp),
                     )
                     OutlinedTextField(
-                        value = if (kirjaimet1.size >= 2) {
-                            kirjaimet1[1]
-                        } else "",
+                        value = if (nakyvatKirjaimet.size >= 2) { nakyvatKirjaimet[1] } else "",
                         readOnly = true,
                         onValueChange = {},
                         singleLine = true,
@@ -301,17 +282,17 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         ),
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("1" in palautetut) {
-                                if (kirjaimet1[1].lowercase() == d[1].lowercase()) {
+                            unfocusedContainerColor = if ("1" in palautetut && KayttajaSanat.size >= 1) {
+                                if (KayttajaSanat[1].lowercase() == d[1].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet1[1].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[1].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
-                            focusedContainerColor = if ("1" in palautetut) {
-                                if (kirjaimet1[1].lowercase() == d[1].lowercase()) {
+                            focusedContainerColor = if ("1" in palautetut && KayttajaSanat.size >= 1) {
+                                if (KayttajaSanat[1].lowercase() == d[1].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet1[1].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[1].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
@@ -321,9 +302,7 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                             .width(75.dp),
                     )
                     OutlinedTextField(
-                        value = if (kirjaimet1.size >= 3) {
-                            kirjaimet1[2]
-                        } else "",
+                        value = if (nakyvatKirjaimet.size >= 3) { nakyvatKirjaimet[2] } else "",
                         readOnly = true,
                         onValueChange = {},
                         singleLine = true,
@@ -339,17 +318,17 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         ),
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("1" in palautetut) {
-                                if (kirjaimet1[2].lowercase() == d[2].lowercase()) {
+                            unfocusedContainerColor = if ("1" in palautetut && KayttajaSanat.size >= 1) {
+                                if (KayttajaSanat[2].lowercase() == d[2].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet1[2].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[2].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
-                            focusedContainerColor = if ("1" in palautetut) {
-                                if (kirjaimet1[2].lowercase() == d[2].lowercase()) {
+                            focusedContainerColor = if ("1" in palautetut && KayttajaSanat.size >= 1) {
+                                if (KayttajaSanat[2].lowercase() == d[2].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet1[2].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[2].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
@@ -359,9 +338,7 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                             .width(75.dp),
                     )
                     OutlinedTextField(
-                        value = if (kirjaimet1.size >= 4) {
-                            kirjaimet1[3]
-                        } else "",
+                        value = if (nakyvatKirjaimet.size >= 4) { nakyvatKirjaimet[3] } else "",
                         readOnly = true,
                         onValueChange = {},
                         singleLine = true,
@@ -377,17 +354,17 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         ),
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("1" in palautetut) {
-                                if (kirjaimet1[3].lowercase() == d[3].lowercase()) {
+                            unfocusedContainerColor = if ("1" in palautetut && KayttajaSanat.size >= 1) {
+                                if (KayttajaSanat[3].lowercase() == d[3].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet1[3].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[3].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
-                            focusedContainerColor = if ("1" in palautetut) {
-                                if (kirjaimet1[3].lowercase() == d[3].lowercase()) {
+                            focusedContainerColor = if ("1" in palautetut && KayttajaSanat.size >= 1) {
+                                if (KayttajaSanat[3].lowercase() == d[3].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet1[3].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[3].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
@@ -397,9 +374,7 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                             .width(75.dp),
                     )
                     OutlinedTextField(
-                        value = if (kirjaimet1.size >= 5) {
-                            kirjaimet1[4]
-                        } else "",
+                        value = if (nakyvatKirjaimet.size >= 5) { nakyvatKirjaimet[4] } else "",
                         readOnly = true,
                         onValueChange = {},
                         singleLine = true,
@@ -415,17 +390,17 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         ),
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("1" in palautetut) {
-                                if (kirjaimet1[4].lowercase() == d[4].lowercase()) {
+                            unfocusedContainerColor = if ("1" in palautetut && KayttajaSanat.size >= 1) {
+                                if (KayttajaSanat[4].lowercase() == d[4].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet1[4].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[4].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
-                            focusedContainerColor = if ("1" in palautetut) {
-                                if (kirjaimet1[4].lowercase() == d[4].lowercase()) {
+                            focusedContainerColor = if ("1" in palautetut && KayttajaSanat.size >= 1) {
+                                if (KayttajaSanat[4].lowercase() == d[4].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet1[4].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[4].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
@@ -446,9 +421,7 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                     maxItemsInEachRow = 5
                 ) {
                     OutlinedTextField(
-                        value = if (kirjaimet2.size >= 1) {
-                            kirjaimet2[0]
-                        } else "",
+                        value = if (nakyvatKirjaimet.size >= 6) { nakyvatKirjaimet[5] } else "",
                         readOnly = true,
                         onValueChange = {},
                         singleLine = true,
@@ -465,16 +438,16 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = if ("2" in palautetut) {
-                                if (kirjaimet2[0].lowercase() == d[0].lowercase()) {
+                                if (KayttajaSanat[5].lowercase() == d[0].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet2[0].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[5].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
                             focusedContainerColor = if ("2" in palautetut) {
-                                if (kirjaimet2[0].lowercase() == d[0].lowercase()) {
+                                if (KayttajaSanat[5].lowercase() == d[0].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet2[0].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[5].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
@@ -484,9 +457,7 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                             .width(75.dp)
                     )
                     OutlinedTextField(
-                        value = if (kirjaimet2.size >= 2) {
-                            kirjaimet2[1]
-                        } else "",
+                        value = if (nakyvatKirjaimet.size >= 7) { nakyvatKirjaimet[6] } else "",
                         readOnly = true,
                         onValueChange = {},
                         singleLine = true,
@@ -500,16 +471,16 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = if ("2" in palautetut) {
-                                if (kirjaimet2[1].lowercase() == d[1].lowercase()) {
+                                if (KayttajaSanat[6].lowercase() == d[1].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet2[1].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[6].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
                             focusedContainerColor = if ("2" in palautetut) {
-                                if (kirjaimet2[1].lowercase() == d[1].lowercase()) {
+                                if (KayttajaSanat[6].lowercase() == d[1].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet2[1].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[6].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
@@ -519,9 +490,7 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                             .width(75.dp)
                     )
                     OutlinedTextField(
-                        value = if (kirjaimet2.size >= 3) {
-                            kirjaimet2[2]
-                        } else "",
+                        value = if (nakyvatKirjaimet.size >= 8) { nakyvatKirjaimet[7] } else "",
                         readOnly = true,
                         onValueChange = {},
                         singleLine = true,
@@ -535,16 +504,16 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = if ("2" in palautetut) {
-                                if (kirjaimet2[2].lowercase() == d[2].lowercase()) {
+                                if (KayttajaSanat[7].lowercase() == d[2].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet2[2].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[7].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
                             focusedContainerColor = if ("2" in palautetut) {
-                                if (kirjaimet2[2].lowercase() == d[2].lowercase()) {
+                                if (KayttajaSanat[7].lowercase() == d[2].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet2[2].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[7].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
@@ -554,9 +523,7 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                             .width(75.dp)
                     )
                     OutlinedTextField(
-                        value = if (kirjaimet2.size >= 4) {
-                            kirjaimet2[3]
-                        } else "",
+                        value = if (nakyvatKirjaimet.size >= 9) { nakyvatKirjaimet[8] } else "",
                         readOnly = true,
                         onValueChange = {},
                         singleLine = true,
@@ -570,16 +537,16 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = if ("2" in palautetut) {
-                                if (kirjaimet2[3].lowercase() == d[3].lowercase()) {
+                                if (KayttajaSanat[8].lowercase() == d[3].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet2[3].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[8].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
                             focusedContainerColor = if ("2" in palautetut) {
-                                if (kirjaimet2[3].lowercase() == d[3].lowercase()) {
+                                if (KayttajaSanat[8].lowercase() == d[3].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet2[3].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[8].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
@@ -589,9 +556,7 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                             .width(75.dp)
                     )
                     OutlinedTextField(
-                        value = if (kirjaimet2.size >= 5) {
-                            kirjaimet2[4]
-                        } else "",
+                        value = if (nakyvatKirjaimet.size >= 10) { nakyvatKirjaimet[9] } else "",
                         readOnly = true,
                         onValueChange = {},
                         singleLine = true,
@@ -605,16 +570,16 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = if ("2" in palautetut) {
-                                if (kirjaimet2[4].lowercase() == d[4].lowercase()) {
+                                if (KayttajaSanat[9].lowercase() == d[4].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet2[4].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[9].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
                             focusedContainerColor = if ("2" in palautetut) {
-                                if (kirjaimet2[4].lowercase() == d[4].lowercase()) {
+                                if (KayttajaSanat[9].lowercase() == d[4].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet2[4].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[9].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
@@ -635,9 +600,7 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                     maxItemsInEachRow = 5
                 ) {
                     OutlinedTextField(
-                        value = if (kirjaimet3.size >= 1) {
-                            kirjaimet3[0]
-                        } else "",
+                        value = if (nakyvatKirjaimet.size >= 11) { nakyvatKirjaimet[10] } else "",
                         readOnly = true,
                         onValueChange = {},
                         singleLine = true,
@@ -654,16 +617,16 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = if ("3" in palautetut) {
-                                if (kirjaimet3[0].lowercase() == d[0].lowercase()) {
+                                if (KayttajaSanat[2][0].lowercase() == d[0].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet3[0].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[2][0].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
                             focusedContainerColor = if ("3" in palautetut) {
-                                if (kirjaimet3[0].lowercase() == d[0].lowercase()) {
+                                if (KayttajaSanat[2][0].lowercase() == d[0].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet3[0].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[2][0].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
@@ -673,9 +636,7 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                             .width(75.dp)
                     )
                     OutlinedTextField(
-                        value = if (kirjaimet3.size >= 2) {
-                            kirjaimet3[1]
-                        } else "",
+                        value = if (nakyvatKirjaimet.size >= 12) { nakyvatKirjaimet[11] } else "",
                         readOnly = true,
                         onValueChange = {},
                         singleLine = true,
@@ -689,16 +650,16 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = if ("3" in palautetut) {
-                                if (kirjaimet3[1].lowercase() == d[1].lowercase()) {
+                                if (KayttajaSanat[2][1].lowercase() == d[1].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet3[1].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[2][1].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
                             focusedContainerColor = if ("3" in palautetut) {
-                                if (kirjaimet3[1].lowercase() == d[1].lowercase()) {
+                                if (KayttajaSanat[2][1].lowercase() == d[1].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet3[1].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[2][1].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
@@ -708,9 +669,7 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                             .width(75.dp)
                     )
                     OutlinedTextField(
-                        value = if (kirjaimet3.size >= 3) {
-                            kirjaimet3[2]
-                        } else "",
+                        value = if (nakyvatKirjaimet.size >= 13) { nakyvatKirjaimet[12] } else "",
                         readOnly = true,
                         onValueChange = {},
                         singleLine = true,
@@ -724,16 +683,16 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = if ("3" in palautetut) {
-                                if (kirjaimet3[2].lowercase() == d[2].lowercase()) {
+                                if (KayttajaSanat[2][2].lowercase() == d[2].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet3[2].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[2][2].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
                             focusedContainerColor = if ("3" in palautetut) {
-                                if (kirjaimet3[2].lowercase() == d[2].lowercase()) {
+                                if (KayttajaSanat[2][2].lowercase() == d[2].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet3[2].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[2][2].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
@@ -743,9 +702,7 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                             .width(75.dp)
                     )
                     OutlinedTextField(
-                        value = if (kirjaimet3.size >= 4) {
-                            kirjaimet3[3]
-                        } else "",
+                        value = if (nakyvatKirjaimet.size >= 14) { nakyvatKirjaimet[13] } else "",
                         readOnly = true,
                         onValueChange = {},
                         singleLine = true,
@@ -759,16 +716,16 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = if ("3" in palautetut) {
-                                if (kirjaimet3[3].lowercase() == d[3].lowercase()) {
+                                if (KayttajaSanat[2][3].lowercase() == d[3].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet3[3].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[2][3].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
                             focusedContainerColor = if ("3" in palautetut) {
-                                if (kirjaimet3[3].lowercase() == d[3].lowercase()) {
+                                if (KayttajaSanat[2][3].lowercase() == d[3].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet3[3].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[2][3].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
@@ -778,9 +735,7 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                             .width(75.dp)
                     )
                     OutlinedTextField(
-                        value = if (kirjaimet3.size >= 5) {
-                            kirjaimet3[4]
-                        } else "",
+                        value = if (nakyvatKirjaimet.size >= 15) { nakyvatKirjaimet[14] } else "",
                         readOnly = true,
                         onValueChange = {},
                         singleLine = true,
@@ -794,16 +749,16 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = if ("3" in palautetut) {
-                                if (kirjaimet3[4].lowercase() == d[4].lowercase()) {
+                                if (KayttajaSanat[2][4].lowercase() == d[4].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet3[4].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[2][4].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
                             focusedContainerColor = if ("3" in palautetut) {
-                                if (kirjaimet3[4].lowercase() == d[4].lowercase()) {
+                                if (KayttajaSanat[2][4].lowercase() == d[4].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet3[4].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[2][4].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
@@ -824,9 +779,7 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                     maxItemsInEachRow = 5
                 ) {
                     OutlinedTextField(
-                        value = if (kirjaimet4.size >= 1) {
-                            kirjaimet4[0]
-                        } else "",
+                        value = if (nakyvatKirjaimet.size >= 16) { nakyvatKirjaimet[15] } else "",
                         readOnly = true,
                         onValueChange = {},
                         singleLine = true,
@@ -843,16 +796,16 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = if ("4" in palautetut) {
-                                if (kirjaimet4[0].lowercase() == d[0].lowercase()) {
+                                if (KayttajaSanat[3][0].lowercase() == d[0].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet4[0].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[3][0].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
                             focusedContainerColor = if ("4" in palautetut) {
-                                if (kirjaimet4[0].lowercase() == d[0].lowercase()) {
+                                if (KayttajaSanat[3][0].lowercase() == d[0].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet4[0].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[3][0].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
@@ -862,9 +815,7 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                             .width(75.dp)
                     )
                     OutlinedTextField(
-                        value = if (kirjaimet4.size >= 2) {
-                            kirjaimet4[1]
-                        } else "",
+                        value = if (nakyvatKirjaimet.size >= 17) { nakyvatKirjaimet[16] } else "",
                         readOnly = true,
                         onValueChange = {},
                         singleLine = true,
@@ -878,16 +829,16 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = if ("4" in palautetut) {
-                                if (kirjaimet4[1].lowercase() == d[1].lowercase()) {
+                                if (KayttajaSanat[3][1].lowercase() == d[1].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet4[1].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[3][1].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
                             focusedContainerColor = if ("4" in palautetut) {
-                                if (kirjaimet4[1].lowercase() == d[1].lowercase()) {
+                                if (KayttajaSanat[3][1].lowercase() == d[1].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet4[1].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[3][1].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
@@ -897,9 +848,7 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                             .width(75.dp)
                     )
                     OutlinedTextField(
-                        value = if (kirjaimet4.size >= 3) {
-                            kirjaimet4[2]
-                        } else "",
+                        value = if (nakyvatKirjaimet.size >= 18) { nakyvatKirjaimet[17] } else "",
                         readOnly = true,
                         onValueChange = {},
                         singleLine = true,
@@ -913,16 +862,16 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = if ("4" in palautetut) {
-                                if (kirjaimet4[2].lowercase() == d[2].lowercase()) {
+                                if (KayttajaSanat[3][2].lowercase() == d[2].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet4[2].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[3][2].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
                             focusedContainerColor = if ("4" in palautetut) {
-                                if (kirjaimet4[2].lowercase() == d[2].lowercase()) {
+                                if (KayttajaSanat[3][2].lowercase() == d[2].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet4[2].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[3][2].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
@@ -932,9 +881,7 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                             .width(75.dp)
                     )
                     OutlinedTextField(
-                        value = if (kirjaimet4.size >= 4) {
-                            kirjaimet4[3]
-                        } else "",
+                        value = if (nakyvatKirjaimet.size >= 19) { nakyvatKirjaimet[18] } else "",
                         readOnly = true,
                         onValueChange = {},
                         singleLine = true,
@@ -948,16 +895,16 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = if ("4" in palautetut) {
-                                if (kirjaimet4[3].lowercase() == d[3].lowercase()) {
+                                if (KayttajaSanat[3][3].lowercase() == d[3].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet4[3].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[3][3].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
                             focusedContainerColor = if ("4" in palautetut) {
-                                if (kirjaimet4[3].lowercase() == d[3].lowercase()) {
+                                if (KayttajaSanat[3][3].lowercase() == d[3].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet4[3].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[3][3].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
@@ -967,9 +914,7 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                             .width(75.dp)
                     )
                     OutlinedTextField(
-                        value = if (kirjaimet4.size >= 5) {
-                            kirjaimet4[4]
-                        } else "",
+                        value = if (nakyvatKirjaimet.size >= 20) { nakyvatKirjaimet[19] } else "",
                         readOnly = true,
                         onValueChange = {},
                         singleLine = true,
@@ -983,16 +928,16 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = if ("4" in palautetut) {
-                                if (kirjaimet4[4].lowercase() == d[4].lowercase()) {
+                                if (KayttajaSanat[3][4].lowercase() == d[4].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet4[4].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[3][4].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
                             focusedContainerColor = if ("4" in palautetut) {
-                                if (kirjaimet4[4].lowercase() == d[4].lowercase()) {
+                                if (KayttajaSanat[3][4].lowercase() == d[4].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet4[4].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[3][4].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
@@ -1013,9 +958,7 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                     maxItemsInEachRow = 5
                 ) {
                     OutlinedTextField(
-                        value = if (kirjaimet5.size >= 1) {
-                            kirjaimet5[0]
-                        } else "",
+                        value = if (nakyvatKirjaimet.size >= 21) { nakyvatKirjaimet[20] } else "",
                         readOnly = true,
                         onValueChange = {},
                         singleLine = true,
@@ -1032,16 +975,16 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = if ("5" in palautetut) {
-                                if (kirjaimet5[0].lowercase() == d[0].lowercase()) {
+                                if (KayttajaSanat[4][0].lowercase() == d[0].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet5[0].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[4][0].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
                             focusedContainerColor = if ("5" in palautetut) {
-                                if (kirjaimet5[0].lowercase() == d[0].lowercase()) {
+                                if (KayttajaSanat[4][0].lowercase() == d[0].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet5[0].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[4][0].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
@@ -1051,9 +994,7 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                             .width(75.dp)
                     )
                     OutlinedTextField(
-                        value = if (kirjaimet5.size >= 2) {
-                            kirjaimet5[1]
-                        } else "",
+                        value = if (nakyvatKirjaimet.size >= 22) { nakyvatKirjaimet[21] } else "",
                         readOnly = true,
                         onValueChange = {},
                         singleLine = true,
@@ -1067,16 +1008,16 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = if ("5" in palautetut) {
-                                if (kirjaimet5[1].lowercase() == d[1].lowercase()) {
+                                if (KayttajaSanat[4][1].lowercase() == d[1].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet5[1].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[4][1].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
                             focusedContainerColor = if ("5" in palautetut) {
-                                if (kirjaimet5[1].lowercase() == d[1].lowercase()) {
+                                if (KayttajaSanat[4][1].lowercase() == d[1].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet5[1].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[4][1].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
@@ -1086,9 +1027,7 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                             .width(75.dp)
                     )
                     OutlinedTextField(
-                        value = if (kirjaimet5.size >= 3) {
-                            kirjaimet5[2]
-                        } else "",
+                        value = if (nakyvatKirjaimet.size >= 23) { nakyvatKirjaimet[22] } else "",
                         readOnly = true,
                         onValueChange = {},
                         singleLine = true,
@@ -1102,16 +1041,16 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = if ("5" in palautetut) {
-                                if (kirjaimet5[2].lowercase() == d[2].lowercase()) {
+                                if (KayttajaSanat[4][2].lowercase() == d[2].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet5[2].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[4][2].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
                             focusedContainerColor = if ("5" in palautetut) {
-                                if (kirjaimet5[2].lowercase() == d[2].lowercase()) {
+                                if (KayttajaSanat[4][2].lowercase() == d[2].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet5[2].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[4][2].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
@@ -1121,9 +1060,7 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                             .width(75.dp)
                     )
                     OutlinedTextField(
-                        value = if (kirjaimet5.size >= 4) {
-                            kirjaimet5[3]
-                        } else "",
+                        value = if (nakyvatKirjaimet.size >= 24) { nakyvatKirjaimet[23] } else "",
                         readOnly = true,
                         onValueChange = {},
                         singleLine = true,
@@ -1137,16 +1074,16 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = if ("5" in palautetut) {
-                                if (kirjaimet5[3].lowercase() == d[3].lowercase()) {
+                                if (KayttajaSanat[4][3].lowercase() == d[3].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet5[3].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[4][3].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
                             focusedContainerColor = if ("5" in palautetut) {
-                                if (kirjaimet5[3].lowercase() == d[3].lowercase()) {
+                                if (KayttajaSanat[4][3].lowercase() == d[3].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet5[3].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[4][3].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
@@ -1156,9 +1093,7 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                             .width(75.dp)
                     )
                     OutlinedTextField(
-                        value = if (kirjaimet5.size >= 5) {
-                            kirjaimet5[4]
-                        } else "",
+                        value = if (nakyvatKirjaimet.size >= 25) { nakyvatKirjaimet[24] } else "",
                         readOnly = true,
                         onValueChange = {},
                         singleLine = true,
@@ -1172,16 +1107,16 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = if ("5" in palautetut) {
-                                if (kirjaimet5[4].lowercase() == d[4].lowercase()) {
+                                if (KayttajaSanat[4][4].lowercase() == d[4].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet5[4].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[4][4].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
                             focusedContainerColor = if ("5" in palautetut) {
-                                if (kirjaimet5[4].lowercase() == d[4].lowercase()) {
+                                if (KayttajaSanat[4][4].lowercase() == d[4].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet5[4].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[4][4].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
@@ -1202,9 +1137,7 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                     maxItemsInEachRow = 5
                 ) {
                     OutlinedTextField(
-                        value = if (kirjaimet6.size >= 1) {
-                            kirjaimet6[0]
-                        } else "",
+                        value = if (nakyvatKirjaimet.size >= 26) { nakyvatKirjaimet[25] } else "",
                         readOnly = true,
                         onValueChange = {},
                         singleLine = true,
@@ -1221,16 +1154,16 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = if ("6" in palautetut) {
-                                if (kirjaimet6[0].lowercase() == d[0].lowercase()) {
+                                if (KayttajaSanat[5][0].lowercase() == d[0].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet6[0].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[5][0].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
                             focusedContainerColor = if ("6" in palautetut) {
-                                if (kirjaimet6[0].lowercase() == d[0].lowercase()) {
+                                if (KayttajaSanat[5][0].lowercase() == d[0].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet6[0].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[5][0].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
@@ -1240,9 +1173,7 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                             .width(75.dp)
                     )
                     OutlinedTextField(
-                        value = if (kirjaimet6.size >= 2) {
-                            kirjaimet6[1]
-                        } else "",
+                        value = if (nakyvatKirjaimet.size >= 27) { nakyvatKirjaimet[26] } else "",
                         readOnly = true,
                         onValueChange = {},
                         singleLine = true,
@@ -1256,16 +1187,16 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = if ("6" in palautetut) {
-                                if (kirjaimet6[1].lowercase() == d[1].lowercase()) {
+                                if (KayttajaSanat[5][1].lowercase() == d[1].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet6[1].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[5][1].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
                             focusedContainerColor = if ("6" in palautetut) {
-                                if (kirjaimet6[1].lowercase() == d[1].lowercase()) {
+                                if (KayttajaSanat[5][1].lowercase() == d[1].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet6[1].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[5][1].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
@@ -1275,9 +1206,7 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                             .width(75.dp)
                     )
                     OutlinedTextField(
-                        value = if (kirjaimet6.size >= 3) {
-                            kirjaimet6[2]
-                        } else "",
+                        value = if (nakyvatKirjaimet.size >= 28) { nakyvatKirjaimet[27] } else "",
                         readOnly = true,
                         onValueChange = {},
                         singleLine = true,
@@ -1291,16 +1220,16 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = if ("6" in palautetut) {
-                                if (kirjaimet6[2].lowercase() == d[2].lowercase()) {
+                                if (KayttajaSanat[5][2].lowercase() == d[2].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet6[2].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[5][2].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
                             focusedContainerColor = if ("6" in palautetut) {
-                                if (kirjaimet6[2].lowercase() == d[2].lowercase()) {
+                                if (KayttajaSanat[5][2].lowercase() == d[2].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet6[2].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[5][2].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
@@ -1310,9 +1239,7 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                             .width(75.dp)
                     )
                     OutlinedTextField(
-                        value = if (kirjaimet6.size >= 4) {
-                            kirjaimet6[3]
-                        } else "",
+                        value = if (nakyvatKirjaimet.size >= 29) { nakyvatKirjaimet[28] } else "",
                         readOnly = true,
                         onValueChange = {},
                         singleLine = true,
@@ -1326,16 +1253,16 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = if ("6" in palautetut) {
-                                if (kirjaimet6[3].lowercase() == d[3].lowercase()) {
+                                if (KayttajaSanat[5][3].lowercase() == d[3].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet6[3].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[5][3].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
                             focusedContainerColor = if ("6" in palautetut) {
-                                if (kirjaimet6[3].lowercase() == d[3].lowercase()) {
+                                if (KayttajaSanat[5][3].lowercase() == d[3].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet6[3].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[5][3].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
@@ -1345,9 +1272,7 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                             .width(75.dp)
                     )
                     OutlinedTextField(
-                        value = if (kirjaimet6.size >= 5) {
-                            kirjaimet6[4]
-                        } else "",
+                        value = if (nakyvatKirjaimet.size >= 30) { nakyvatKirjaimet[29] } else "",
                         readOnly = true,
                         onValueChange = {},
                         singleLine = true,
@@ -1361,16 +1286,16 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = if ("6" in palautetut) {
-                                if (kirjaimet6[4].lowercase() == d[4].lowercase()) {
+                                if (KayttajaSanat[5][4].lowercase() == d[4].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet6[4].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[5][4].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
                             focusedContainerColor = if ("6" in palautetut) {
-                                if (kirjaimet6[4].lowercase() == d[4].lowercase()) {
+                                if (KayttajaSanat[5][4].lowercase() == d[4].lowercase()) {
                                     Color.Green
-                                } else if (kirjaimet6[4].lowercase() in sana.lowercase()) {
+                                } else if (KayttajaSanat[5][4].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
@@ -2149,55 +2074,14 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                             disabledContentColor = White
                         ),
                         onClick = {
-                            if (arvauksienMaara == 0) {
-                                // check that is not empty and if the first is empty also returns
-                                if (!kirjaimet1.isNotEmpty() || kirjaimet1[0] == "") {
-                                    return@Button
-                                }
-                                nykyKohta -= 1
-                                kirjaimet1.removeAt(nykyKohta)
-                                kaikkiKirjaimet.removeAt(nykyKohta)
+                            // check that is not empty and if the first is empty also returns
+                            if (!kaikkiKirjaimet.isNotEmpty() || kaikkiKirjaimet[0] == "") {
+                                return@Button
                             }
-                            if (arvauksienMaara == 1) {
-                                if (!kirjaimet2.isNotEmpty() || kirjaimet2[0] == "") {
-                                    return@Button
-                                }
-                                nykyKohta -= 1
-                                kirjaimet2.removeAt(nykyKohta)
-                                kaikkiKirjaimet.removeAt(nykyKohta)
-                            }
-                            if (arvauksienMaara == 2) {
-                                if (!kirjaimet3.isNotEmpty() || kirjaimet3[0] == "") {
-                                    return@Button
-                                }
-                                nykyKohta -= 1
-                                kirjaimet3.removeAt(nykyKohta)
-                                kaikkiKirjaimet.removeAt(nykyKohta)
-                            }
-                            if (arvauksienMaara == 3) {
-                                if (!kirjaimet4.isNotEmpty() || kirjaimet4[0] == "") {
-                                    return@Button
-                                }
-                                nykyKohta -= 1
-                                kirjaimet4.removeAt(nykyKohta)
-                                kaikkiKirjaimet.removeAt(nykyKohta)
-                            }
-                            if (arvauksienMaara == 4) {
-                                if (!kirjaimet5.isNotEmpty() || kirjaimet5[0] == "") {
-                                    return@Button
-                                }
-                                nykyKohta -= 1
-                                kirjaimet5.removeAt(nykyKohta)
-                                kaikkiKirjaimet.removeAt(nykyKohta)
-                            }
-                            if (arvauksienMaara == 5) {
-                                if (!kirjaimet6.isNotEmpty() || kirjaimet6[0] == "") {
-                                    return@Button
-                                }
-                                nykyKohta -= 1
-                                kirjaimet6.removeAt(nykyKohta)
-                                kaikkiKirjaimet.removeAt(nykyKohta)
-                            }
+                            nykyKohta -= 1
+                            nakyvatKirjaimetKohta -= 1
+                            nakyvatKirjaimet.removeAt(nakyvatKirjaimetKohta)
+                            kaikkiKirjaimet.removeAt(nykyKohta)
                         },
                     ) {
                         Text("tyh", color = White, fontSize = 20.sp, textAlign = TextAlign.Center)
@@ -2281,18 +2165,9 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         // clears all the values
                         onClick = {
                             isPopupOpen = false
-                            palautettu=false
-                            palautettu2=false
-                            palautettu3=false
-                            palautettu4=false
-                            palautettu5=false
-                            palautettu6=false
-                            kirjaimet1.clear()
-                            kirjaimet2.clear()
-                            kirjaimet3.clear()
-                            kirjaimet4.clear()
-                            kirjaimet5.clear()
-                            kirjaimet6.clear()
+                            nakyvatKirjaimetKohta = 0
+                            KayttajaSanat = emptyArray<String>()
+                            nakyvatKirjaimet.clear()
                             kaikkiKirjaimet.clear()
                             palautettuKirjaimet.clear()
                             paikat.clear()

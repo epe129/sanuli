@@ -431,3 +431,80 @@ for ((index, value) in sana.withIndex()) {
                         showContent = false
                     }
                 }
+
+
+if (arvauksienMaara == 0) {
+            kirjaimet1.add(nykyKohta, kirjain)
+            kaikkiKirjaimet.add(nykyKohta, kirjain)
+        }
+        if (arvauksienMaara == 1) {
+            kirjaimet2.add(nykyKohta, kirjain)
+            kaikkiKirjaimet.add(nykyKohta, kirjain)
+        }
+        if (arvauksienMaara == 2) {
+            kirjaimet3.add(nykyKohta, kirjain)
+            kaikkiKirjaimet.add(nykyKohta, kirjain)
+        }
+        if (arvauksienMaara == 3) {
+            kirjaimet4.add(nykyKohta, kirjain)
+            kaikkiKirjaimet.add(nykyKohta, kirjain)
+        }
+        if (arvauksienMaara == 4) {
+            kirjaimet5.add(nykyKohta, kirjain)
+            kaikkiKirjaimet.add(nykyKohta, kirjain)
+        }
+        if (arvauksienMaara == 5) {
+            kirjaimet6.add(nykyKohta, kirjain)
+            kaikkiKirjaimet.add(nykyKohta, kirjain)
+        }
+
+         val kirjaimet1 = remember { mutableStateListOf<String>() }
+            val kirjaimet2 = remember { mutableStateListOf<String>() }
+            val kirjaimet3 = remember { mutableStateListOf<String>() }
+            val kirjaimet4 = remember { mutableStateListOf<String>() }
+            val kirjaimet5 = remember { mutableStateListOf<String>() }
+            val kirjaimet6 = remember { mutableStateListOf<String>() }
+
+if (arvauksienMaara == 0) {
+
+                            }
+                            if (arvauksienMaara == 1) {
+                                if (!kirjaimet2.isNotEmpty() || kirjaimet2[0] == "") {
+                                    return@Button
+                                }
+                                nykyKohta -= 1
+                                kirjaimet2.removeAt(nykyKohta)
+                                kaikkiKirjaimet.removeAt(nykyKohta)
+                            }
+                            if (arvauksienMaara == 2) {
+                                if (!kirjaimet3.isNotEmpty() || kirjaimet3[0] == "") {
+                                    return@Button
+                                }
+                                nykyKohta -= 1
+                                kirjaimet3.removeAt(nykyKohta)
+                                kaikkiKirjaimet.removeAt(nykyKohta)
+                            }
+                            if (arvauksienMaara == 3) {
+                                if (!kirjaimet4.isNotEmpty() || kirjaimet4[0] == "") {
+                                    return@Button
+                                }
+                                nykyKohta -= 1
+                                kirjaimet4.removeAt(nykyKohta)
+                                kaikkiKirjaimet.removeAt(nykyKohta)
+                            }
+                            if (arvauksienMaara == 4) {
+                                if (!kirjaimet5.isNotEmpty() || kirjaimet5[0] == "") {
+                                    return@Button
+                                }
+                                nykyKohta -= 1
+                                kirjaimet5.removeAt(nykyKohta)
+                                kaikkiKirjaimet.removeAt(nykyKohta)
+                            }
+                            if (arvauksienMaara == 5) {
+                                if (!kirjaimet6.isNotEmpty() || kirjaimet6[0] == "") {
+                                    return@Button
+                                }
+                                nykyKohta -= 1
+                                kirjaimet6.removeAt(nykyKohta)
+                                kaikkiKirjaimet.removeAt(nykyKohta)
+                            }
