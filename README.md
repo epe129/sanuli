@@ -12,3 +12,6 @@ All the words are finnish words.
 - Kotlin extensions (Should be automatically installed to Android Studio)
 
 then clone the repository to Android Studio and you can run the app.
+
+## License
+Open source.
