@@ -196,7 +196,7 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
             verticalArrangement = Arrangement.Center,
         ) {
             Column(
-                modifier = Modifier.fillMaxWidth().height(550.dp),
+                modifier = Modifier.fillMaxWidth().height(575.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center,
             ) {
@@ -1292,11 +1292,25 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                             .width(75.dp)
                     )
                 }
+                // cheat button what shows the correct word
+                var huijaus by remember { mutableStateOf("") }
+                Button(
+                    onClick = {
+                        huijaus = sana
+                    },
+                    colors = ButtonColors(
+                        containerColor = Color.Transparent,
+                        contentColor = Color.Transparent,
+                        disabledContainerColor = Color.Transparent,
+                        disabledContentColor = Color.Transparent,
+                    ),
+                ) {
+                    Text(huijaus, color = White, fontSize = 25.sp)
+                }
             }
-
             // KEYBOARD /////////////////////////////////////////////////////////////////////////////////////////////////////////////
             Column(
-                modifier = Modifier.fillMaxWidth().height(200.dp),
+                modifier = Modifier.fillMaxWidth().height(200.dp).offset(0.dp, -25.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Bottom,
             ) {
