@@ -7,6 +7,9 @@ All the words are finnish words.
 
 ![description](./peli.png)
 
+## Technologies
+made using kotlin. Uses JSON as database to store all the words.
+
 ## Need to install
 - Android Studio
 - Kotlin extensions (Should be automatically installed to Android Studio)
