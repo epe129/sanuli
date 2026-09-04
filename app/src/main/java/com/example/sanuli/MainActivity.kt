@@ -60,7 +60,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             SanuliTheme {
                 Scaffold(modifier = Modifier.fillMaxSize(),
-                    containerColor = Color.Gray) { innerPadding ->
+                    containerColor = Color.DarkGray) { innerPadding ->
                     Game(
                         modifier = Modifier.padding(innerPadding),
                         context = this
