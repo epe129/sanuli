@@ -52,6 +52,8 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import java.io.IOException
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.seconds
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -1292,20 +1294,25 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                             .width(75.dp)
                     )
                 }
+                // todo taimeri jonka avulla button häviää noin 0.5-1 sekunnin jälkeen
                 // cheat button what shows the correct word
-                var huijaus by remember { mutableStateOf("") }
-                Button(
-                    onClick = {
-                        huijaus = sana
-                    },
-                    colors = ButtonColors(
-                        containerColor = Color.Transparent,
-                        contentColor = Color.Transparent,
-                        disabledContainerColor = Color.Transparent,
-                        disabledContentColor = Color.Transparent,
-                    ),
-                ) {
-                    Text(huijaus, color = White, fontSize = 25.sp)
+                // https://kotlinlang.org/docs/time-measurement.html#measure-differences-in-time
+                val fiveSeconds: Duration = 5.seconds
+                if () {
+                    var huijaus by remember { mutableStateOf("") }
+                    Button(
+                        onClick = {
+                            huijaus = sana
+                        },
+                        colors = ButtonColors(
+                            containerColor = Color.Transparent,
+                            contentColor = Color.Transparent,
+                            disabledContainerColor = Color.Transparent,
+                            disabledContentColor = Color.Transparent,
+                        ),
+                    ) {
+                        Text(huijaus, color = White, fontSize = 25.sp)
+                    }
                 }
             }
             // KEYBOARD /////////////////////////////////////////////////////////////////////////////////////////////////////////////
