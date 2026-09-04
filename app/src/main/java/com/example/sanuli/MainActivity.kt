@@ -120,8 +120,6 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
             return
         }
         KayttajaSanat += kaikkiKirjaimet
-        println("\n")
-        println(KayttajaSanat[0][0])
         kaydytNumerot.clear()
         kaydytKirjaimet.clear()
         val sub = kaikkiKirjaimet.toList().subList(0, 5)
@@ -186,19 +184,8 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
     for (i in sana) {
         d.add(i.toString().lowercase())
     }
+
     // cheat when testing
-    println("\n")
-    println("\n")
-    println("\n")
-    println("\n")
-    println("\n")
-    println("\n")
-    println("\n")
-    println("\n")
-    println("\n")
-    println("\n")
-    println("\n")
-    println("\n")
     println(sana)
 
     // shows the sanuli game if game is over doesn't show

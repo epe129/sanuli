@@ -508,3 +508,19 @@ if (arvauksienMaara == 0) {
                                 kirjaimet6.removeAt(nykyKohta)
                                 kaikkiKirjaimet.removeAt(nykyKohta)
                             }
+
+                            println("\n")
+                                println("\n")
+                                println("\n")
+                                println("\n")
+                                println("\n")
+                                println("\n")
+                                println("\n")
+                                println("\n")
+                                println("\n")
+                                println("\n")
+                                println("\n")
+                                println("\n")
+
+                                println("\n")
+                                        println(KayttajaSanat[0][0])
