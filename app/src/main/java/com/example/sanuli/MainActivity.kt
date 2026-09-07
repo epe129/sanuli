@@ -92,13 +92,13 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
     var jsonString = ""
     val kaydytNumerot = remember { mutableStateListOf<String>() }
     val kaydytKirjaimet = remember { mutableStateListOf<String>() }
-    var KayttajaSanat = remember { emptyArray<String>() }
+    val KayttajaSanat = remember { mutableStateListOf<String>() }
     val nakyvatKirjaimet = remember { mutableStateListOf<String>() }
     var nakyvatKirjaimetKohta by remember { mutableIntStateOf(0) }
     var huijausClickt by remember { mutableStateOf(false) }
     var huijausClicktText by remember { mutableStateOf("") }
     var checkClickt by remember { mutableStateOf(false) }
-    val sanat = remember { mutableStateListOf<String>() }
+//    val sanat = remember { mutableStateListOf<String>() }
 
     // gets words from json file
     try {
@@ -108,12 +108,12 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
     }
 
     // makes the json to list
-    val sanatTOlist = remember { jsonString.replace("""[{}:"]""".toRegex(), "").replace("sanat", "").replace("]", "").replace("[", "").lowercase().trim().split(",") }
+    val sanatTOlist = remember { jsonString.replace("""[{}:"]""".toRegex(), "").replace("sanat", "").replace("]", "").replace("[", "").lowercase().trim().split(",") .map { it.trim() } }
 
     // adds the word to the sanat list because the original list has whitespace in every word
-    for (c in sanatTOlist) {
-        sanat.add(c.trim())
-    }
+    //for (c in sanatTOlist) {
+      //  sanat.add(c.trim())
+    //}
 
     // gets the random word from sanat sanatTOList
     var sana by remember(sanatTOlist) { mutableStateOf(sanatTOlist.random().trim()) }
@@ -128,18 +128,23 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
         nykyKohta += 1
         nakyvatKirjaimetKohta += 1
     }
-
     // check if user got the word correct
     fun tarkista() {
+        checkClickt = false
         if (kaikkiKirjaimet.size < 5) {
             return
         }
-        val sub = kaikkiKirjaimet.toList().subList(0, 5)
-        KayttajaSanat += kaikkiKirjaimet
+        val sub = kaikkiKirjaimet.joinToString("").lowercase().trim()
+        if (sub !in sanatTOlist) {
+            checkClickt = true
+            return
+        }
+        //KayttajaSanat += kaikkiKirjaimet
+        KayttajaSanat.addAll(kaikkiKirjaimet)
         kaydytNumerot.clear()
         kaydytKirjaimet.clear()
         // check if right
-        if (sub.size < 5) {
+        if (sub.length < 5) {
             return
         } else {
             for (c in kaikkiKirjaimet) {
@@ -147,7 +152,7 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                     palautettuKirjaimet.add(c)
                 }
             }
-            if (sub.joinToString(separator = "").replace(",", "").lowercase().trim() == sana) {
+            if (sub == sana) {
                 isPopupOpen = true
                 showContent = false
             }
@@ -281,14 +286,14 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         ),
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("1" in palautetut && KayttajaSanat.size >= 1) {
+                            unfocusedContainerColor = if ("1" in palautetut && KayttajaSanat.size >= 2) {
                                 if (KayttajaSanat[1].lowercase() == d[1].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[1].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
-                            focusedContainerColor = if ("1" in palautetut && KayttajaSanat.size >= 1) {
+                            focusedContainerColor = if ("1" in palautetut && KayttajaSanat.size >= 2) {
                                 if (KayttajaSanat[1].lowercase() == d[1].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[1].lowercase() in sana.lowercase()) {
@@ -317,14 +322,14 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         ),
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("1" in palautetut && KayttajaSanat.size >= 1) {
+                            unfocusedContainerColor = if ("1" in palautetut && KayttajaSanat.size >= 3) {
                                 if (KayttajaSanat[2].lowercase() == d[2].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[2].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
-                            focusedContainerColor = if ("1" in palautetut && KayttajaSanat.size >= 1) {
+                            focusedContainerColor = if ("1" in palautetut && KayttajaSanat.size >= 3) {
                                 if (KayttajaSanat[2].lowercase() == d[2].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[2].lowercase() in sana.lowercase()) {
@@ -353,14 +358,14 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         ),
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("1" in palautetut && KayttajaSanat.size >= 1) {
+                            unfocusedContainerColor = if ("1" in palautetut && KayttajaSanat.size >= 4) {
                                 if (KayttajaSanat[3].lowercase() == d[3].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[3].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
-                            focusedContainerColor = if ("1" in palautetut && KayttajaSanat.size >= 1) {
+                            focusedContainerColor = if ("1" in palautetut && KayttajaSanat.size >= 4) {
                                 if (KayttajaSanat[3].lowercase() == d[3].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[3].lowercase() in sana.lowercase()) {
@@ -389,14 +394,14 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         ),
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("1" in palautetut && KayttajaSanat.size >= 1) {
+                            unfocusedContainerColor = if ("1" in palautetut && KayttajaSanat.size >= 5) {
                                 if (KayttajaSanat[4].lowercase() == d[4].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[4].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
-                            focusedContainerColor = if ("1" in palautetut && KayttajaSanat.size >= 1) {
+                            focusedContainerColor = if ("1" in palautetut && KayttajaSanat.size >= 5) {
                                 if (KayttajaSanat[4].lowercase() == d[4].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[4].lowercase() in sana.lowercase()) {
@@ -436,14 +441,14 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         ),
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("2" in palautetut) {
+                            unfocusedContainerColor = if ("2" in palautetut && KayttajaSanat.size >= 6) {
                                 if (KayttajaSanat[5].lowercase() == d[0].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[5].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
-                            focusedContainerColor = if ("2" in palautetut) {
+                            focusedContainerColor = if ("2" in palautetut && KayttajaSanat.size >= 6) {
                                 if (KayttajaSanat[5].lowercase() == d[0].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[5].lowercase() in sana.lowercase()) {
@@ -469,14 +474,14 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         ),
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("2" in palautetut) {
+                            unfocusedContainerColor = if ("2" in palautetut && KayttajaSanat.size >= 7) {
                                 if (KayttajaSanat[6].lowercase() == d[1].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[6].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
-                            focusedContainerColor = if ("2" in palautetut) {
+                            focusedContainerColor = if ("2" in palautetut && KayttajaSanat.size >= 7) {
                                 if (KayttajaSanat[6].lowercase() == d[1].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[6].lowercase() in sana.lowercase()) {
@@ -502,14 +507,14 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         ),
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("2" in palautetut) {
+                            unfocusedContainerColor = if ("2" in palautetut && KayttajaSanat.size >= 8) {
                                 if (KayttajaSanat[7].lowercase() == d[2].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[7].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
-                            focusedContainerColor = if ("2" in palautetut) {
+                            focusedContainerColor = if ("2" in palautetut && KayttajaSanat.size >= 8) {
                                 if (KayttajaSanat[7].lowercase() == d[2].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[7].lowercase() in sana.lowercase()) {
@@ -535,14 +540,14 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         ),
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("2" in palautetut) {
+                            unfocusedContainerColor = if ("2" in palautetut && KayttajaSanat.size >= 9) {
                                 if (KayttajaSanat[8].lowercase() == d[3].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[8].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
-                            focusedContainerColor = if ("2" in palautetut) {
+                            focusedContainerColor = if ("2" in palautetut && KayttajaSanat.size >= 9) {
                                 if (KayttajaSanat[8].lowercase() == d[3].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[8].lowercase() in sana.lowercase()) {
@@ -568,14 +573,14 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         ),
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("2" in palautetut) {
+                            unfocusedContainerColor = if ("2" in palautetut && KayttajaSanat.size >= 10) {
                                 if (KayttajaSanat[9].lowercase() == d[4].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[9].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
-                            focusedContainerColor = if ("2" in palautetut) {
+                            focusedContainerColor = if ("2" in palautetut && KayttajaSanat.size >= 10) {
                                 if (KayttajaSanat[9].lowercase() == d[4].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[9].lowercase() in sana.lowercase()) {
@@ -615,14 +620,14 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         ),
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("3" in palautetut) {
+                            unfocusedContainerColor = if ("3" in palautetut && KayttajaSanat.size >= 11) {
                                 if (KayttajaSanat[10].lowercase() == d[0].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[10].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
-                            focusedContainerColor = if ("3" in palautetut) {
+                            focusedContainerColor = if ("3" in palautetut && KayttajaSanat.size >= 11) {
                                 if (KayttajaSanat[10].lowercase() == d[0].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[10].lowercase() in sana.lowercase()) {
@@ -648,14 +653,14 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         ),
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("3" in palautetut) {
+                            unfocusedContainerColor = if ("3" in palautetut && KayttajaSanat.size >= 12) {
                                 if (KayttajaSanat[11].lowercase() == d[1].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[11].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
-                            focusedContainerColor = if ("3" in palautetut) {
+                            focusedContainerColor = if ("3" in palautetut && KayttajaSanat.size >= 12) {
                                 if (KayttajaSanat[11].lowercase() == d[1].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[11].lowercase() in sana.lowercase()) {
@@ -681,14 +686,14 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         ),
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("3" in palautetut) {
+                            unfocusedContainerColor = if ("3" in palautetut && KayttajaSanat.size >= 13) {
                                 if (KayttajaSanat[12].lowercase() == d[2].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[12].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
-                            focusedContainerColor = if ("3" in palautetut) {
+                            focusedContainerColor = if ("3" in palautetut && KayttajaSanat.size >= 13) {
                                 if (KayttajaSanat[12].lowercase() == d[2].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[12].lowercase() in sana.lowercase()) {
@@ -714,14 +719,14 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         ),
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("3" in palautetut) {
+                            unfocusedContainerColor = if ("3" in palautetut && KayttajaSanat.size >= 14) {
                                 if (KayttajaSanat[13].lowercase() == d[3].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[13].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
-                            focusedContainerColor = if ("3" in palautetut) {
+                            focusedContainerColor = if ("3" in palautetut && KayttajaSanat.size >= 14) {
                                 if (KayttajaSanat[13].lowercase() == d[3].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[13].lowercase() in sana.lowercase()) {
@@ -747,14 +752,14 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         ),
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("3" in palautetut) {
+                            unfocusedContainerColor = if ("3" in palautetut && KayttajaSanat.size >= 15) {
                                 if (KayttajaSanat[14].lowercase() == d[4].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[14].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
-                            focusedContainerColor = if ("3" in palautetut) {
+                            focusedContainerColor = if ("3" in palautetut && KayttajaSanat.size >= 15) {
                                 if (KayttajaSanat[14].lowercase() == d[4].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[14].lowercase() in sana.lowercase()) {
@@ -794,14 +799,14 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         ),
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("4" in palautetut) {
+                            unfocusedContainerColor = if ("4" in palautetut && KayttajaSanat.size >= 16) {
                                 if (KayttajaSanat[15].lowercase() == d[0].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[15].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
-                            focusedContainerColor = if ("4" in palautetut) {
+                            focusedContainerColor = if ("4" in palautetut && KayttajaSanat.size >= 16) {
                                 if (KayttajaSanat[15].lowercase() == d[0].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[15].lowercase() in sana.lowercase()) {
@@ -827,14 +832,14 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         ),
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("4" in palautetut) {
+                            unfocusedContainerColor = if ("4" in palautetut && KayttajaSanat.size >= 17) {
                                 if (KayttajaSanat[16].lowercase() == d[1].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[16].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
-                            focusedContainerColor = if ("4" in palautetut) {
+                            focusedContainerColor = if ("4" in palautetut && KayttajaSanat.size >= 17) {
                                 if (KayttajaSanat[16].lowercase() == d[1].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[16].lowercase() in sana.lowercase()) {
@@ -860,14 +865,14 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         ),
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("4" in palautetut) {
+                            unfocusedContainerColor = if ("4" in palautetut && KayttajaSanat.size >= 18) {
                                 if (KayttajaSanat[17].lowercase() == d[2].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[17].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
-                            focusedContainerColor = if ("4" in palautetut) {
+                            focusedContainerColor = if ("4" in palautetut && KayttajaSanat.size >= 18) {
                                 if (KayttajaSanat[17].lowercase() == d[2].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[17].lowercase() in sana.lowercase()) {
@@ -893,14 +898,14 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         ),
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("4" in palautetut) {
+                            unfocusedContainerColor = if ("4" in palautetut && KayttajaSanat.size >= 19) {
                                 if (KayttajaSanat[18].lowercase() == d[3].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[18].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
-                            focusedContainerColor = if ("4" in palautetut) {
+                            focusedContainerColor = if ("4" in palautetut && KayttajaSanat.size >= 19) {
                                 if (KayttajaSanat[18].lowercase() == d[3].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[18].lowercase() in sana.lowercase()) {
@@ -926,14 +931,14 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         ),
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("4" in palautetut) {
+                            unfocusedContainerColor = if ("4" in palautetut && KayttajaSanat.size >= 20) {
                                 if (KayttajaSanat[19].lowercase() == d[4].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[19].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
-                            focusedContainerColor = if ("4" in palautetut) {
+                            focusedContainerColor = if ("4" in palautetut && KayttajaSanat.size >= 20) {
                                 if (KayttajaSanat[19].lowercase() == d[4].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[19].lowercase() in sana.lowercase()) {
@@ -973,14 +978,14 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         ),
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("5" in palautetut) {
+                            unfocusedContainerColor = if ("5" in palautetut && KayttajaSanat.size >= 21) {
                                 if (KayttajaSanat[20].lowercase() == d[0].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[20].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
-                            focusedContainerColor = if ("5" in palautetut) {
+                            focusedContainerColor = if ("5" in palautetut && KayttajaSanat.size >= 21) {
                                 if (KayttajaSanat[20].lowercase() == d[0].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[20].lowercase() in sana.lowercase()) {
@@ -1006,14 +1011,14 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         ),
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("5" in palautetut) {
+                            unfocusedContainerColor = if ("5" in palautetut && KayttajaSanat.size >= 22) {
                                 if (KayttajaSanat[21].lowercase() == d[1].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[21].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
-                            focusedContainerColor = if ("5" in palautetut) {
+                            focusedContainerColor = if ("5" in palautetut && KayttajaSanat.size >= 22) {
                                 if (KayttajaSanat[21].lowercase() == d[1].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[21].lowercase() in sana.lowercase()) {
@@ -1039,14 +1044,14 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         ),
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("5" in palautetut) {
+                            unfocusedContainerColor = if ("5" in palautetut && KayttajaSanat.size >= 23) {
                                 if (KayttajaSanat[22].lowercase() == d[2].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[22].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
-                            focusedContainerColor = if ("5" in palautetut) {
+                            focusedContainerColor = if ("5" in palautetut && KayttajaSanat.size >= 23) {
                                 if (KayttajaSanat[22].lowercase() == d[2].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[22].lowercase() in sana.lowercase()) {
@@ -1072,14 +1077,14 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         ),
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("5" in palautetut) {
+                            unfocusedContainerColor = if ("5" in palautetut && KayttajaSanat.size >= 24) {
                                 if (KayttajaSanat[23].lowercase() == d[3].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[23].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
-                            focusedContainerColor = if ("5" in palautetut) {
+                            focusedContainerColor = if ("5" in palautetut && KayttajaSanat.size >= 24) {
                                 if (KayttajaSanat[23].lowercase() == d[3].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[23].lowercase() in sana.lowercase()) {
@@ -1105,14 +1110,14 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         ),
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("5" in palautetut) {
+                            unfocusedContainerColor = if ("5" in palautetut && KayttajaSanat.size >= 25) {
                                 if (KayttajaSanat[24].lowercase() == d[4].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[24].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
-                            focusedContainerColor = if ("5" in palautetut) {
+                            focusedContainerColor = if ("5" in palautetut && KayttajaSanat.size >= 25) {
                                 if (KayttajaSanat[24].lowercase() == d[4].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[24].lowercase() in sana.lowercase()) {
@@ -1152,14 +1157,14 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         ),
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("6" in palautetut) {
+                            unfocusedContainerColor = if ("6" in palautetut && KayttajaSanat.size >= 26) {
                                 if (KayttajaSanat[25].lowercase() == d[0].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[25].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
-                            focusedContainerColor = if ("6" in palautetut) {
+                            focusedContainerColor = if ("6" in palautetut && KayttajaSanat.size >= 26) {
                                 if (KayttajaSanat[25].lowercase() == d[0].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[25].lowercase() in sana.lowercase()) {
@@ -1185,14 +1190,14 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         ),
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("6" in palautetut) {
+                            unfocusedContainerColor = if ("6" in palautetut && KayttajaSanat.size >= 27) {
                                 if (KayttajaSanat[26].lowercase() == d[1].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[26].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
-                            focusedContainerColor = if ("6" in palautetut) {
+                            focusedContainerColor = if ("6" in palautetut && KayttajaSanat.size >= 27) {
                                 if (KayttajaSanat[26].lowercase() == d[1].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[26].lowercase() in sana.lowercase()) {
@@ -1218,14 +1223,14 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         ),
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("6" in palautetut) {
+                            unfocusedContainerColor = if ("6" in palautetut && KayttajaSanat.size >= 28) {
                                 if (KayttajaSanat[27].lowercase() == d[2].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[27].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
-                            focusedContainerColor = if ("6" in palautetut) {
+                            focusedContainerColor = if ("6" in palautetut && KayttajaSanat.size >= 28) {
                                 if (KayttajaSanat[27].lowercase() == d[2].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[27].lowercase() in sana.lowercase()) {
@@ -1251,14 +1256,14 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         ),
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("6" in palautetut) {
+                            unfocusedContainerColor = if ("6" in palautetut && KayttajaSanat.size >= 29) {
                                 if (KayttajaSanat[28].lowercase() == d[3].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[28].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
-                            focusedContainerColor = if ("6" in palautetut) {
+                            focusedContainerColor = if ("6" in palautetut && KayttajaSanat.size >= 29) {
                                 if (KayttajaSanat[28].lowercase() == d[3].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[28].lowercase() in sana.lowercase()) {
@@ -1284,14 +1289,14 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         ),
                         shape = RoundedCornerShape(10.dp),
                         colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("6" in palautetut) {
+                            unfocusedContainerColor = if ("6" in palautetut && KayttajaSanat.size >= 30) {
                                 if (KayttajaSanat[29].lowercase() == d[4].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[29].lowercase() in sana.lowercase()) {
                                     Color.Yellow
                                 } else Color.Gray
                             } else White,
-                            focusedContainerColor = if ("6" in palautetut) {
+                            focusedContainerColor = if ("6" in palautetut && KayttajaSanat.size >= 30) {
                                 if (KayttajaSanat[29].lowercase() == d[4].lowercase()) {
                                     Color.Green
                                 } else if (KayttajaSanat[29].lowercase() in sana.lowercase()) {
@@ -2128,14 +2133,7 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                             disabledContainerColor = White,
                             disabledContentColor = White
                         ),
-                        onClick = {
-                            val sub = kaikkiKirjaimet.toList().subList(0, 5)
-                            if (sub.joinToString(separator = "").replace(",", "").lowercase().trim() !in sanat) {
-                                checkClickt = true
-                                return@Button
-                            }
-                            tarkista()
-                                  },
+                        onClick = { tarkista() },
                     ) {
                         Text(
                             "Tarkista",
@@ -2198,7 +2196,7 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                         onClick = {
                             isPopupOpen = false
                             nakyvatKirjaimetKohta = 0
-                            KayttajaSanat = emptyArray<String>()
+                            KayttajaSanat.clear()
                             nakyvatKirjaimet.clear()
                             kaikkiKirjaimet.clear()
                             palautettuKirjaimet.clear()
