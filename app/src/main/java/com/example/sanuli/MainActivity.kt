@@ -135,10 +135,6 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
             return
         }
         val sub = kaikkiKirjaimet.toList().subList(0, 5)
-        if (sub.joinToString(separator = "").replace(",", "").lowercase().trim() !in sanat) {
-            checkClickt = true
-            return
-        }
         KayttajaSanat += kaikkiKirjaimet
         kaydytNumerot.clear()
         kaydytKirjaimet.clear()
@@ -1330,7 +1326,7 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                     }
                     Text(huijausClicktText, color = White, fontSize = 25.sp)
                 }
-                //if user puts just random characters and it is not in the sanat list shows text for that 10000 milliseconds
+                //if user puts just random characters and it is not in the sanat list shows text
                 if (checkClickt) {
                     Text("Ei sanulistalla.", color = White, fontSize = 25.sp)
                 }
@@ -2132,7 +2128,14 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                             disabledContainerColor = White,
                             disabledContentColor = White
                         ),
-                        onClick = { tarkista() },
+                        onClick = {
+                            val sub = kaikkiKirjaimet.toList().subList(0, 5)
+                            if (sub.joinToString(separator = "").replace(",", "").lowercase().trim() !in sanat) {
+                                checkClickt = true
+                                return@Button
+                            }
+                            tarkista()
+                                  },
                     ) {
                         Text(
                             "Tarkista",
