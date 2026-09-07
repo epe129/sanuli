@@ -51,9 +51,13 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.runtime.LaunchedEffect
+import kotlinx.coroutines.delay
 import java.io.IOException
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
+import kotlin.time.TimeSource
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -91,6 +95,10 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
     var KayttajaSanat = remember { emptyArray<String>() }
     val nakyvatKirjaimet = remember { mutableStateListOf<String>() }
     var nakyvatKirjaimetKohta by remember { mutableIntStateOf(0) }
+    var huijausClickt by remember { mutableStateOf(false) }
+    var huijausClicktText by remember { mutableStateOf("") }
+    var checkClickt by remember { mutableStateOf(false) }
+    val sanat = remember { mutableStateListOf<String>() }
 
     // gets words from json file
     try {
@@ -101,6 +109,11 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
 
     // makes the json to list
     val sanatTOlist = remember { jsonString.replace("""[{}:"]""".toRegex(), "").replace("sanat", "").replace("]", "").replace("[", "").lowercase().trim().split(",") }
+
+    // adds the word to the sanat list because the original list has whitespace in every word
+    for (c in sanatTOlist) {
+        sanat.add(c.trim())
+    }
 
     // gets the random word from sanat sanatTOList
     var sana by remember(sanatTOlist) { mutableStateOf(sanatTOlist.random().trim()) }
@@ -121,10 +134,13 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
         if (kaikkiKirjaimet.size < 5) {
             return
         }
+        val sub = kaikkiKirjaimet.toList().subList(0, 5)
+        if (sub.joinToString(separator = "").replace(",", "").lowercase().trim() !in sanat) {
+            return
+        }
         KayttajaSanat += kaikkiKirjaimet
         kaydytNumerot.clear()
         kaydytKirjaimet.clear()
-        val sub = kaikkiKirjaimet.toList().subList(0, 5)
         // check if right
         if (sub.size < 5) {
             return
@@ -1294,25 +1310,35 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                             .width(75.dp)
                     )
                 }
-                // todo taimeri jonka avulla button häviää noin 0.5-1 sekunnin jälkeen
                 // cheat button what shows the correct word
-                // https://kotlinlang.org/docs/time-measurement.html#measure-differences-in-time
-                val fiveSeconds: Duration = 5.seconds
-                if () {
-                    var huijaus by remember { mutableStateOf("") }
-                    Button(
-                        onClick = {
-                            huijaus = sana
-                        },
-                        colors = ButtonColors(
-                            containerColor = Color.Transparent,
-                            contentColor = Color.Transparent,
-                            disabledContainerColor = Color.Transparent,
-                            disabledContentColor = Color.Transparent,
-                        ),
-                    ) {
-                        Text(huijaus, color = White, fontSize = 25.sp)
+                Button(
+                    onClick = {
+                        huijausClicktText = sana
+                        huijausClickt = true
+                    },
+                    colors = ButtonColors(
+                        containerColor = Color.Transparent,
+                        contentColor = Color.Transparent,
+                        disabledContainerColor = Color.Transparent,
+                        disabledContentColor = Color.Transparent,
+                    ),
+                ) {}
+                // shows the cheating text for 250 milliseconds
+                if (huijausClickt) {
+                    LaunchedEffect(key1 = Unit){
+                        delay(250.milliseconds)
+                        huijausClicktText = ""
+                        huijausClickt = false
                     }
+                    Text(huijausClicktText, color = White, fontSize = 25.sp)
+                }
+                //if user puts just random characters and it is not in the sanat list shows text for that 10000 milliseconds
+                if (checkClickt) {
+                    LaunchedEffect(key1 = Unit){
+                        delay(10000.milliseconds)
+                        checkClickt = false
+                    }
+                    Text("Ei sanulistalla.", color = White, fontSize = 25.sp)
                 }
             }
             // KEYBOARD /////////////////////////////////////////////////////////////////////////////////////////////////////////////
