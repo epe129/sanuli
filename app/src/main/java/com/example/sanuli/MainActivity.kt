@@ -136,6 +136,7 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
         }
         val sub = kaikkiKirjaimet.toList().subList(0, 5)
         if (sub.joinToString(separator = "").replace(",", "").lowercase().trim() !in sanat) {
+            checkClickt = true
             return
         }
         KayttajaSanat += kaikkiKirjaimet
@@ -202,9 +203,6 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
     for (i in sana) {
         d.add(i.toString().lowercase())
     }
-
-    // cheat when testing
-    println(sana)
 
     // shows the sanuli game if game is over doesn't show
     if (showContent) {
@@ -1334,13 +1332,10 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                 }
                 //if user puts just random characters and it is not in the sanat list shows text for that 10000 milliseconds
                 if (checkClickt) {
-                    LaunchedEffect(key1 = Unit){
-                        delay(10000.milliseconds)
-                        checkClickt = false
-                    }
                     Text("Ei sanulistalla.", color = White, fontSize = 25.sp)
                 }
             }
+
             // KEYBOARD /////////////////////////////////////////////////////////////////////////////////////////////////////////////
             Column(
                 modifier = Modifier.fillMaxWidth().height(200.dp).offset(0.dp, -25.dp),
