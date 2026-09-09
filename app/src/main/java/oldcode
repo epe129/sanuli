@@ -524,3 +524,9 @@ if (arvauksienMaara == 0) {
 
                                 println("\n")
                                         println(KayttajaSanat[0][0])
+
+                                        //    val sanat = remember { mutableStateListOf<String>() }
+// adds the word to the sanat list because the original list has whitespace in every word
+    //for (c in sanatTOlist) {
+      //  sanat.add(c.trim())
+    //}

@@ -98,7 +98,6 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
     var huijausClickt by remember { mutableStateOf(false) }
     var huijausClicktText by remember { mutableStateOf("") }
     var checkClickt by remember { mutableStateOf(false) }
-//    val sanat = remember { mutableStateListOf<String>() }
 
     // gets words from json file
     try {
@@ -109,11 +108,6 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
 
     // makes the json to list
     val sanatTOlist = remember { jsonString.replace("""[{}:"]""".toRegex(), "").replace("sanat", "").replace("]", "").replace("[", "").lowercase().trim().split(",") .map { it.trim() } }
-
-    // adds the word to the sanat list because the original list has whitespace in every word
-    //for (c in sanatTOlist) {
-      //  sanat.add(c.trim())
-    //}
 
     // gets the random word from sanat sanatTOList
     var sana by remember(sanatTOlist) { mutableStateOf(sanatTOlist.random().trim()) }
@@ -128,6 +122,7 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
         nykyKohta += 1
         nakyvatKirjaimetKohta += 1
     }
+
     // check if user got the word correct
     fun tarkista() {
         checkClickt = false
