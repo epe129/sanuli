@@ -134,7 +134,6 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
             checkClickt = true
             return
         }
-        //KayttajaSanat += kaikkiKirjaimet
         KayttajaSanat.addAll(kaikkiKirjaimet)
         kaydytNumerot.clear()
         kaydytKirjaimet.clear()
@@ -2123,8 +2122,8 @@ fun Game(context: Context, modifier: Modifier = Modifier) {
                             .width(180.dp)
                             .clip(RoundedCornerShape(0.dp)),
                         colors = ButtonColors(
-                            containerColor = Color.Green,
-                            contentColor = Color.Green,
+                            containerColor = Color(0xFF1B5E20),
+                            contentColor = Color(0xFF1B5E20),
                             disabledContainerColor = White,
                             disabledContentColor = White
                         ),

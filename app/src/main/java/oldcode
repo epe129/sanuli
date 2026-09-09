@@ -530,3 +530,5 @@ if (arvauksienMaara == 0) {
     //for (c in sanatTOlist) {
       //  sanat.add(c.trim())
     //}
+
+            //KayttajaSanat += kaikkiKirjaimet
