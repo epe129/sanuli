@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxSize
@@ -38,8 +40,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Popup
 import com.example.sanuli.ui.theme.SanuliTheme
 import kotlin.collections.mutableListOf
 import android.content.Context
@@ -49,6 +53,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.LaunchedEffect
 import kotlinx.coroutines.delay
+import java.io.IOException
 import kotlin.time.Duration.Companion.milliseconds
 
 class MainActivity : ComponentActivity() {
@@ -60,19 +65,6 @@ class MainActivity : ComponentActivity() {
                 Scaffold(modifier = Modifier.fillMaxSize(), containerColor = Color.DarkGray) { innerPadding -> Game(modifier = Modifier.padding(innerPadding), context = this) }
             }
         }
-    }
-}
-
-object DataManager {
-    var data = ""
-    fun loadAssetsFromFile(context : Context) {
-        val inputStream = context.assets.open("sanat.json")
-        val size : Int = inputStream.available()
-        val buffer = ByteArray(size)
-        inputStream.read(buffer)
-        inputStream.close()
-        val json = String(buffer, charset = Charsets.UTF_8)
-        data = json
     }
 }
 
@@ -88,20 +80,27 @@ fun Game(context: Context, modifier: Modifier) {
     val palautettuKirjaimet = remember { mutableStateListOf<String>() }
     val paikat = remember { mutableStateListOf<String>() }
     val kirjaimet = listOf("Q", "W", "E","R","T","Y","U","I","O","P","Å","A","S","D","F","G","H","J","K","L","Ö","Ä","Z","X","C","V","B","N","M")
+    var jsonString = ""
     val kaydytNumerot = remember { mutableStateListOf<String>() }
     val kaydytKirjaimet = remember { mutableStateListOf<String>() }
     val kayttajaSanat = remember { mutableStateListOf<String>() }
-    val nakyvatKirjaimet = remember { mutableStateListOf<String>("","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","") }
+    val nakyvatKirjaimet = remember { mutableStateListOf<String>() }
     var nakyvatKirjaimetKohta by remember { mutableIntStateOf(0) }
     var huijausClickt by remember { mutableStateOf(false) }
     var huijausClicktText by remember { mutableStateOf("") }
     var checkClickt by remember { mutableStateOf(false) }
 
-    // makes the json to list and gets the data from json using object data
-    DataManager.loadAssetsFromFile(context)
-    val sanatTOlist =  remember { DataManager.data.replace("""[{}:"]""".toRegex(), "").replace("sanat", "").replace("]", "").replace("[", "").lowercase().trim().split(",") .map { it.trim() } }
+    // gets words from json file
+    try {
+        jsonString = context.assets.open("sanat.json").bufferedReader().use { it.readText() }
+    } catch (ioException: IOException) {
+        ioException.printStackTrace()
+    }
 
-    // gets the random word from sanatTOList
+    // makes the json to list
+    val sanatTOlist = remember { jsonString.replace("""[{}:"]""".toRegex(), "").replace("sanat", "").replace("]", "").replace("[", "").lowercase().trim().split(",") .map { it.trim() } }
+
+    // gets the random word from sanat sanatTOList
     var sana by remember(sanatTOlist) { mutableStateOf(sanatTOlist.random().trim()) }
 
     // adds kirjain to the list's
@@ -110,7 +109,7 @@ fun Game(context: Context, modifier: Modifier) {
             return
         }
         kaikkiKirjaimet.add(nykyKohta, kirjain)
-        nakyvatKirjaimet.add(nakyvatKirjaimetKohta, kirjain)
+        nakyvatKirjaimet.add(kirjain)
         nykyKohta += 1
         nakyvatKirjaimetKohta += 1
     }
@@ -218,46 +217,7 @@ fun Game(context: Context, modifier: Modifier) {
                     verticalArrangement = Arrangement.Center,
                     maxItemsInEachRow = 5
                 ) {
-                    nakyvatKirjaimet.forEachIndexed { index, item ->
-                        if(index == 5) {
-                            return@forEachIndexed
-                        }
-                        OutlinedTextField(
-                            value = nakyvatKirjaimet[index],
-                            onValueChange = {
-                                nakyvatKirjaimet[index] = it
-                            },
-                            readOnly = true,
-                            singleLine = true,
-                            textStyle = TextStyle(
-                                color = Color.Black,
-                                fontWeight = FontWeight.Bold,
-                                textAlign = TextAlign.Center,
-                                fontSize = 24.sp
-                            ),
-                            colors = TextFieldDefaults.colors(
-                                unfocusedContainerColor = if ("1" in palautetut && kayttajaSanat.isNotEmpty()) {
-                                    if (kayttajaSanat[index].lowercase() == d[index].lowercase()) {
-                                        Color.Green
-                                    } else if (kayttajaSanat[index].lowercase() in sana.lowercase()) {
-                                        Color.Yellow
-                                    } else Color.Gray
-                                } else White,
-                                focusedContainerColor = if ("1" in palautetut && kayttajaSanat.isNotEmpty()) {
-                                    if (kayttajaSanat[index].lowercase() == d[index].lowercase()) {
-                                        Color.Green
-                                    } else if (kayttajaSanat[index].lowercase() in sana.lowercase()) {
-                                        Color.Yellow
-                                    } else Color.Gray
-                                } else White,
-                                focusedIndicatorColor = White,
-                            ),
-                            shape = RoundedCornerShape(10.dp),
-                            modifier = Modifier
-                                .width(75.dp),
-                        )
-                    }
-                  /*  OutlinedTextField(
+                    OutlinedTextField(
                         value = if (nakyvatKirjaimet.isNotEmpty()) { nakyvatKirjaimet[0] } else "",
                         readOnly = true,
                         onValueChange = {},
@@ -436,7 +396,7 @@ fun Game(context: Context, modifier: Modifier) {
                         ),
                         modifier = Modifier
                             .width(75.dp),
-                    )*/
+                    )
                 }
 
                 // rivi 2
@@ -2176,30 +2136,67 @@ fun Game(context: Context, modifier: Modifier) {
             ) {
                 Text("How to play",  color = White, fontSize = 25.sp, textAlign = TextAlign.Center, modifier = Modifier.padding(0.dp, 0.dp, 0.dp, 15.dp))
                 Text(
-                        "All words are finnish words. \n" +
-                        "\n" +
-                        "You have six tries to guess the word correct and the word length is always 5 character.\n" +
-                        "\n" +
-                        "Green on the keyboard key or in the character box means the character is in the right place and it is in the word.\n" +
-                        "\n" +
-                        "Yellow on the keyboard key or in the character box means the character is not in the right place but the character is in the word.\n" +
-                        "\n" +
-                        "Gray on the keyboard key or in the character box means the character is not in the right place and it is not in the word.\n",
-                        color = White, fontSize = 20.sp, textAlign = TextAlign.Center
-                    )
+                    "All words are finnish words. \n" +
+                            "\n" +
+                            "You have six tries to guess the word correct and the word length is always 5 character.\n" +
+                            "\n" +
+                            "Green on the keyboard key or in the character box means the character is in the right place and it is in the word.\n" +
+                            "\n" +
+                            "Yellow on the keyboard key or in the character box means the character is not in the right place but the character is in the word.\n" +
+                            "\n" +
+                            "Gray on the keyboard key or in the character box means the character is not in the right place and it is not in the word.\n",
+                    color = White, fontSize = 20.sp, textAlign = TextAlign.Center
+                )
             }
         }
     }
+
+    // popup opens when the game is over
     if (isPopupOpen) {
-        Popup(onDismissRequest = { isPopupOpen = false; showContent = true; sana = sanatTOlist.random().trim() }, isRight, sana)
-        nakyvatKirjaimetKohta = 0
-        kayttajaSanat.clear()
-        nakyvatKirjaimet.clear()
-        kaikkiKirjaimet.clear()
-        palautettuKirjaimet.clear()
-        paikat.clear()
-        arvauksienMaara = 0
-        isRight = "ARVASIT OKEIN!!"
-        palautetut.clear()
+        Popup(
+            // Positions the popup relative to the button
+            alignment = Alignment.TopCenter,
+            // Shifts the popup by (x, y) in pixels
+            offset = IntOffset(0, 370),
+            // Hides the popup when it is dismissed, for example, when the user clicks outside it
+            onDismissRequest = { isPopupOpen = true }
+        ) {
+            Box(
+                Modifier
+                    .background(Color.LightGray, RoundedCornerShape(4.dp))
+                    .padding(12.dp)
+                    .height(300.dp)
+                    .fillMaxWidth(),
+                contentAlignment = Alignment.Center,
+            ) {
+                Column(
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(isRight, textAlign = TextAlign.Center)
+                    Text(sana)
+                    Button(
+                        // clears all the values
+                        onClick = {
+                            isPopupOpen = false
+                            nakyvatKirjaimetKohta = 0
+                            kayttajaSanat.clear()
+                            nakyvatKirjaimet.clear()
+                            kaikkiKirjaimet.clear()
+                            palautettuKirjaimet.clear()
+                            paikat.clear()
+                            arvauksienMaara = 0
+                            showContent = true
+                            isRight = "ARVASIT OKEIN!!"
+                            sana = sanatTOlist.random().trim()
+                            palautetut.clear()
+                        },
+                        modifier = Modifier.offset(0.dp, 20.dp),
+                    ) {
+                        Text("Uudestaan")
+                    }
+                }
+            }
+        }
     }
 }

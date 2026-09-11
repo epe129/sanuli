@@ -532,3 +532,13 @@ if (arvauksienMaara == 0) {
     //}
 
             //KayttajaSanat += kaikkiKirjaimet
+
+    //val sanatTOlist = remember { jsonString.replace("""[{}:"]""".toRegex(), "").replace("sanat", "").replace("]", "").replace("[", "").lowercase().trim().split(",") .map { it.trim() } }
+    //var jsonString = ""
+// gets words from json file
+   // try {
+     //   jsonString = context.assets.open("sanat.json").bufferedReader().use { it.readText() }
+   // } catch (ioException: IOException) {
+      //  ioException.printStackTrace()
+    //}
+
