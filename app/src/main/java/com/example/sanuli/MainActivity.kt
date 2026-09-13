@@ -80,7 +80,7 @@ object DataManager {
 fun Game(context: Context, modifier: Modifier) {
     var showContent by remember { mutableStateOf(true) }
     var isPopupOpen by remember { mutableStateOf(false) }
-    var isRight by remember { mutableStateOf("ARVASIT OIKEIN!!") }
+    var isRight by remember { mutableStateOf("") }
     val kaikkiKirjaimet = remember { mutableStateListOf<String>() }
     var arvauksienMaara by remember { mutableIntStateOf(0) }
     var nykyKohta by remember { mutableIntStateOf(0) }
@@ -144,6 +144,7 @@ fun Game(context: Context, modifier: Modifier) {
                 }
             }
             if (sub == sana) {
+                isRight = "ARVASIT OIKEIN!!"
                 isPopupOpen = true
                 showContent = false
             }
@@ -229,9 +230,9 @@ fun Game(context: Context, modifier: Modifier) {
                 ) {
                     nakyvatKirjaimetKAIKKI.forEachIndexed { index, item ->
                         OutlinedTextField(
-                            value = if (index < 5) { nakyvatKirjaimetKAIKKI[index] } else return@forEachIndexed,
+                            value = if (index <= 4) { nakyvatKirjaimetKAIKKI[index] } else return@forEachIndexed,
                             onValueChange = {
-                                if (index < 5) { nakyvatKirjaimetKAIKKI[index] = it  } else return@OutlinedTextField
+                                if (index <= 4) { nakyvatKirjaimetKAIKKI[index] = it  } else return@OutlinedTextField
                             },
                             readOnly = true,
                             singleLine = true,
@@ -276,9 +277,9 @@ fun Game(context: Context, modifier: Modifier) {
                 ) {
                     nakyvatKirjaimetKAIKKI.forEachIndexed { index, item ->
                         OutlinedTextField(
-                            value = if (index > 4 && index < 10) { nakyvatKirjaimetKAIKKI[index] } else return@forEachIndexed,
+                            value = if (index >= 5 && index <= 9) { nakyvatKirjaimetKAIKKI[index] } else return@forEachIndexed,
                             onValueChange = {
-                                if (index > 4 && index < 10) { nakyvatKirjaimetKAIKKI[index] = it  } else return@OutlinedTextField
+                                if (index >= 5 && index <= 9) { nakyvatKirjaimetKAIKKI[index] = it  } else return@OutlinedTextField
                             },
                             readOnly = true,
                             singleLine = true,
@@ -288,15 +289,15 @@ fun Game(context: Context, modifier: Modifier) {
                                 textAlign = TextAlign.Center,
                                 fontSize = 24.sp
                             ),
-                            /*colors = TextFieldDefaults.colors(
-                                unfocusedContainerColor = if ("2" in palautetut && kayttajaSanat.size >= 6) {
+                          /*  colors = TextFieldDefaults.colors(
+                                unfocusedContainerColor = if ("2" in palautetut && kayttajaSanat.size >= 6 && index > 4 && index < 10) {
                                     if (kayttajaSanat[index].lowercase() == d[index].lowercase()) {
                                         Color.Green
                                     } else if (kayttajaSanat[index].lowercase() in sana.lowercase()) {
                                         Color.Yellow
                                     } else Color.Gray
                                 } else White,
-                                focusedContainerColor = if ("2" in palautetut && kayttajaSanat.size >= 6) {
+                                focusedContainerColor = if ("2" in palautetut && kayttajaSanat.size >= 6 && index > 4 && index < 10) {
                                     if (kayttajaSanat[index].lowercase() == d[index].lowercase()) {
                                         Color.Green
                                     } else if (kayttajaSanat[index].lowercase() in sana.lowercase()) {
@@ -310,176 +311,6 @@ fun Game(context: Context, modifier: Modifier) {
                                 .width(75.dp),
                         )
                     }
-
-
-                    /*OutlinedTextField(
-                        value = if (nakyvatKirjaimet.size >= 6) { nakyvatKirjaimet[5] } else "",
-                        readOnly = true,
-                        onValueChange = {},
-                        singleLine = true,
-                        textStyle = TextStyle(
-                            color = Color.Black,
-                            fontWeight = FontWeight.Bold,
-                            textAlign = TextAlign.Center,
-                            fontSize = 24.sp
-                        ),
-                        keyboardOptions = KeyboardOptions(
-                            showKeyboardOnFocus = false,
-                            imeAction = ImeAction.Next
-                        ),
-                        shape = RoundedCornerShape(10.dp),
-                        colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("2" in palautetut && kayttajaSanat.size >= 6) {
-                                if (kayttajaSanat[5].lowercase() == d[0].lowercase()) {
-                                    Color.Green
-                                } else if (kayttajaSanat[5].lowercase() in sana.lowercase()) {
-                                    Color.Yellow
-                                } else Color.Gray
-                            } else White,
-                            focusedContainerColor = if ("2" in palautetut && kayttajaSanat.size >= 6) {
-                                if (kayttajaSanat[5].lowercase() == d[0].lowercase()) {
-                                    Color.Green
-                                } else if (kayttajaSanat[5].lowercase() in sana.lowercase()) {
-                                    Color.Yellow
-                                } else Color.Gray
-                            } else White,
-                            focusedIndicatorColor = White,
-                        ),
-                        modifier = Modifier
-                            .width(75.dp)
-                    )
-                    OutlinedTextField(
-                        value = if (nakyvatKirjaimet.size >= 7) { nakyvatKirjaimet[6] } else "",
-                        readOnly = true,
-                        onValueChange = {},
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions(showKeyboardOnFocus = false),
-                        textStyle = TextStyle(
-                            color = Color.Black,
-                            fontWeight = FontWeight.Bold,
-                            textAlign = TextAlign.Center,
-                            fontSize = 24.sp
-                        ),
-                        shape = RoundedCornerShape(10.dp),
-                        colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("2" in palautetut && kayttajaSanat.size >= 7) {
-                                if (kayttajaSanat[6].lowercase() == d[1].lowercase()) {
-                                    Color.Green
-                                } else if (kayttajaSanat[6].lowercase() in sana.lowercase()) {
-                                    Color.Yellow
-                                } else Color.Gray
-                            } else White,
-                            focusedContainerColor = if ("2" in palautetut && kayttajaSanat.size >= 7) {
-                                if (kayttajaSanat[6].lowercase() == d[1].lowercase()) {
-                                    Color.Green
-                                } else if (kayttajaSanat[6].lowercase() in sana.lowercase()) {
-                                    Color.Yellow
-                                } else Color.Gray
-                            } else White,
-                            focusedIndicatorColor = White,
-                        ),
-                        modifier = Modifier
-                            .width(75.dp)
-                    )
-                    OutlinedTextField(
-                        value = if (nakyvatKirjaimet.size >= 8) { nakyvatKirjaimet[7] } else "",
-                        readOnly = true,
-                        onValueChange = {},
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions(showKeyboardOnFocus = false),
-                        textStyle = TextStyle(
-                            color = Color.Black,
-                            fontWeight = FontWeight.Bold,
-                            textAlign = TextAlign.Center,
-                            fontSize = 24.sp
-                        ),
-                        shape = RoundedCornerShape(10.dp),
-                        colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("2" in palautetut && kayttajaSanat.size >= 8) {
-                                if (kayttajaSanat[7].lowercase() == d[2].lowercase()) {
-                                    Color.Green
-                                } else if (kayttajaSanat[7].lowercase() in sana.lowercase()) {
-                                    Color.Yellow
-                                } else Color.Gray
-                            } else White,
-                            focusedContainerColor = if ("2" in palautetut && kayttajaSanat.size >= 8) {
-                                if (kayttajaSanat[7].lowercase() == d[2].lowercase()) {
-                                    Color.Green
-                                } else if (kayttajaSanat[7].lowercase() in sana.lowercase()) {
-                                    Color.Yellow
-                                } else Color.Gray
-                            } else White,
-                            focusedIndicatorColor = White,
-                        ),
-                        modifier = Modifier
-                            .width(75.dp)
-                    )
-                    OutlinedTextField(
-                        value = if (nakyvatKirjaimet.size >= 9) { nakyvatKirjaimet[8] } else "",
-                        readOnly = true,
-                        onValueChange = {},
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions(showKeyboardOnFocus = false),
-                        textStyle = TextStyle(
-                            color = Color.Black,
-                            fontWeight = FontWeight.Bold,
-                            textAlign = TextAlign.Center,
-                            fontSize = 24.sp
-                        ),
-                        shape = RoundedCornerShape(10.dp),
-                        colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("2" in palautetut && kayttajaSanat.size >= 9) {
-                                if (kayttajaSanat[8].lowercase() == d[3].lowercase()) {
-                                    Color.Green
-                                } else if (kayttajaSanat[8].lowercase() in sana.lowercase()) {
-                                    Color.Yellow
-                                } else Color.Gray
-                            } else White,
-                            focusedContainerColor = if ("2" in palautetut && kayttajaSanat.size >= 9) {
-                                if (kayttajaSanat[8].lowercase() == d[3].lowercase()) {
-                                    Color.Green
-                                } else if (kayttajaSanat[8].lowercase() in sana.lowercase()) {
-                                    Color.Yellow
-                                } else Color.Gray
-                            } else White,
-                            focusedIndicatorColor = White,
-                        ),
-                        modifier = Modifier
-                            .width(75.dp)
-                    )
-                    OutlinedTextField(
-                        value = if (nakyvatKirjaimet.size >= 10) { nakyvatKirjaimet[9] } else "",
-                        readOnly = true,
-                        onValueChange = {},
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions(showKeyboardOnFocus = false),
-                        textStyle = TextStyle(
-                            color = Color.Black,
-                            fontWeight = FontWeight.Bold,
-                            textAlign = TextAlign.Center,
-                            fontSize = 24.sp
-                        ),
-                        shape = RoundedCornerShape(10.dp),
-                        colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("2" in palautetut && kayttajaSanat.size >= 10) {
-                                if (kayttajaSanat[9].lowercase() == d[4].lowercase()) {
-                                    Color.Green
-                                } else if (kayttajaSanat[9].lowercase() in sana.lowercase()) {
-                                    Color.Yellow
-                                } else Color.Gray
-                            } else White,
-                            focusedContainerColor = if ("2" in palautetut && kayttajaSanat.size >= 10) {
-                                if (kayttajaSanat[9].lowercase() == d[4].lowercase()) {
-                                    Color.Green
-                                } else if (kayttajaSanat[9].lowercase() in sana.lowercase()) {
-                                    Color.Yellow
-                                } else Color.Gray
-                            } else White,
-                            focusedIndicatorColor = White,
-                        ),
-                        modifier = Modifier
-                            .width(75.dp)
-                    )*/
                 }
 
                 // rivi 3
@@ -491,174 +322,42 @@ fun Game(context: Context, modifier: Modifier) {
                     verticalArrangement = Arrangement.Center,
                     maxItemsInEachRow = 5
                 ) {
-                    /*OutlinedTextField(
-                        value = if (nakyvatKirjaimet.size >= 11) { nakyvatKirjaimet[10] } else "",
-                        readOnly = true,
-                        onValueChange = {},
-                        singleLine = true,
-                        textStyle = TextStyle(
-                            color = Color.Black,
-                            fontWeight = FontWeight.Bold,
-                            textAlign = TextAlign.Center,
-                            fontSize = 24.sp
-                        ),
-                        keyboardOptions = KeyboardOptions(
-                            showKeyboardOnFocus = false,
-                            imeAction = ImeAction.Next
-                        ),
-                        shape = RoundedCornerShape(10.dp),
-                        colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("3" in palautetut && kayttajaSanat.size >= 11) {
-                                if (kayttajaSanat[10].lowercase() == d[0].lowercase()) {
-                                    Color.Green
-                                } else if (kayttajaSanat[10].lowercase() in sana.lowercase()) {
-                                    Color.Yellow
-                                } else Color.Gray
-                            } else White,
-                            focusedContainerColor = if ("3" in palautetut && kayttajaSanat.size >= 11) {
-                                if (kayttajaSanat[10].lowercase() == d[0].lowercase()) {
-                                    Color.Green
-                                } else if (kayttajaSanat[10].lowercase() in sana.lowercase()) {
-                                    Color.Yellow
-                                } else Color.Gray
-                            } else White,
-                            focusedIndicatorColor = White,
-                        ),
-                        modifier = Modifier
-                            .width(75.dp)
-                    )
-                    OutlinedTextField(
-                        value = if (nakyvatKirjaimet.size >= 12) { nakyvatKirjaimet[11] } else "",
-                        readOnly = true,
-                        onValueChange = {},
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions(showKeyboardOnFocus = false),
-                        textStyle = TextStyle(
-                            color = Color.Black,
-                            fontWeight = FontWeight.Bold,
-                            textAlign = TextAlign.Center,
-                            fontSize = 24.sp
-                        ),
-                        shape = RoundedCornerShape(10.dp),
-                        colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("3" in palautetut && kayttajaSanat.size >= 12) {
-                                if (kayttajaSanat[11].lowercase() == d[1].lowercase()) {
-                                    Color.Green
-                                } else if (kayttajaSanat[11].lowercase() in sana.lowercase()) {
-                                    Color.Yellow
-                                } else Color.Gray
-                            } else White,
-                            focusedContainerColor = if ("3" in palautetut && kayttajaSanat.size >= 12) {
-                                if (kayttajaSanat[11].lowercase() == d[1].lowercase()) {
-                                    Color.Green
-                                } else if (kayttajaSanat[11].lowercase() in sana.lowercase()) {
-                                    Color.Yellow
-                                } else Color.Gray
-                            } else White,
-                            focusedIndicatorColor = White,
-                        ),
-                        modifier = Modifier
-                            .width(75.dp)
-                    )
-                    OutlinedTextField(
-                        value = if (nakyvatKirjaimet.size >= 13) { nakyvatKirjaimet[12] } else "",
-                        readOnly = true,
-                        onValueChange = {},
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions(showKeyboardOnFocus = false),
-                        textStyle = TextStyle(
-                            color = Color.Black,
-                            fontWeight = FontWeight.Bold,
-                            textAlign = TextAlign.Center,
-                            fontSize = 24.sp
-                        ),
-                        shape = RoundedCornerShape(10.dp),
-                        colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("3" in palautetut && kayttajaSanat.size >= 13) {
-                                if (kayttajaSanat[12].lowercase() == d[2].lowercase()) {
-                                    Color.Green
-                                } else if (kayttajaSanat[12].lowercase() in sana.lowercase()) {
-                                    Color.Yellow
-                                } else Color.Gray
-                            } else White,
-                            focusedContainerColor = if ("3" in palautetut && kayttajaSanat.size >= 13) {
-                                if (kayttajaSanat[12].lowercase() == d[2].lowercase()) {
-                                    Color.Green
-                                } else if (kayttajaSanat[12].lowercase() in sana.lowercase()) {
-                                    Color.Yellow
-                                } else Color.Gray
-                            } else White,
-                            focusedIndicatorColor = White,
-                        ),
-                        modifier = Modifier
-                            .width(75.dp)
-                    )
-                    OutlinedTextField(
-                        value = if (nakyvatKirjaimet.size >= 14) { nakyvatKirjaimet[13] } else "",
-                        readOnly = true,
-                        onValueChange = {},
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions(showKeyboardOnFocus = false),
-                        textStyle = TextStyle(
-                            color = Color.Black,
-                            fontWeight = FontWeight.Bold,
-                            textAlign = TextAlign.Center,
-                            fontSize = 24.sp
-                        ),
-                        shape = RoundedCornerShape(10.dp),
-                        colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("3" in palautetut && kayttajaSanat.size >= 14) {
-                                if (kayttajaSanat[13].lowercase() == d[3].lowercase()) {
-                                    Color.Green
-                                } else if (kayttajaSanat[13].lowercase() in sana.lowercase()) {
-                                    Color.Yellow
-                                } else Color.Gray
-                            } else White,
-                            focusedContainerColor = if ("3" in palautetut && kayttajaSanat.size >= 14) {
-                                if (kayttajaSanat[13].lowercase() == d[3].lowercase()) {
-                                    Color.Green
-                                } else if (kayttajaSanat[13].lowercase() in sana.lowercase()) {
-                                    Color.Yellow
-                                } else Color.Gray
-                            } else White,
-                            focusedIndicatorColor = White,
-                        ),
-                        modifier = Modifier
-                            .width(75.dp)
-                    )
-                    OutlinedTextField(
-                        value = if (nakyvatKirjaimet.size >= 15) { nakyvatKirjaimet[14] } else "",
-                        readOnly = true,
-                        onValueChange = {},
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions(showKeyboardOnFocus = false),
-                        textStyle = TextStyle(
-                            color = Color.Black,
-                            fontWeight = FontWeight.Bold,
-                            textAlign = TextAlign.Center,
-                            fontSize = 24.sp
-                        ),
-                        shape = RoundedCornerShape(10.dp),
-                        colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("3" in palautetut && kayttajaSanat.size >= 15) {
-                                if (kayttajaSanat[14].lowercase() == d[4].lowercase()) {
-                                    Color.Green
-                                } else if (kayttajaSanat[14].lowercase() in sana.lowercase()) {
-                                    Color.Yellow
-                                } else Color.Gray
-                            } else White,
-                            focusedContainerColor = if ("3" in palautetut && kayttajaSanat.size >= 15) {
-                                if (kayttajaSanat[14].lowercase() == d[4].lowercase()) {
-                                    Color.Green
-                                } else if (kayttajaSanat[14].lowercase() in sana.lowercase()) {
-                                    Color.Yellow
-                                } else Color.Gray
-                            } else White,
-                            focusedIndicatorColor = White,
-                        ),
-                        modifier = Modifier
-                            .width(75.dp)
-                    )*/
+                    nakyvatKirjaimetKAIKKI.forEachIndexed { index, item ->
+                        OutlinedTextField(
+                            value = if (index >= 10 && index <= 15) { nakyvatKirjaimetKAIKKI[index] } else return@forEachIndexed,
+                            onValueChange = {
+                                if (index >= 10 && index <= 15) { nakyvatKirjaimetKAIKKI[index] = it  } else return@OutlinedTextField
+                            },
+                            readOnly = true,
+                            singleLine = true,
+                            textStyle = TextStyle(
+                                color = Color.Black,
+                                fontWeight = FontWeight.Bold,
+                                textAlign = TextAlign.Center,
+                                fontSize = 24.sp
+                            ),
+                            /*  colors = TextFieldDefaults.colors(
+                                  unfocusedContainerColor = if ("2" in palautetut && kayttajaSanat.size >= 6 && index > 4 && index < 10) {
+                                      if (kayttajaSanat[index].lowercase() == d[index].lowercase()) {
+                                          Color.Green
+                                      } else if (kayttajaSanat[index].lowercase() in sana.lowercase()) {
+                                          Color.Yellow
+                                      } else Color.Gray
+                                  } else White,
+                                  focusedContainerColor = if ("2" in palautetut && kayttajaSanat.size >= 6 && index > 4 && index < 10) {
+                                      if (kayttajaSanat[index].lowercase() == d[index].lowercase()) {
+                                          Color.Green
+                                      } else if (kayttajaSanat[index].lowercase() in sana.lowercase()) {
+                                          Color.Yellow
+                                      } else Color.Gray
+                                  } else White,
+                                  focusedIndicatorColor = White,
+                              ),*/
+                            shape = RoundedCornerShape(10.dp),
+                            modifier = Modifier
+                                .width(75.dp),
+                        )
+                    }
                 }
 
                 // rivi 4
@@ -670,174 +369,42 @@ fun Game(context: Context, modifier: Modifier) {
                     verticalArrangement = Arrangement.Center,
                     maxItemsInEachRow = 5
                 ) {
-                    /*OutlinedTextField(
-                        value = if (nakyvatKirjaimet.size >= 16) { nakyvatKirjaimet[15] } else "",
-                        readOnly = true,
-                        onValueChange = {},
-                        singleLine = true,
-                        textStyle = TextStyle(
-                            color = Color.Black,
-                            fontWeight = FontWeight.Bold,
-                            textAlign = TextAlign.Center,
-                            fontSize = 24.sp
-                        ),
-                        keyboardOptions = KeyboardOptions(
-                            showKeyboardOnFocus = false,
-                            imeAction = ImeAction.Next
-                        ),
-                        shape = RoundedCornerShape(10.dp),
-                        colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("4" in palautetut && kayttajaSanat.size >= 16) {
-                                if (kayttajaSanat[15].lowercase() == d[0].lowercase()) {
-                                    Color.Green
-                                } else if (kayttajaSanat[15].lowercase() in sana.lowercase()) {
-                                    Color.Yellow
-                                } else Color.Gray
-                            } else White,
-                            focusedContainerColor = if ("4" in palautetut && kayttajaSanat.size >= 16) {
-                                if (kayttajaSanat[15].lowercase() == d[0].lowercase()) {
-                                    Color.Green
-                                } else if (kayttajaSanat[15].lowercase() in sana.lowercase()) {
-                                    Color.Yellow
-                                } else Color.Gray
-                            } else White,
-                            focusedIndicatorColor = White,
-                        ),
-                        modifier = Modifier
-                            .width(75.dp)
-                    )
-                    OutlinedTextField(
-                        value = if (nakyvatKirjaimet.size >= 17) { nakyvatKirjaimet[16] } else "",
-                        readOnly = true,
-                        onValueChange = {},
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions(showKeyboardOnFocus = false),
-                        textStyle = TextStyle(
-                            color = Color.Black,
-                            fontWeight = FontWeight.Bold,
-                            textAlign = TextAlign.Center,
-                            fontSize = 24.sp
-                        ),
-                        shape = RoundedCornerShape(10.dp),
-                        colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("4" in palautetut && kayttajaSanat.size >= 17) {
-                                if (kayttajaSanat[16].lowercase() == d[1].lowercase()) {
-                                    Color.Green
-                                } else if (kayttajaSanat[16].lowercase() in sana.lowercase()) {
-                                    Color.Yellow
-                                } else Color.Gray
-                            } else White,
-                            focusedContainerColor = if ("4" in palautetut && kayttajaSanat.size >= 17) {
-                                if (kayttajaSanat[16].lowercase() == d[1].lowercase()) {
-                                    Color.Green
-                                } else if (kayttajaSanat[16].lowercase() in sana.lowercase()) {
-                                    Color.Yellow
-                                } else Color.Gray
-                            } else White,
-                            focusedIndicatorColor = White,
-                        ),
-                        modifier = Modifier
-                            .width(75.dp)
-                    )
-                    OutlinedTextField(
-                        value = if (nakyvatKirjaimet.size >= 18) { nakyvatKirjaimet[17] } else "",
-                        readOnly = true,
-                        onValueChange = {},
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions(showKeyboardOnFocus = false),
-                        textStyle = TextStyle(
-                            color = Color.Black,
-                            fontWeight = FontWeight.Bold,
-                            textAlign = TextAlign.Center,
-                            fontSize = 24.sp
-                        ),
-                        shape = RoundedCornerShape(10.dp),
-                        colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("4" in palautetut && kayttajaSanat.size >= 18) {
-                                if (kayttajaSanat[17].lowercase() == d[2].lowercase()) {
-                                    Color.Green
-                                } else if (kayttajaSanat[17].lowercase() in sana.lowercase()) {
-                                    Color.Yellow
-                                } else Color.Gray
-                            } else White,
-                            focusedContainerColor = if ("4" in palautetut && kayttajaSanat.size >= 18) {
-                                if (kayttajaSanat[17].lowercase() == d[2].lowercase()) {
-                                    Color.Green
-                                } else if (kayttajaSanat[17].lowercase() in sana.lowercase()) {
-                                    Color.Yellow
-                                } else Color.Gray
-                            } else White,
-                            focusedIndicatorColor = White,
-                        ),
-                        modifier = Modifier
-                            .width(75.dp)
-                    )
-                    OutlinedTextField(
-                        value = if (nakyvatKirjaimet.size >= 19) { nakyvatKirjaimet[18] } else "",
-                        readOnly = true,
-                        onValueChange = {},
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions(showKeyboardOnFocus = false),
-                        textStyle = TextStyle(
-                            color = Color.Black,
-                            fontWeight = FontWeight.Bold,
-                            textAlign = TextAlign.Center,
-                            fontSize = 24.sp
-                        ),
-                        shape = RoundedCornerShape(10.dp),
-                        colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("4" in palautetut && kayttajaSanat.size >= 19) {
-                                if (kayttajaSanat[18].lowercase() == d[3].lowercase()) {
-                                    Color.Green
-                                } else if (kayttajaSanat[18].lowercase() in sana.lowercase()) {
-                                    Color.Yellow
-                                } else Color.Gray
-                            } else White,
-                            focusedContainerColor = if ("4" in palautetut && kayttajaSanat.size >= 19) {
-                                if (kayttajaSanat[18].lowercase() == d[3].lowercase()) {
-                                    Color.Green
-                                } else if (kayttajaSanat[18].lowercase() in sana.lowercase()) {
-                                    Color.Yellow
-                                } else Color.Gray
-                            } else White,
-                            focusedIndicatorColor = White,
-                        ),
-                        modifier = Modifier
-                            .width(75.dp)
-                    )
-                    OutlinedTextField(
-                        value = if (nakyvatKirjaimet.size >= 20) { nakyvatKirjaimet[19] } else "",
-                        readOnly = true,
-                        onValueChange = {},
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions(showKeyboardOnFocus = false),
-                        textStyle = TextStyle(
-                            color = Color.Black,
-                            fontWeight = FontWeight.Bold,
-                            textAlign = TextAlign.Center,
-                            fontSize = 24.sp
-                        ),
-                        shape = RoundedCornerShape(10.dp),
-                        colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("4" in palautetut && kayttajaSanat.size >= 20) {
-                                if (kayttajaSanat[19].lowercase() == d[4].lowercase()) {
-                                    Color.Green
-                                } else if (kayttajaSanat[19].lowercase() in sana.lowercase()) {
-                                    Color.Yellow
-                                } else Color.Gray
-                            } else White,
-                            focusedContainerColor = if ("4" in palautetut && kayttajaSanat.size >= 20) {
-                                if (kayttajaSanat[19].lowercase() == d[4].lowercase()) {
-                                    Color.Green
-                                } else if (kayttajaSanat[19].lowercase() in sana.lowercase()) {
-                                    Color.Yellow
-                                } else Color.Gray
-                            } else White,
-                            focusedIndicatorColor = White,
-                        ),
-                        modifier = Modifier
-                            .width(75.dp)
-                    )*/
+                    nakyvatKirjaimetKAIKKI.forEachIndexed { index, item ->
+                        OutlinedTextField(
+                            value = if (index >= 15 && index <= 20) { nakyvatKirjaimetKAIKKI[index] } else return@forEachIndexed,
+                            onValueChange = {
+                                if (index >= 15 && index <= 20) { nakyvatKirjaimetKAIKKI[index] = it  } else return@OutlinedTextField
+                            },
+                            readOnly = true,
+                            singleLine = true,
+                            textStyle = TextStyle(
+                                color = Color.Black,
+                                fontWeight = FontWeight.Bold,
+                                textAlign = TextAlign.Center,
+                                fontSize = 24.sp
+                            ),
+                            /*  colors = TextFieldDefaults.colors(
+                                  unfocusedContainerColor = if ("2" in palautetut && kayttajaSanat.size >= 6 && index > 4 && index < 10) {
+                                      if (kayttajaSanat [index].lowercase() == d[index].lowercase()) {
+                                          Color.Green
+                                      } else if (kayttajaSanat[index].lowercase() in sana.lowercase()) {
+                                          Color.Yellow
+                                      } else Color.Gray
+                                  } else White,
+                                  focusedContainerColor = if ("2" in palautetut && kayttajaSanat.size >= 6 && index > 4 && index < 10) {
+                                      if (kayttajaSanat[index].lowercase() == d[index].lowercase()) {
+                                          Color.Green
+                                      } else if (kayttajaSanat[index].lowercase() in sana.lowercase()) {
+                                          Color.Yellow
+                                      } else Color.Gray
+                                  } else White,
+                                  focusedIndicatorColor = White,
+                              ),*/
+                            shape = RoundedCornerShape(10.dp),
+                            modifier = Modifier
+                                .width(75.dp),
+                        )
+                    }
                 }
 
                 // rivi 5
@@ -849,174 +416,42 @@ fun Game(context: Context, modifier: Modifier) {
                     verticalArrangement = Arrangement.Center,
                     maxItemsInEachRow = 5
                 ) {
-                    /*OutlinedTextField(
-                        value = if (nakyvatKirjaimet.size >= 21) { nakyvatKirjaimet[20] } else "",
-                        readOnly = true,
-                        onValueChange = {},
-                        singleLine = true,
-                        textStyle = TextStyle(
-                            color = Color.Black,
-                            fontWeight = FontWeight.Bold,
-                            textAlign = TextAlign.Center,
-                            fontSize = 24.sp
-                        ),
-                        keyboardOptions = KeyboardOptions(
-                            showKeyboardOnFocus = false,
-                            imeAction = ImeAction.Next
-                        ),
-                        shape = RoundedCornerShape(10.dp),
-                        colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("5" in palautetut && kayttajaSanat.size >= 21) {
-                                if (kayttajaSanat[20].lowercase() == d[0].lowercase()) {
-                                    Color.Green
-                                } else if (kayttajaSanat[20].lowercase() in sana.lowercase()) {
-                                    Color.Yellow
-                                } else Color.Gray
-                            } else White,
-                            focusedContainerColor = if ("5" in palautetut && kayttajaSanat.size >= 21) {
-                                if (kayttajaSanat[20].lowercase() == d[0].lowercase()) {
-                                    Color.Green
-                                } else if (kayttajaSanat[20].lowercase() in sana.lowercase()) {
-                                    Color.Yellow
-                                } else Color.Gray
-                            } else White,
-                            focusedIndicatorColor = White,
-                        ),
-                        modifier = Modifier
-                            .width(75.dp)
-                    )
-                    OutlinedTextField(
-                        value = if (nakyvatKirjaimet.size >= 22) { nakyvatKirjaimet[21] } else "",
-                        readOnly = true,
-                        onValueChange = {},
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions(showKeyboardOnFocus = false),
-                        textStyle = TextStyle(
-                            color = Color.Black,
-                            fontWeight = FontWeight.Bold,
-                            textAlign = TextAlign.Center,
-                            fontSize = 24.sp
-                        ),
-                        shape = RoundedCornerShape(10.dp),
-                        colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("5" in palautetut && kayttajaSanat.size >= 22) {
-                                if (kayttajaSanat[21].lowercase() == d[1].lowercase()) {
-                                    Color.Green
-                                } else if (kayttajaSanat[21].lowercase() in sana.lowercase()) {
-                                    Color.Yellow
-                                } else Color.Gray
-                            } else White,
-                            focusedContainerColor = if ("5" in palautetut && kayttajaSanat.size >= 22) {
-                                if (kayttajaSanat[21].lowercase() == d[1].lowercase()) {
-                                    Color.Green
-                                } else if (kayttajaSanat[21].lowercase() in sana.lowercase()) {
-                                    Color.Yellow
-                                } else Color.Gray
-                            } else White,
-                            focusedIndicatorColor = White,
-                        ),
-                        modifier = Modifier
-                            .width(75.dp)
-                    )
-                    OutlinedTextField(
-                        value = if (nakyvatKirjaimet.size >= 23) { nakyvatKirjaimet[22] } else "",
-                        readOnly = true,
-                        onValueChange = {},
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions(showKeyboardOnFocus = false),
-                        textStyle = TextStyle(
-                            color = Color.Black,
-                            fontWeight = FontWeight.Bold,
-                            textAlign = TextAlign.Center,
-                            fontSize = 24.sp
-                        ),
-                        shape = RoundedCornerShape(10.dp),
-                        colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("5" in palautetut && kayttajaSanat.size >= 23) {
-                                if (kayttajaSanat[22].lowercase() == d[2].lowercase()) {
-                                    Color.Green
-                                } else if (kayttajaSanat[22].lowercase() in sana.lowercase()) {
-                                    Color.Yellow
-                                } else Color.Gray
-                            } else White,
-                            focusedContainerColor = if ("5" in palautetut && kayttajaSanat.size >= 23) {
-                                if (kayttajaSanat[22].lowercase() == d[2].lowercase()) {
-                                    Color.Green
-                                } else if (kayttajaSanat[22].lowercase() in sana.lowercase()) {
-                                    Color.Yellow
-                                } else Color.Gray
-                            } else White,
-                            focusedIndicatorColor = White,
-                        ),
-                        modifier = Modifier
-                            .width(75.dp)
-                    )
-                    OutlinedTextField(
-                        value = if (nakyvatKirjaimet.size >= 24) { nakyvatKirjaimet[23] } else "",
-                        readOnly = true,
-                        onValueChange = {},
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions(showKeyboardOnFocus = false),
-                        textStyle = TextStyle(
-                            color = Color.Black,
-                            fontWeight = FontWeight.Bold,
-                            textAlign = TextAlign.Center,
-                            fontSize = 24.sp
-                        ),
-                        shape = RoundedCornerShape(10.dp),
-                        colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("5" in palautetut && kayttajaSanat.size >= 24) {
-                                if (kayttajaSanat[23].lowercase() == d[3].lowercase()) {
-                                    Color.Green
-                                } else if (kayttajaSanat[23].lowercase() in sana.lowercase()) {
-                                    Color.Yellow
-                                } else Color.Gray
-                            } else White,
-                            focusedContainerColor = if ("5" in palautetut && kayttajaSanat.size >= 24) {
-                                if (kayttajaSanat[23].lowercase() == d[3].lowercase()) {
-                                    Color.Green
-                                } else if (kayttajaSanat[23].lowercase() in sana.lowercase()) {
-                                    Color.Yellow
-                                } else Color.Gray
-                            } else White,
-                            focusedIndicatorColor = White,
-                        ),
-                        modifier = Modifier
-                            .width(75.dp)
-                    )
-                    OutlinedTextField(
-                        value = if (nakyvatKirjaimet.size >= 25) { nakyvatKirjaimet[24] } else "",
-                        readOnly = true,
-                        onValueChange = {},
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions(showKeyboardOnFocus = false),
-                        textStyle = TextStyle(
-                            color = Color.Black,
-                            fontWeight = FontWeight.Bold,
-                            textAlign = TextAlign.Center,
-                            fontSize = 24.sp
-                        ),
-                        shape = RoundedCornerShape(10.dp),
-                        colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("5" in palautetut && kayttajaSanat.size >= 25) {
-                                if (kayttajaSanat[24].lowercase() == d[4].lowercase()) {
-                                    Color.Green
-                                } else if (kayttajaSanat[24].lowercase() in sana.lowercase()) {
-                                    Color.Yellow
-                                } else Color.Gray
-                            } else White,
-                            focusedContainerColor = if ("5" in palautetut && kayttajaSanat.size >= 25) {
-                                if (kayttajaSanat[24].lowercase() == d[4].lowercase()) {
-                                    Color.Green
-                                } else if (kayttajaSanat[24].lowercase() in sana.lowercase()) {
-                                    Color.Yellow
-                                } else Color.Gray
-                            } else White,
-                            focusedIndicatorColor = White,
-                        ),
-                        modifier = Modifier
-                            .width(75.dp)
-                    )*/
+                    nakyvatKirjaimetKAIKKI.forEachIndexed { index, item ->
+                        OutlinedTextField(
+                            value = if (index >= 20 && index <= 25) { nakyvatKirjaimetKAIKKI[index] } else return@forEachIndexed,
+                            onValueChange = {
+                                if (index >= 20 && index <= 25) { nakyvatKirjaimetKAIKKI[index] = it  } else return@OutlinedTextField
+                            },
+                            readOnly = true,
+                            singleLine = true,
+                            textStyle = TextStyle(
+                                color = Color.Black,
+                                fontWeight = FontWeight.Bold,
+                                textAlign = TextAlign.Center,
+                                fontSize = 24.sp
+                            ),
+                            /*  colors = TextFieldDefaults.colors(
+                                  unfocusedContainerColor = if ("2" in palautetut && kayttajaSanat.size >= 6 && index > 4 && index < 10) {
+                                      if (kayttajaSanat [index].lowercase() == d[index].lowercase()) {
+                                          Color.Green
+                                      } else if (kayttajaSanat[index].lowercase() in sana.lowercase()) {
+                                          Color.Yellow
+                                      } else Color.Gray
+                                  } else White,
+                                  focusedContainerColor = if ("2" in palautetut && kayttajaSanat.size >= 6 && index > 4 && index < 10) {
+                                      if (kayttajaSanat[index].lowercase() == d[index].lowercase()) {
+                                          Color.Green
+                                      } else if (kayttajaSanat[index].lowercase() in sana.lowercase()) {
+                                          Color.Yellow
+                                      } else Color.Gray
+                                  } else White,
+                                  focusedIndicatorColor = White,
+                              ),*/
+                            shape = RoundedCornerShape(10.dp),
+                            modifier = Modifier
+                                .width(75.dp),
+                        )
+                    }
                 }
 
                 // rivi 6
@@ -1028,174 +463,42 @@ fun Game(context: Context, modifier: Modifier) {
                     verticalArrangement = Arrangement.Center,
                     maxItemsInEachRow = 5
                 ) {
-                    /*OutlinedTextField(
-                        value = if (nakyvatKirjaimet.size >= 26) { nakyvatKirjaimet[25] } else "",
-                        readOnly = true,
-                        onValueChange = {},
-                        singleLine = true,
-                        textStyle = TextStyle(
-                            color = Color.Black,
-                            fontWeight = FontWeight.Bold,
-                            textAlign = TextAlign.Center,
-                            fontSize = 24.sp
-                        ),
-                        keyboardOptions = KeyboardOptions(
-                            showKeyboardOnFocus = false,
-                            imeAction = ImeAction.Next
-                        ),
-                        shape = RoundedCornerShape(10.dp),
-                        colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("6" in palautetut && kayttajaSanat.size >= 26) {
-                                if (kayttajaSanat[25].lowercase() == d[0].lowercase()) {
-                                    Color.Green
-                                } else if (kayttajaSanat[25].lowercase() in sana.lowercase()) {
-                                    Color.Yellow
-                                } else Color.Gray
-                            } else White,
-                            focusedContainerColor = if ("6" in palautetut && kayttajaSanat.size >= 26) {
-                                if (kayttajaSanat[25].lowercase() == d[0].lowercase()) {
-                                    Color.Green
-                                } else if (kayttajaSanat[25].lowercase() in sana.lowercase()) {
-                                    Color.Yellow
-                                } else Color.Gray
-                            } else White,
-                            focusedIndicatorColor = White,
-                        ),
-                        modifier = Modifier
-                            .width(75.dp)
-                    )
-                    OutlinedTextField(
-                        value = if (nakyvatKirjaimet.size >= 27) { nakyvatKirjaimet[26] } else "",
-                        readOnly = true,
-                        onValueChange = {},
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions(showKeyboardOnFocus = false),
-                        textStyle = TextStyle(
-                            color = Color.Black,
-                            fontWeight = FontWeight.Bold,
-                            textAlign = TextAlign.Center,
-                            fontSize = 24.sp
-                        ),
-                        shape = RoundedCornerShape(10.dp),
-                        colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("6" in palautetut && kayttajaSanat.size >= 27) {
-                                if (kayttajaSanat[26].lowercase() == d[1].lowercase()) {
-                                    Color.Green
-                                } else if (kayttajaSanat[26].lowercase() in sana.lowercase()) {
-                                    Color.Yellow
-                                } else Color.Gray
-                            } else White,
-                            focusedContainerColor = if ("6" in palautetut && kayttajaSanat.size >= 27) {
-                                if (kayttajaSanat[26].lowercase() == d[1].lowercase()) {
-                                    Color.Green
-                                } else if (kayttajaSanat[26].lowercase() in sana.lowercase()) {
-                                    Color.Yellow
-                                } else Color.Gray
-                            } else White,
-                            focusedIndicatorColor = White,
-                        ),
-                        modifier = Modifier
-                            .width(75.dp)
-                    )
-                    OutlinedTextField(
-                        value = if (nakyvatKirjaimet.size >= 28) { nakyvatKirjaimet[27] } else "",
-                        readOnly = true,
-                        onValueChange = {},
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions(showKeyboardOnFocus = false),
-                        textStyle = TextStyle(
-                            color = Color.Black,
-                            fontWeight = FontWeight.Bold,
-                            textAlign = TextAlign.Center,
-                            fontSize = 24.sp
-                        ),
-                        shape = RoundedCornerShape(10.dp),
-                        colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("6" in palautetut && kayttajaSanat.size >= 28) {
-                                if (kayttajaSanat[27].lowercase() == d[2].lowercase()) {
-                                    Color.Green
-                                } else if (kayttajaSanat[27].lowercase() in sana.lowercase()) {
-                                    Color.Yellow
-                                } else Color.Gray
-                            } else White,
-                            focusedContainerColor = if ("6" in palautetut && kayttajaSanat.size >= 28) {
-                                if (kayttajaSanat[27].lowercase() == d[2].lowercase()) {
-                                    Color.Green
-                                } else if (kayttajaSanat[27].lowercase() in sana.lowercase()) {
-                                    Color.Yellow
-                                } else Color.Gray
-                            } else White,
-                            focusedIndicatorColor = White,
-                        ),
-                        modifier = Modifier
-                            .width(75.dp)
-                    )
-                    OutlinedTextField(
-                        value = if (nakyvatKirjaimet.size >= 29) { nakyvatKirjaimet[28] } else "",
-                        readOnly = true,
-                        onValueChange = {},
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions(showKeyboardOnFocus = false),
-                        textStyle = TextStyle(
-                            color = Color.Black,
-                            fontWeight = FontWeight.Bold,
-                            textAlign = TextAlign.Center,
-                            fontSize = 24.sp
-                        ),
-                        shape = RoundedCornerShape(10.dp),
-                        colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("6" in palautetut && kayttajaSanat.size >= 29) {
-                                if (kayttajaSanat[28].lowercase() == d[3].lowercase()) {
-                                    Color.Green
-                                } else if (kayttajaSanat[28].lowercase() in sana.lowercase()) {
-                                    Color.Yellow
-                                } else Color.Gray
-                            } else White,
-                            focusedContainerColor = if ("6" in palautetut && kayttajaSanat.size >= 29) {
-                                if (kayttajaSanat[28].lowercase() == d[3].lowercase()) {
-                                    Color.Green
-                                } else if (kayttajaSanat[28].lowercase() in sana.lowercase()) {
-                                    Color.Yellow
-                                } else Color.Gray
-                            } else White,
-                            focusedIndicatorColor = White,
-                        ),
-                        modifier = Modifier
-                            .width(75.dp)
-                    )
-                    OutlinedTextField(
-                        value = if (nakyvatKirjaimet.size >= 30) { nakyvatKirjaimet[29] } else "",
-                        readOnly = true,
-                        onValueChange = {},
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions(showKeyboardOnFocus = false),
-                        textStyle = TextStyle(
-                            color = Color.Black,
-                            fontWeight = FontWeight.Bold,
-                            textAlign = TextAlign.Center,
-                            fontSize = 24.sp
-                        ),
-                        shape = RoundedCornerShape(10.dp),
-                        colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = if ("6" in palautetut && kayttajaSanat.size >= 30) {
-                                if (kayttajaSanat[29].lowercase() == d[4].lowercase()) {
-                                    Color.Green
-                                } else if (kayttajaSanat[29].lowercase() in sana.lowercase()) {
-                                    Color.Yellow
-                                } else Color.Gray
-                            } else White,
-                            focusedContainerColor = if ("6" in palautetut && kayttajaSanat.size >= 30) {
-                                if (kayttajaSanat[29].lowercase() == d[4].lowercase()) {
-                                    Color.Green
-                                } else if (kayttajaSanat[29].lowercase() in sana.lowercase()) {
-                                    Color.Yellow
-                                } else Color.Gray
-                            } else White,
-                            focusedIndicatorColor = White,
-                        ),
-                        modifier = Modifier
-                            .width(75.dp)
-                    )*/
+                    nakyvatKirjaimetKAIKKI.forEachIndexed { index, item ->
+                        OutlinedTextField(
+                            value = if (index >= 25 && index <= 30) { nakyvatKirjaimetKAIKKI[index] } else return@forEachIndexed,
+                            onValueChange = {
+                                if (index >= 25 && index <= 30) { nakyvatKirjaimetKAIKKI[index] = it  } else return@OutlinedTextField
+                            },
+                            readOnly = true,
+                            singleLine = true,
+                            textStyle = TextStyle(
+                                color = Color.Black,
+                                fontWeight = FontWeight.Bold,
+                                textAlign = TextAlign.Center,
+                                fontSize = 24.sp
+                            ),
+                            /*  colors = TextFieldDefaults.colors(
+                                  unfocusedContainerColor = if ("2" in palautetut && kayttajaSanat.size >= 6 && index > 4 && index < 10) {
+                                      if (kayttajaSanat [index].lowercase() == d[index].lowercase()) {
+                                          Color.Green
+                                      } else if (kayttajaSanat[index].lowercase() in sana.lowercase()) {
+                                          Color.Yellow
+                                      } else Color.Gray
+                                  } else White,
+                                  focusedContainerColor = if ("2" in palautetut && kayttajaSanat.size >= 6 && index > 4 && index < 10) {
+                                      if (kayttajaSanat[index].lowercase() == d[index].lowercase()) {
+                                          Color.Green
+                                      } else if (kayttajaSanat[index].lowercase() in sana.lowercase()) {
+                                          Color.Yellow
+                                      } else Color.Gray
+                                  } else White,
+                                  focusedIndicatorColor = White,
+                              ),*/
+                            shape = RoundedCornerShape(10.dp),
+                            modifier = Modifier
+                                .width(75.dp),
+                        )
+                    }
                 }
                 // cheat button what shows the correct word
                 Button(
@@ -2058,14 +1361,18 @@ fun Game(context: Context, modifier: Modifier) {
     }
     if (isPopupOpen) {
         Popup(onDismissRequest = { isPopupOpen = false; showContent = true; sana = sanatTOlist.random().trim() }, isRight, sana)
-        nakyvatKirjaimetKohta = 0
         kayttajaSanat.clear()
         nakyvatKirjaimet.clear()
         kaikkiKirjaimet.clear()
         palautettuKirjaimet.clear()
         paikat.clear()
-        arvauksienMaara = 0
-        isRight = "ARVASIT OKEIN!!"
         palautetut.clear()
+        nakyvatKirjaimetKAIKKI.clear()
+        for (lisaa in 0..30) {
+            nakyvatKirjaimetKAIKKI.add(lisaa, "")
+        }
+        arvauksienMaara = 0
+        nakyvatKirjaimetKohtaKAKKI = 0
+        nakyvatKirjaimetKohta = 0
     }
 }
