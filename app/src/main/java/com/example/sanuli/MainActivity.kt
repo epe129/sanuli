@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.OutlinedTextField
@@ -35,8 +34,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -289,23 +286,23 @@ fun Game(context: Context, modifier: Modifier) {
                                 textAlign = TextAlign.Center,
                                 fontSize = 24.sp
                             ),
-                          /*  colors = TextFieldDefaults.colors(
-                                unfocusedContainerColor = if ("2" in palautetut && kayttajaSanat.size >= 6 && index > 4 && index < 10) {
-                                    if (kayttajaSanat[index].lowercase() == d[index].lowercase()) {
+                            colors = TextFieldDefaults.colors(
+                               /* unfocusedContainerColor = if ("2" in palautetut && nakyvatKirjaimetKAIKKI.size >= 5) {
+                                    if (nakyvatKirjaimetKAIKKI[index].lowercase() == d[index].lowercase()) {
                                         Color.Green
-                                    } else if (kayttajaSanat[index].lowercase() in sana.lowercase()) {
+                                    } else if (nakyvatKirjaimetKAIKKI[index].lowercase() in sana.lowercase()) {
                                         Color.Yellow
                                     } else Color.Gray
                                 } else White,
-                                focusedContainerColor = if ("2" in palautetut && kayttajaSanat.size >= 6 && index > 4 && index < 10) {
-                                    if (kayttajaSanat[index].lowercase() == d[index].lowercase()) {
+                                focusedContainerColor = if ("2" in palautetut && nakyvatKirjaimetKAIKKI.size >= 5) {
+                                    if (nakyvatKirjaimetKAIKKI[index].lowercase() == d[index].lowercase()) {
                                         Color.Green
-                                    } else if (kayttajaSanat[index].lowercase() in sana.lowercase()) {
+                                    } else if (nakyvatKirjaimetKAIKKI[index].lowercase() in sana.lowercase()) {
                                         Color.Yellow
                                     } else Color.Gray
-                                } else White,
+                                } else White,*/
                                 focusedIndicatorColor = White,
-                            ),*/
+                            ),
                             shape = RoundedCornerShape(10.dp),
                             modifier = Modifier
                                 .width(75.dp),
@@ -336,8 +333,8 @@ fun Game(context: Context, modifier: Modifier) {
                                 textAlign = TextAlign.Center,
                                 fontSize = 24.sp
                             ),
-                            /*  colors = TextFieldDefaults.colors(
-                                  unfocusedContainerColor = if ("2" in palautetut && kayttajaSanat.size >= 6 && index > 4 && index < 10) {
+                            colors = TextFieldDefaults.colors(
+                                /*  unfocusedContainerColor = if ("2" in palautetut && kayttajaSanat.size >= 6 && index > 4 && index < 10) {
                                       if (kayttajaSanat[index].lowercase() == d[index].lowercase()) {
                                           Color.Green
                                       } else if (kayttajaSanat[index].lowercase() in sana.lowercase()) {
@@ -350,9 +347,9 @@ fun Game(context: Context, modifier: Modifier) {
                                       } else if (kayttajaSanat[index].lowercase() in sana.lowercase()) {
                                           Color.Yellow
                                       } else Color.Gray
-                                  } else White,
+                                  } else White,*/
                                   focusedIndicatorColor = White,
-                              ),*/
+                              ),
                             shape = RoundedCornerShape(10.dp),
                             modifier = Modifier
                                 .width(75.dp),
@@ -383,8 +380,8 @@ fun Game(context: Context, modifier: Modifier) {
                                 textAlign = TextAlign.Center,
                                 fontSize = 24.sp
                             ),
-                            /*  colors = TextFieldDefaults.colors(
-                                  unfocusedContainerColor = if ("2" in palautetut && kayttajaSanat.size >= 6 && index > 4 && index < 10) {
+                            colors = TextFieldDefaults.colors(
+                                  /*unfocusedContainerColor = if ("2" in palautetut && kayttajaSanat.size >= 6 && index > 4 && index < 10) {
                                       if (kayttajaSanat [index].lowercase() == d[index].lowercase()) {
                                           Color.Green
                                       } else if (kayttajaSanat[index].lowercase() in sana.lowercase()) {
@@ -397,9 +394,9 @@ fun Game(context: Context, modifier: Modifier) {
                                       } else if (kayttajaSanat[index].lowercase() in sana.lowercase()) {
                                           Color.Yellow
                                       } else Color.Gray
-                                  } else White,
+                                  } else White,*/
                                   focusedIndicatorColor = White,
-                              ),*/
+                              ),
                             shape = RoundedCornerShape(10.dp),
                             modifier = Modifier
                                 .width(75.dp),
@@ -430,8 +427,8 @@ fun Game(context: Context, modifier: Modifier) {
                                 textAlign = TextAlign.Center,
                                 fontSize = 24.sp
                             ),
-                            /*  colors = TextFieldDefaults.colors(
-                                  unfocusedContainerColor = if ("2" in palautetut && kayttajaSanat.size >= 6 && index > 4 && index < 10) {
+                            colors = TextFieldDefaults.colors(
+                                  /*unfocusedContainerColor = if ("2" in palautetut && kayttajaSanat.size >= 6 && index > 4 && index < 10) {
                                       if (kayttajaSanat [index].lowercase() == d[index].lowercase()) {
                                           Color.Green
                                       } else if (kayttajaSanat[index].lowercase() in sana.lowercase()) {
@@ -444,9 +441,9 @@ fun Game(context: Context, modifier: Modifier) {
                                       } else if (kayttajaSanat[index].lowercase() in sana.lowercase()) {
                                           Color.Yellow
                                       } else Color.Gray
-                                  } else White,
+                                  } else White,*/
                                   focusedIndicatorColor = White,
-                              ),*/
+                              ),
                             shape = RoundedCornerShape(10.dp),
                             modifier = Modifier
                                 .width(75.dp),
@@ -477,8 +474,8 @@ fun Game(context: Context, modifier: Modifier) {
                                 textAlign = TextAlign.Center,
                                 fontSize = 24.sp
                             ),
-                            /*  colors = TextFieldDefaults.colors(
-                                  unfocusedContainerColor = if ("2" in palautetut && kayttajaSanat.size >= 6 && index > 4 && index < 10) {
+                            colors = TextFieldDefaults.colors(
+                                  /*unfocusedContainerColor = if ("2" in palautetut && kayttajaSanat.size >= 6 && index > 4 && index < 10) {
                                       if (kayttajaSanat [index].lowercase() == d[index].lowercase()) {
                                           Color.Green
                                       } else if (kayttajaSanat[index].lowercase() in sana.lowercase()) {
@@ -491,9 +488,9 @@ fun Game(context: Context, modifier: Modifier) {
                                       } else if (kayttajaSanat[index].lowercase() in sana.lowercase()) {
                                           Color.Yellow
                                       } else Color.Gray
-                                  } else White,
+                                  } else White,*/
                                   focusedIndicatorColor = White,
-                              ),*/
+                                ),
                             shape = RoundedCornerShape(10.dp),
                             modifier = Modifier
                                 .width(75.dp),
