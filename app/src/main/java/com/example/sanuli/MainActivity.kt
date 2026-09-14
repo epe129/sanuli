@@ -95,6 +95,13 @@ fun Game(context: Context, modifier: Modifier) {
     var huijausClickt by remember { mutableStateOf(false) }
     var huijausClicktText by remember { mutableStateOf("") }
     var checkClickt by remember { mutableStateOf(false) }
+    val varitTextfieldeka = remember { mutableStateListOf<String>() }
+    val varitTextfieldtoka = remember { mutableStateListOf<String>() }
+    val varitTextfieldkolmas = remember { mutableStateListOf<String>() }
+    val varitTextfieldneljas = remember { mutableStateListOf<String>() }
+    val varitTextfieldviides = remember { mutableStateListOf<String>() }
+    val varitTextfieldkuudes = remember { mutableStateListOf<String>() }
+
 
     // makes the json to list and gets the data from json using object data
     DataManager.loadAssetsFromFile(context)
@@ -181,6 +188,68 @@ fun Game(context: Context, modifier: Modifier) {
         palautetut.add(arvauksienMaara.toString())
         nykyKohta = 0
         nakyvatKirjaimetKohta = 0
+
+        for (k in 0..31) {
+            if ("1" in palautetut && kayttajaSanat.isNotEmpty() && k <= 4) {
+                if (kayttajaSanat[k].lowercase() == sana[k].lowercase()) {
+                    varitTextfieldeka.add(k, "vihrea")
+                } else if (kayttajaSanat[k].lowercase() in sana.lowercase()) {
+                    varitTextfieldeka.add(k, "keltanen")
+                } else varitTextfieldeka.add(k, "harmaa")
+                if (k == 4) {break}
+            }
+            if ("2" in palautetut && kayttajaSanat.isNotEmpty() && k >= 5 && k <= 9) {
+                for (s in 0..4){
+                    if (kayttajaSanat[k].lowercase() == sana[s].lowercase()) {
+                        varitTextfieldeka.add(k, "vihrea")
+                    } else if (kayttajaSanat[k].lowercase() in sana.lowercase()) {
+                        varitTextfieldeka.add(k, "keltanen")
+                    } else varitTextfieldeka.add(k, "harmaa")
+                }
+                if (k == 9) {break}
+            }
+            /*if () {
+                for (s in 0..4){
+                    if (kayttajaSanat[k].lowercase() == sana[s].lowercase()) {
+                        varitTextfieldeka.add(k, "vihrea")
+                    } else if (kayttajaSanat[k].lowercase() in sana.lowercase()) {
+                        varitTextfieldeka.add(k, "keltanen")
+                    } else varitTextfieldeka.add(k, "harmaa")
+                }
+                if (k ) {break}
+            }
+            if () {
+                for (s in 0..4){
+                    if (kayttajaSanat[k].lowercase() == sana[s].lowercase()) {
+                        varitTextfieldeka.add(k, "vihrea")
+                    } else if (kayttajaSanat[k].lowercase() in sana.lowercase()) {
+                        varitTextfieldeka.add(k, "keltanen")
+                    } else varitTextfieldeka.add(k, "harmaa")
+                }
+                if (k == ) {break}
+            }
+            if () {
+                for (s in 0..4){
+                    if (kayttajaSanat[k].lowercase() == sana[s].lowercase()) {
+                        varitTextfieldeka.add(k, "vihrea")
+                    } else if (kayttajaSanat[k].lowercase() in sana.lowercase()) {
+                        varitTextfieldeka.add(k, "keltanen")
+                    } else varitTextfieldeka.add(k, "harmaa")
+                }
+                if (k == ) {break}
+            }
+            if () {
+                for (s in 0..4){
+                    if (kayttajaSanat[k].lowercase() == sana[s].lowercase()) {
+                        varitTextfieldeka.add(k, "vihrea")
+                    } else if (kayttajaSanat[k].lowercase() in sana.lowercase()) {
+                        varitTextfieldeka.add(k, "keltanen")
+                    } else varitTextfieldeka.add(k, "harmaa")
+                }
+                if (k == ) {break}
+            }*/
+        }
+
         // if user didn't get the word right
         if (arvauksienMaara >= 6 && !isPopupOpen) {
             isRight = "ikävä kyllä tällä kertaa et arvannut oikein!"
@@ -189,12 +258,6 @@ fun Game(context: Context, modifier: Modifier) {
             arvauksienMaara = 0
         }
         kaikkiKirjaimet.clear()
-    }
-
-    // list where every character is in individually
-    val d = mutableListOf<String>()
-    for (i in sana) {
-        d.add(i.toString().lowercase())
     }
 
     // shows the sanuli game if game is over doesn't show
@@ -240,17 +303,17 @@ fun Game(context: Context, modifier: Modifier) {
                                 fontSize = 24.sp
                             ),
                             colors = TextFieldDefaults.colors(
-                                unfocusedContainerColor = if ("1" in palautetut && kayttajaSanat.isNotEmpty()) {
-                                    if (kayttajaSanat[index].lowercase() == d[index].lowercase()) {
+                                unfocusedContainerColor = if (varitTextfieldeka.size >= 4) {
+                                    if (varitTextfieldeka[index].lowercase() == "vihrea") {
                                         Color.Green
-                                    } else if (kayttajaSanat[index].lowercase() in sana.lowercase()) {
+                                    } else if (varitTextfieldeka[index].lowercase() == "keltanen") {
                                         Color.Yellow
                                     } else Color.Gray
                                 } else White,
-                                focusedContainerColor = if ("1" in palautetut && kayttajaSanat.isNotEmpty()) {
-                                    if (kayttajaSanat[index].lowercase() == d[index].lowercase()) {
+                                focusedContainerColor = if (varitTextfieldeka.size >= 4) {
+                                    if (varitTextfieldeka[index].lowercase() == "vihrea") {
                                         Color.Green
-                                    } else if (kayttajaSanat[index].lowercase() in sana.lowercase()) {
+                                    } else if (varitTextfieldeka[index].lowercase() == "keltanen") {
                                         Color.Yellow
                                     } else Color.Gray
                                 } else White,
@@ -287,20 +350,20 @@ fun Game(context: Context, modifier: Modifier) {
                                 fontSize = 24.sp
                             ),
                             colors = TextFieldDefaults.colors(
-                               /* unfocusedContainerColor = if ("2" in palautetut && nakyvatKirjaimetKAIKKI.size >= 5) {
-                                    if (nakyvatKirjaimetKAIKKI[index].lowercase() == d[index].lowercase()) {
+                                unfocusedContainerColor = if (varitTextfieldeka.size >= 10) {
+                                    if (varitTextfieldeka[index].lowercase() == "vihrea") {
                                         Color.Green
-                                    } else if (nakyvatKirjaimetKAIKKI[index].lowercase() in sana.lowercase()) {
+                                    } else if (varitTextfieldeka[index].lowercase() == "keltanen") {
                                         Color.Yellow
                                     } else Color.Gray
                                 } else White,
-                                focusedContainerColor = if ("2" in palautetut && nakyvatKirjaimetKAIKKI.size >= 5) {
-                                    if (nakyvatKirjaimetKAIKKI[index].lowercase() == d[index].lowercase()) {
+                                focusedContainerColor = if (varitTextfieldeka.size >= 10) {
+                                    if (varitTextfieldeka[index].lowercase() == "vihrea") {
                                         Color.Green
-                                    } else if (nakyvatKirjaimetKAIKKI[index].lowercase() in sana.lowercase()) {
+                                    } else if (varitTextfieldeka[index].lowercase() == "keltanen") {
                                         Color.Yellow
                                     } else Color.Gray
-                                } else White,*/
+                                } else White,
                                 focusedIndicatorColor = White,
                             ),
                             shape = RoundedCornerShape(10.dp),
@@ -334,20 +397,20 @@ fun Game(context: Context, modifier: Modifier) {
                                 fontSize = 24.sp
                             ),
                             colors = TextFieldDefaults.colors(
-                                /*  unfocusedContainerColor = if ("2" in palautetut && kayttajaSanat.size >= 6 && index > 4 && index < 10) {
-                                      if (kayttajaSanat[index].lowercase() == d[index].lowercase()) {
+                                  unfocusedContainerColor = if (varitTextfieldeka.size >= 15) {
+                                      if (varitTextfieldeka[index].lowercase() == "vihrea") {
                                           Color.Green
-                                      } else if (kayttajaSanat[index].lowercase() in sana.lowercase()) {
+                                      } else if (varitTextfieldeka[index].lowercase() == "keltanen") {
                                           Color.Yellow
                                       } else Color.Gray
                                   } else White,
-                                  focusedContainerColor = if ("2" in palautetut && kayttajaSanat.size >= 6 && index > 4 && index < 10) {
-                                      if (kayttajaSanat[index].lowercase() == d[index].lowercase()) {
-                                          Color.Green
-                                      } else if (kayttajaSanat[index].lowercase() in sana.lowercase()) {
-                                          Color.Yellow
-                                      } else Color.Gray
-                                  } else White,*/
+                                focusedContainerColor = if (varitTextfieldeka.size >= 15) {
+                                    if (varitTextfieldeka[index].lowercase() == "vihrea") {
+                                        Color.Green
+                                    } else if (varitTextfieldeka[index].lowercase() == "keltanen") {
+                                        Color.Yellow
+                                    } else Color.Gray
+                                } else White,
                                   focusedIndicatorColor = White,
                               ),
                             shape = RoundedCornerShape(10.dp),
@@ -381,20 +444,20 @@ fun Game(context: Context, modifier: Modifier) {
                                 fontSize = 24.sp
                             ),
                             colors = TextFieldDefaults.colors(
-                                  /*unfocusedContainerColor = if ("2" in palautetut && kayttajaSanat.size >= 6 && index > 4 && index < 10) {
-                                      if (kayttajaSanat [index].lowercase() == d[index].lowercase()) {
-                                          Color.Green
-                                      } else if (kayttajaSanat[index].lowercase() in sana.lowercase()) {
-                                          Color.Yellow
-                                      } else Color.Gray
-                                  } else White,
-                                  focusedContainerColor = if ("2" in palautetut && kayttajaSanat.size >= 6 && index > 4 && index < 10) {
-                                      if (kayttajaSanat[index].lowercase() == d[index].lowercase()) {
-                                          Color.Green
-                                      } else if (kayttajaSanat[index].lowercase() in sana.lowercase()) {
-                                          Color.Yellow
-                                      } else Color.Gray
-                                  } else White,*/
+                                unfocusedContainerColor = if (varitTextfieldeka.size >= 20) {
+                                    if (varitTextfieldeka[index].lowercase() == "vihrea") {
+                                        Color.Green
+                                    } else if (varitTextfieldeka[index].lowercase() == "keltanen") {
+                                        Color.Yellow
+                                    } else Color.Gray
+                                } else White,
+                                focusedContainerColor = if (varitTextfieldeka.size >= 20) {
+                                    if (varitTextfieldeka[index].lowercase() == "vihrea") {
+                                        Color.Green
+                                    } else if (varitTextfieldeka[index].lowercase() == "keltanen") {
+                                        Color.Yellow
+                                    } else Color.Gray
+                                } else White,
                                   focusedIndicatorColor = White,
                               ),
                             shape = RoundedCornerShape(10.dp),
@@ -428,20 +491,20 @@ fun Game(context: Context, modifier: Modifier) {
                                 fontSize = 24.sp
                             ),
                             colors = TextFieldDefaults.colors(
-                                  /*unfocusedContainerColor = if ("2" in palautetut && kayttajaSanat.size >= 6 && index > 4 && index < 10) {
-                                      if (kayttajaSanat [index].lowercase() == d[index].lowercase()) {
-                                          Color.Green
-                                      } else if (kayttajaSanat[index].lowercase() in sana.lowercase()) {
-                                          Color.Yellow
-                                      } else Color.Gray
-                                  } else White,
-                                  focusedContainerColor = if ("2" in palautetut && kayttajaSanat.size >= 6 && index > 4 && index < 10) {
-                                      if (kayttajaSanat[index].lowercase() == d[index].lowercase()) {
-                                          Color.Green
-                                      } else if (kayttajaSanat[index].lowercase() in sana.lowercase()) {
-                                          Color.Yellow
-                                      } else Color.Gray
-                                  } else White,*/
+                                unfocusedContainerColor = if (varitTextfieldeka.size >= 25) {
+                                    if (varitTextfieldeka[index].lowercase() == "vihrea") {
+                                        Color.Green
+                                    } else if (varitTextfieldeka[index].lowercase() == "keltanen") {
+                                        Color.Yellow
+                                    } else Color.Gray
+                                } else White,
+                                focusedContainerColor = if (varitTextfieldeka.size >= 25) {
+                                    if (varitTextfieldeka[index].lowercase() == "vihrea") {
+                                        Color.Green
+                                    } else if (varitTextfieldeka[index].lowercase() == "keltanen") {
+                                        Color.Yellow
+                                    } else Color.Gray
+                                } else White,
                                   focusedIndicatorColor = White,
                               ),
                             shape = RoundedCornerShape(10.dp),
@@ -475,20 +538,20 @@ fun Game(context: Context, modifier: Modifier) {
                                 fontSize = 24.sp
                             ),
                             colors = TextFieldDefaults.colors(
-                                  /*unfocusedContainerColor = if ("2" in palautetut && kayttajaSanat.size >= 6 && index > 4 && index < 10) {
-                                      if (kayttajaSanat [index].lowercase() == d[index].lowercase()) {
-                                          Color.Green
-                                      } else if (kayttajaSanat[index].lowercase() in sana.lowercase()) {
-                                          Color.Yellow
-                                      } else Color.Gray
-                                  } else White,
-                                  focusedContainerColor = if ("2" in palautetut && kayttajaSanat.size >= 6 && index > 4 && index < 10) {
-                                      if (kayttajaSanat[index].lowercase() == d[index].lowercase()) {
-                                          Color.Green
-                                      } else if (kayttajaSanat[index].lowercase() in sana.lowercase()) {
-                                          Color.Yellow
-                                      } else Color.Gray
-                                  } else White,*/
+                                unfocusedContainerColor = if (varitTextfieldeka.size >= 30) {
+                                    if (varitTextfieldeka[index].lowercase() == "vihrea") {
+                                        Color.Green
+                                    } else if (varitTextfieldeka[index].lowercase() == "keltanen") {
+                                        Color.Yellow
+                                    } else Color.Gray
+                                } else White,
+                                focusedContainerColor = if (varitTextfieldeka.size >= 30) {
+                                    if (varitTextfieldeka[index].lowercase() == "vihrea") {
+                                        Color.Green
+                                    } else if (varitTextfieldeka[index].lowercase() == "keltanen") {
+                                        Color.Yellow
+                                    } else Color.Gray
+                                } else White,
                                   focusedIndicatorColor = White,
                                 ),
                             shape = RoundedCornerShape(10.dp),

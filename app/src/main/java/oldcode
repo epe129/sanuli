@@ -1578,3 +1578,11 @@ if (arvauksienMaara == 0) {
 
 
 
+    // list where every character is in individually
+    //val d = mutableListOf<String>()
+    //for (i in sana) {
+      //  d.add(i.toString().lowercase())
+    //}
+
+
+
