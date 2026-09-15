@@ -208,7 +208,7 @@ fun Game(context: Context, modifier: Modifier) {
                 }
                 if (k == 9) {break}
             }
-            /*if () {
+            if ("3" in palautetut && kayttajaSanat.isNotEmpty() && k >= 10 && k <= 15) {
                 for (s in 0..4){
                     if (kayttajaSanat[k].lowercase() == sana[s].lowercase()) {
                         varitTextfieldeka.add(k, "vihrea")
@@ -216,9 +216,9 @@ fun Game(context: Context, modifier: Modifier) {
                         varitTextfieldeka.add(k, "keltanen")
                     } else varitTextfieldeka.add(k, "harmaa")
                 }
-                if (k ) {break}
+                if (k == 15) {break}
             }
-            if () {
+            if ("4" in palautetut && kayttajaSanat.isNotEmpty() && k >= 15 && k <= 20) {
                 for (s in 0..4){
                     if (kayttajaSanat[k].lowercase() == sana[s].lowercase()) {
                         varitTextfieldeka.add(k, "vihrea")
@@ -226,9 +226,9 @@ fun Game(context: Context, modifier: Modifier) {
                         varitTextfieldeka.add(k, "keltanen")
                     } else varitTextfieldeka.add(k, "harmaa")
                 }
-                if (k == ) {break}
+                if (k == 20) {break}
             }
-            if () {
+            if ("5" in palautetut && kayttajaSanat.isNotEmpty() && k >= 20 && k <= 25) {
                 for (s in 0..4){
                     if (kayttajaSanat[k].lowercase() == sana[s].lowercase()) {
                         varitTextfieldeka.add(k, "vihrea")
@@ -236,9 +236,9 @@ fun Game(context: Context, modifier: Modifier) {
                         varitTextfieldeka.add(k, "keltanen")
                     } else varitTextfieldeka.add(k, "harmaa")
                 }
-                if (k == ) {break}
+                if (k == 25) {break}
             }
-            if () {
+            if ("6" in palautetut && kayttajaSanat.isNotEmpty() && k >= 25 && k <= 30) {
                 for (s in 0..4){
                     if (kayttajaSanat[k].lowercase() == sana[s].lowercase()) {
                         varitTextfieldeka.add(k, "vihrea")
@@ -246,8 +246,8 @@ fun Game(context: Context, modifier: Modifier) {
                         varitTextfieldeka.add(k, "keltanen")
                     } else varitTextfieldeka.add(k, "harmaa")
                 }
-                if (k == ) {break}
-            }*/
+                if (k == 30) {break}
+            }
         }
 
         // if user didn't get the word right
