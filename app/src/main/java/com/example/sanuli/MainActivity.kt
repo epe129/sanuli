@@ -96,12 +96,6 @@ fun Game(context: Context, modifier: Modifier) {
     var huijausClicktText by remember { mutableStateOf("") }
     var checkClickt by remember { mutableStateOf(false) }
     val varitTextfieldeka = remember { mutableStateListOf<String>() }
-    val varitTextfieldtoka = remember { mutableStateListOf<String>() }
-    val varitTextfieldkolmas = remember { mutableStateListOf<String>() }
-    val varitTextfieldneljas = remember { mutableStateListOf<String>() }
-    val varitTextfieldviides = remember { mutableStateListOf<String>() }
-    val varitTextfieldkuudes = remember { mutableStateListOf<String>() }
-
 
     // makes the json to list and gets the data from json using object data
     DataManager.loadAssetsFromFile(context)
@@ -208,7 +202,7 @@ fun Game(context: Context, modifier: Modifier) {
                 }
                 if (k == 9) {break}
             }
-            if ("3" in palautetut && kayttajaSanat.isNotEmpty() && k >= 10 && k <= 15) {
+            if ("3" in palautetut && kayttajaSanat.isNotEmpty() && k >= 10 && k <= 14) {
                 for (s in 0..4){
                     if (kayttajaSanat[k].lowercase() == sana[s].lowercase()) {
                         varitTextfieldeka.add(k, "vihrea")
@@ -216,9 +210,9 @@ fun Game(context: Context, modifier: Modifier) {
                         varitTextfieldeka.add(k, "keltanen")
                     } else varitTextfieldeka.add(k, "harmaa")
                 }
-                if (k == 15) {break}
+                if (k == 14) {break}
             }
-            if ("4" in palautetut && kayttajaSanat.isNotEmpty() && k >= 15 && k <= 20) {
+            if ("4" in palautetut && kayttajaSanat.isNotEmpty() && k >= 15 && k <= 19) {
                 for (s in 0..4){
                     if (kayttajaSanat[k].lowercase() == sana[s].lowercase()) {
                         varitTextfieldeka.add(k, "vihrea")
@@ -226,9 +220,9 @@ fun Game(context: Context, modifier: Modifier) {
                         varitTextfieldeka.add(k, "keltanen")
                     } else varitTextfieldeka.add(k, "harmaa")
                 }
-                if (k == 20) {break}
+                if (k == 19) {break}
             }
-            if ("5" in palautetut && kayttajaSanat.isNotEmpty() && k >= 20 && k <= 25) {
+            if ("5" in palautetut && kayttajaSanat.isNotEmpty() && k >= 20 && k <= 24) {
                 for (s in 0..4){
                     if (kayttajaSanat[k].lowercase() == sana[s].lowercase()) {
                         varitTextfieldeka.add(k, "vihrea")
@@ -236,9 +230,9 @@ fun Game(context: Context, modifier: Modifier) {
                         varitTextfieldeka.add(k, "keltanen")
                     } else varitTextfieldeka.add(k, "harmaa")
                 }
-                if (k == 25) {break}
+                if (k == 24) {break}
             }
-            if ("6" in palautetut && kayttajaSanat.isNotEmpty() && k >= 25 && k <= 30) {
+            if ("6" in palautetut && kayttajaSanat.isNotEmpty() && k >= 25 && k <= 29) {
                 for (s in 0..4){
                     if (kayttajaSanat[k].lowercase() == sana[s].lowercase()) {
                         varitTextfieldeka.add(k, "vihrea")
@@ -246,7 +240,7 @@ fun Game(context: Context, modifier: Modifier) {
                         varitTextfieldeka.add(k, "keltanen")
                     } else varitTextfieldeka.add(k, "harmaa")
                 }
-                if (k == 30) {break}
+                if (k == 29) {break}
             }
         }
 
@@ -350,14 +344,14 @@ fun Game(context: Context, modifier: Modifier) {
                                 fontSize = 24.sp
                             ),
                             colors = TextFieldDefaults.colors(
-                                unfocusedContainerColor = if (varitTextfieldeka.size >= 10) {
+                                unfocusedContainerColor = if (varitTextfieldeka.size >= 9) {
                                     if (varitTextfieldeka[index].lowercase() == "vihrea") {
                                         Color.Green
                                     } else if (varitTextfieldeka[index].lowercase() == "keltanen") {
                                         Color.Yellow
                                     } else Color.Gray
                                 } else White,
-                                focusedContainerColor = if (varitTextfieldeka.size >= 10) {
+                                focusedContainerColor = if (varitTextfieldeka.size >= 9) {
                                     if (varitTextfieldeka[index].lowercase() == "vihrea") {
                                         Color.Green
                                     } else if (varitTextfieldeka[index].lowercase() == "keltanen") {
@@ -384,9 +378,9 @@ fun Game(context: Context, modifier: Modifier) {
                 ) {
                     nakyvatKirjaimetKAIKKI.forEachIndexed { index, item ->
                         OutlinedTextField(
-                            value = if (index >= 10 && index <= 15) { nakyvatKirjaimetKAIKKI[index] } else return@forEachIndexed,
+                            value = if (index >= 10 && index <= 14) { nakyvatKirjaimetKAIKKI[index] } else return@forEachIndexed,
                             onValueChange = {
-                                if (index >= 10 && index <= 15) { nakyvatKirjaimetKAIKKI[index] = it  } else return@OutlinedTextField
+                                if (index >= 10 && index <= 14) { nakyvatKirjaimetKAIKKI[index] = it  } else return@OutlinedTextField
                             },
                             readOnly = true,
                             singleLine = true,
@@ -397,14 +391,14 @@ fun Game(context: Context, modifier: Modifier) {
                                 fontSize = 24.sp
                             ),
                             colors = TextFieldDefaults.colors(
-                                  unfocusedContainerColor = if (varitTextfieldeka.size >= 15) {
+                                  unfocusedContainerColor = if (varitTextfieldeka.size >= 14) {
                                       if (varitTextfieldeka[index].lowercase() == "vihrea") {
                                           Color.Green
                                       } else if (varitTextfieldeka[index].lowercase() == "keltanen") {
                                           Color.Yellow
                                       } else Color.Gray
                                   } else White,
-                                focusedContainerColor = if (varitTextfieldeka.size >= 15) {
+                                focusedContainerColor = if (varitTextfieldeka.size >= 14) {
                                     if (varitTextfieldeka[index].lowercase() == "vihrea") {
                                         Color.Green
                                     } else if (varitTextfieldeka[index].lowercase() == "keltanen") {
@@ -431,9 +425,9 @@ fun Game(context: Context, modifier: Modifier) {
                 ) {
                     nakyvatKirjaimetKAIKKI.forEachIndexed { index, item ->
                         OutlinedTextField(
-                            value = if (index >= 15 && index <= 20) { nakyvatKirjaimetKAIKKI[index] } else return@forEachIndexed,
+                            value = if (index >= 15 && index <= 19) { nakyvatKirjaimetKAIKKI[index] } else return@forEachIndexed,
                             onValueChange = {
-                                if (index >= 15 && index <= 20) { nakyvatKirjaimetKAIKKI[index] = it  } else return@OutlinedTextField
+                                if (index >= 15 && index <= 19) { nakyvatKirjaimetKAIKKI[index] = it  } else return@OutlinedTextField
                             },
                             readOnly = true,
                             singleLine = true,
@@ -444,14 +438,14 @@ fun Game(context: Context, modifier: Modifier) {
                                 fontSize = 24.sp
                             ),
                             colors = TextFieldDefaults.colors(
-                                unfocusedContainerColor = if (varitTextfieldeka.size >= 20) {
+                                unfocusedContainerColor = if (varitTextfieldeka.size >= 19) {
                                     if (varitTextfieldeka[index].lowercase() == "vihrea") {
                                         Color.Green
                                     } else if (varitTextfieldeka[index].lowercase() == "keltanen") {
                                         Color.Yellow
                                     } else Color.Gray
                                 } else White,
-                                focusedContainerColor = if (varitTextfieldeka.size >= 20) {
+                                focusedContainerColor = if (varitTextfieldeka.size >= 19) {
                                     if (varitTextfieldeka[index].lowercase() == "vihrea") {
                                         Color.Green
                                     } else if (varitTextfieldeka[index].lowercase() == "keltanen") {
@@ -478,9 +472,9 @@ fun Game(context: Context, modifier: Modifier) {
                 ) {
                     nakyvatKirjaimetKAIKKI.forEachIndexed { index, item ->
                         OutlinedTextField(
-                            value = if (index >= 20 && index <= 25) { nakyvatKirjaimetKAIKKI[index] } else return@forEachIndexed,
+                            value = if (index >= 20 && index <= 24) { nakyvatKirjaimetKAIKKI[index] } else return@forEachIndexed,
                             onValueChange = {
-                                if (index >= 20 && index <= 25) { nakyvatKirjaimetKAIKKI[index] = it  } else return@OutlinedTextField
+                                if (index >= 20 && index <= 24) { nakyvatKirjaimetKAIKKI[index] = it  } else return@OutlinedTextField
                             },
                             readOnly = true,
                             singleLine = true,
@@ -491,14 +485,14 @@ fun Game(context: Context, modifier: Modifier) {
                                 fontSize = 24.sp
                             ),
                             colors = TextFieldDefaults.colors(
-                                unfocusedContainerColor = if (varitTextfieldeka.size >= 25) {
+                                unfocusedContainerColor = if (varitTextfieldeka.size >= 24) {
                                     if (varitTextfieldeka[index].lowercase() == "vihrea") {
                                         Color.Green
                                     } else if (varitTextfieldeka[index].lowercase() == "keltanen") {
                                         Color.Yellow
                                     } else Color.Gray
                                 } else White,
-                                focusedContainerColor = if (varitTextfieldeka.size >= 25) {
+                                focusedContainerColor = if (varitTextfieldeka.size >= 24) {
                                     if (varitTextfieldeka[index].lowercase() == "vihrea") {
                                         Color.Green
                                     } else if (varitTextfieldeka[index].lowercase() == "keltanen") {
@@ -525,9 +519,9 @@ fun Game(context: Context, modifier: Modifier) {
                 ) {
                     nakyvatKirjaimetKAIKKI.forEachIndexed { index, item ->
                         OutlinedTextField(
-                            value = if (index >= 25 && index <= 30) { nakyvatKirjaimetKAIKKI[index] } else return@forEachIndexed,
+                            value = if (index >= 25 && index <= 29) { nakyvatKirjaimetKAIKKI[index] } else return@forEachIndexed,
                             onValueChange = {
-                                if (index >= 25 && index <= 30) { nakyvatKirjaimetKAIKKI[index] = it  } else return@OutlinedTextField
+                                if (index >= 25 && index <= 29) { nakyvatKirjaimetKAIKKI[index] = it  } else return@OutlinedTextField
                             },
                             readOnly = true,
                             singleLine = true,
@@ -538,14 +532,14 @@ fun Game(context: Context, modifier: Modifier) {
                                 fontSize = 24.sp
                             ),
                             colors = TextFieldDefaults.colors(
-                                unfocusedContainerColor = if (varitTextfieldeka.size >= 30) {
+                                unfocusedContainerColor = if (varitTextfieldeka.size >= 29) {
                                     if (varitTextfieldeka[index].lowercase() == "vihrea") {
                                         Color.Green
                                     } else if (varitTextfieldeka[index].lowercase() == "keltanen") {
                                         Color.Yellow
                                     } else Color.Gray
                                 } else White,
-                                focusedContainerColor = if (varitTextfieldeka.size >= 30) {
+                                focusedContainerColor = if (varitTextfieldeka.size >= 29) {
                                     if (varitTextfieldeka[index].lowercase() == "vihrea") {
                                         Color.Green
                                     } else if (varitTextfieldeka[index].lowercase() == "keltanen") {
@@ -1434,5 +1428,6 @@ fun Game(context: Context, modifier: Modifier) {
         arvauksienMaara = 0
         nakyvatKirjaimetKohtaKAKKI = 0
         nakyvatKirjaimetKohta = 0
+        varitTextfieldeka.clear()
     }
 }
