@@ -27,7 +27,6 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -40,11 +39,13 @@ import androidx.compose.ui.unit.sp
 import com.example.sanuli.ui.theme.SanuliTheme
 import kotlin.collections.mutableListOf
 import android.content.Context
+import androidx.compose.foundation.gestures.snapping.SnapPosition
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Alignment
 import kotlinx.coroutines.delay
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -81,7 +82,7 @@ fun Game(context: Context, modifier: Modifier) {
     val kaikkiKirjaimet = remember { mutableStateListOf<String>() }
     var arvauksienMaara by remember { mutableIntStateOf(0) }
     var nykyKohta by remember { mutableIntStateOf(0) }
-    val palautetut = remember { mutableStateListOf<String>() }
+    var palautetut: Int by remember { mutableIntStateOf(0) }
     val palautettuKirjaimet = remember { mutableStateListOf<String>() }
     val paikat = remember { mutableStateListOf<String>() }
     val kirjaimet = listOf("Q", "W", "E","R","T","Y","U","I","O","P","Å","A","S","D","F","G","H","J","K","L","Ö","Ä","Z","X","C","V","B","N","M")
@@ -179,12 +180,13 @@ fun Game(context: Context, modifier: Modifier) {
             nakyvatKirjaimet.add(kaikki)
         }
         arvauksienMaara += 1
-        palautetut.add(arvauksienMaara.toString())
+        palautetut = arvauksienMaara
         nykyKohta = 0
         nakyvatKirjaimetKohta = 0
-
-        for (k in 0..31) {
-            if ("1" in palautetut && kayttajaSanat.isNotEmpty() && k <= 4) {
+        // DOESN'T WORK
+        if (palautetut == 1 && kayttajaSanat.isNotEmpty()) {
+            for (k in 0..4) {
+                println("1")
                 if (kayttajaSanat[k].lowercase() == sana[k].lowercase()) {
                     varitTextfieldeka.add(k, "vihrea")
                 } else if (kayttajaSanat[k].lowercase() in sana.lowercase()) {
@@ -192,55 +194,74 @@ fun Game(context: Context, modifier: Modifier) {
                 } else varitTextfieldeka.add(k, "harmaa")
                 if (k == 4) {break}
             }
-            if ("2" in palautetut && kayttajaSanat.isNotEmpty() && k >= 5 && k <= 9) {
-                for (s in 0..4){
-                    if (kayttajaSanat[k].lowercase() == sana[s].lowercase()) {
-                        varitTextfieldeka.add(k, "vihrea")
-                    } else if (kayttajaSanat[k].lowercase() in sana.lowercase()) {
-                        varitTextfieldeka.add(k, "keltanen")
-                    } else varitTextfieldeka.add(k, "harmaa")
+        }
+        if (palautetut == 2 && kayttajaSanat.isNotEmpty()) {
+            for (l in 5..9) {
+                println("2")
+                for (s in 0..4) {
+                    if (kayttajaSanat[l].lowercase() == sana[s].lowercase()) {
+                        varitTextfieldeka.add(l, "vihrea")
+                    } else if (kayttajaSanat[l].lowercase() in sana.lowercase()) {
+                        varitTextfieldeka.add(l, "keltanen")
+                    } else varitTextfieldeka.add(l, "harmaa")
+                    if (l == 9 || s == 4) { break }
                 }
-                if (k == 9) {break}
             }
-            if ("3" in palautetut && kayttajaSanat.isNotEmpty() && k >= 10 && k <= 14) {
-                for (s in 0..4){
-                    if (kayttajaSanat[k].lowercase() == sana[s].lowercase()) {
-                        varitTextfieldeka.add(k, "vihrea")
-                    } else if (kayttajaSanat[k].lowercase() in sana.lowercase()) {
-                        varitTextfieldeka.add(k, "keltanen")
-                    } else varitTextfieldeka.add(k, "harmaa")
+        }
+        if (palautetut == 3 && kayttajaSanat.isNotEmpty()) {
+            for (z in 10..14) {
+                for (s in 0..4) {
+                    if (kayttajaSanat[z].lowercase() == sana[s].lowercase()) {
+                        varitTextfieldeka.add(z, "vihrea")
+                    } else if (kayttajaSanat[z].lowercase() in sana.lowercase()) {
+                        varitTextfieldeka.add(z, "keltanen")
+                    } else varitTextfieldeka.add(z, "harmaa")
+                    if (z == 14) {
+                        break
+                    }
                 }
-                if (k == 14) {break}
             }
-            if ("4" in palautetut && kayttajaSanat.isNotEmpty() && k >= 15 && k <= 19) {
-                for (s in 0..4){
-                    if (kayttajaSanat[k].lowercase() == sana[s].lowercase()) {
-                        varitTextfieldeka.add(k, "vihrea")
-                    } else if (kayttajaSanat[k].lowercase() in sana.lowercase()) {
-                        varitTextfieldeka.add(k, "keltanen")
-                    } else varitTextfieldeka.add(k, "harmaa")
+        }
+        if (palautetut == 4 && kayttajaSanat.isNotEmpty()) {
+            for (x in 15..19) {
+                for (s in 0..4) {
+                    if (kayttajaSanat[x].lowercase() == sana[s].lowercase()) {
+                        varitTextfieldeka.add(x, "vihrea")
+                    } else if (kayttajaSanat[x].lowercase() in sana.lowercase()) {
+                        varitTextfieldeka.add(x, "keltanen")
+                    } else varitTextfieldeka.add(x, "harmaa")
+                    if (x == 19) {
+                        break
+                    }
                 }
-                if (k == 19) {break}
             }
-            if ("5" in palautetut && kayttajaSanat.isNotEmpty() && k >= 20 && k <= 24) {
-                for (s in 0..4){
-                    if (kayttajaSanat[k].lowercase() == sana[s].lowercase()) {
-                        varitTextfieldeka.add(k, "vihrea")
-                    } else if (kayttajaSanat[k].lowercase() in sana.lowercase()) {
-                        varitTextfieldeka.add(k, "keltanen")
-                    } else varitTextfieldeka.add(k, "harmaa")
+        }
+        if (palautetut == 5 && kayttajaSanat.isNotEmpty()) {
+            for (c in 20..24) {
+                for (s in 0..4) {
+                    if (kayttajaSanat[c].lowercase() == sana[s].lowercase()) {
+                        varitTextfieldeka.add(c, "vihrea")
+                    } else if (kayttajaSanat[c].lowercase() in sana.lowercase()) {
+                        varitTextfieldeka.add(c, "keltanen")
+                    } else varitTextfieldeka.add(c, "harmaa")
+                    if (c == 24) {
+                        break
+                    }
                 }
-                if (k == 24) {break}
             }
-            if ("6" in palautetut && kayttajaSanat.isNotEmpty() && k >= 25 && k <= 29) {
-                for (s in 0..4){
-                    if (kayttajaSanat[k].lowercase() == sana[s].lowercase()) {
-                        varitTextfieldeka.add(k, "vihrea")
-                    } else if (kayttajaSanat[k].lowercase() in sana.lowercase()) {
-                        varitTextfieldeka.add(k, "keltanen")
-                    } else varitTextfieldeka.add(k, "harmaa")
+        }
+        if (palautetut == 6 && kayttajaSanat.isNotEmpty()) {
+            for (v in 25..29) {
+                for (s in 0..4) {
+                    if (kayttajaSanat[v].lowercase() == sana[s].lowercase()) {
+                        varitTextfieldeka.add(v, "vihrea")
+                    } else if (kayttajaSanat[v].lowercase() in sana.lowercase()) {
+                        varitTextfieldeka.add(v, "keltanen")
+                    } else varitTextfieldeka.add(v, "harmaa")
+                    if (v == 29) {
+                        break
+                    }
                 }
-                if (k == 29) {break}
             }
         }
 
@@ -252,8 +273,9 @@ fun Game(context: Context, modifier: Modifier) {
             arvauksienMaara = 0
         }
         kaikkiKirjaimet.clear()
+        println("VÄRIT:")
+        println(varitTextfieldeka)
     }
-
     // shows the sanuli game if game is over doesn't show
     if (showContent) {
         Column(
@@ -581,762 +603,51 @@ fun Game(context: Context, modifier: Modifier) {
                     Text("Ei sanulistalla.", color = White, fontSize = 25.sp)
                 }
             }
-
+            // KEYBOARD COLORS DOESN'T WORK
             // KEYBOARD /////////////////////////////////////////////////////////////////////////////////////////////////////////////
             Column(
-                modifier = Modifier.fillMaxWidth().height(200.dp).offset(0.dp, (-25).dp),
+                modifier = Modifier.fillMaxWidth().height(250.dp).offset(0.dp, (-75).dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Bottom,
             ) {
-                // eka rivi
-                FlowRow(
-                    modifier = Modifier.padding(0.dp).fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Absolute.spacedBy(1.dp),
-                ) {
-                    TextButton(
-                        colors = ButtonColors(
-                            containerColor =
-                                (if ("Q" in palautettuKirjaimet && paikat.size >= 2) {
-                                    if ("Q" in sana.uppercase()) {
-                                        if (paikat[0] == "-1" && paikat[1] == "-1") {
-                                            Color.Blue
-                                        }
-                                        if (paikat[0].toInt() == paikat[1].toInt()) {
-                                            Color.Green
-                                        } else {
-                                            Color.Yellow
-                                        }
-                                    } else {
-                                        Color.Gray
-                                    }
-                                } else Color.Blue),
-                            contentColor = White,
-                            disabledContainerColor = Color.Blue,
-                            disabledContentColor = White
-                        ),
-                        modifier = Modifier
-                            .padding(1.dp)
-                            .width(34.dp)
-                            .clip(RoundedCornerShape(0.dp)),
-                        onClick = { addKirjain("Q") },
-                    ) {
-                        Text("Q", fontSize = 25.sp, textAlign = TextAlign.Center)
-                    }
-                    TextButton(
-                        colors = ButtonColors(
-                            containerColor = (if ("W" in palautettuKirjaimet && paikat.size >= 4) {
-                                if ("W" in sana.uppercase()) {
-                                    if (paikat[2].toInt() == paikat[3].toInt()) {
-                                        Color.Green
-                                    } else {
-                                        Color.Yellow
-                                    }
-                                } else {
-                                    Color.Gray
-                                }
-                            } else Color.Blue),
-                            contentColor = White,
-                            disabledContainerColor = Color.Blue,
-                            disabledContentColor = White
-                        ),
-                        modifier = Modifier
-                            .padding(1.dp)
-                            .width(34.dp)
-                            .clip(RoundedCornerShape(0.dp)),
-                        onClick = { addKirjain("W") },
-                    ) {
-                        Text("W", fontSize = 25.sp, textAlign = TextAlign.Center)
-                    }
-                    TextButton(
-                        colors = ButtonColors(
-                            containerColor = (if ("E" in palautettuKirjaimet && paikat.size >= 6) {
-                                if ("E" in sana.uppercase()) {
-                                    if (paikat[4].toInt() == paikat[5].toInt()) {
-                                        Color.Green
-                                    } else {
-                                        Color.Yellow
-                                    }
-                                } else {
-                                    Color.Gray
-                                }
-                            } else Color.Blue),
-                            contentColor = White,
-                            disabledContainerColor = Color.Blue,
-                            disabledContentColor = White
-                        ),
-                        modifier = Modifier
-                            .padding(1.dp)
-                            .width(34.dp)
-                            .clip(RoundedCornerShape(0.dp)),
-                        onClick = { addKirjain("E") },
-                    ) {
-                        Text("E", fontSize = 25.sp, textAlign = TextAlign.Center)
-                    }
-                    TextButton(
-                        colors = ButtonColors(
-                            containerColor = (if ("R" in palautettuKirjaimet && paikat.size >= 8) {
-                                if ("R" in sana.uppercase()) {
-                                    if (paikat[6].toInt() == paikat[7].toInt()) {
-                                        Color.Green
-                                    } else {
-                                        Color.Yellow
-                                    }
-                                } else {
-                                    Color.Gray
-                                }
-                            } else Color.Blue),
-                            contentColor = White,
-                            disabledContainerColor = Color.Blue,
-                            disabledContentColor = White
-                        ),
-                        modifier = Modifier
-                            .padding(1.dp)
-                            .width(34.dp)
-                            .clip(RoundedCornerShape(0.dp)),
-                        onClick = { addKirjain("R") },
-                    ) {
-                        Text("R", fontSize = 25.sp, textAlign = TextAlign.Center)
-                    }
-                    TextButton(
-                        colors = ButtonColors(
-                            containerColor = (if ("T" in palautettuKirjaimet && paikat.size >= 10) {
-                                if ("T" in sana.uppercase()) {
-                                    if (paikat[8].toInt() == paikat[9].toInt()) {
-                                        Color.Green
-                                    } else {
-                                        Color.Yellow
-                                    }
-                                } else {
-                                    Color.Gray
-                                }
-                            } else Color.Blue),
-                            contentColor = White,
-                            disabledContainerColor = Color.Blue,
-                            disabledContentColor = White
-                        ),
-                        modifier = Modifier
-                            .padding(1.dp)
-                            .width(34.dp)
-                            .clip(RoundedCornerShape(0.dp)),
-                        onClick = { addKirjain("T") },
-                    ) {
-                        Text("T", fontSize = 25.sp, textAlign = TextAlign.Center)
-                    }
-                    TextButton(
-                        colors = ButtonColors(
-                            containerColor = (if ("Y" in palautettuKirjaimet && paikat.size >= 12) {
-                                if ("Y" in sana.uppercase()) {
-                                    if (paikat[10].toInt() == paikat[11].toInt()) {
-                                        Color.Green
-                                    } else {
-                                        Color.Yellow
-                                    }
-                                } else {
-                                    Color.Gray
-                                }
-                            } else Color.Blue),
-                            contentColor = White,
-                            disabledContainerColor = Color.Blue,
-                            disabledContentColor = White
-                        ),
-                        modifier = Modifier
-                            .padding(1.dp)
-                            .width(34.dp)
-                            .clip(RoundedCornerShape(0.dp)),
-                        onClick = { addKirjain("Y") },
-                    ) {
-                        Text("Y", fontSize = 25.sp, textAlign = TextAlign.Center)
-                    }
-                    TextButton(
-                        colors = ButtonColors(
-                            containerColor = (if ("U" in palautettuKirjaimet && paikat.size >= 14) {
-                                if ("U" in sana.uppercase()) {
-                                    if (paikat[12].toInt() == paikat[13].toInt()) {
-                                        Color.Green
-                                    } else {
-                                        Color.Yellow
-                                    }
-                                } else {
-                                    Color.Gray
-                                }
-                            } else Color.Blue),
-                            contentColor = White,
-                            disabledContainerColor = Color.Blue,
-                            disabledContentColor = White
-                        ),
-                        modifier = Modifier
-                            .padding(1.dp)
-                            .width(34.dp)
-                            .clip(RoundedCornerShape(0.dp)),
-                        onClick = { addKirjain("U") },
-                    ) {
-                        Text("U", fontSize = 25.sp, textAlign = TextAlign.Center)
-                    }
-                    TextButton(
-                        colors = ButtonColors(
-                            containerColor = (if ("I" in palautettuKirjaimet && paikat.size >= 16) {
-                                if ("I" in sana.uppercase()) {
-                                    if (paikat[14].toInt() == paikat[15].toInt()) {
-                                        Color.Green
-                                    } else {
-                                        Color.Yellow
-                                    }
-                                } else {
-                                    Color.Gray
-                                }
-                            } else Color.Blue),
-                            contentColor = White,
-                            disabledContainerColor = Color.Blue,
-                            disabledContentColor = White
-                        ),
-                        modifier = Modifier
-                            .padding(1.dp)
-                            .width(34.dp)
-                            .clip(RoundedCornerShape(0.dp)),
-                        onClick = { addKirjain("I") },
-                    ) {
-                        Text("I", fontSize = 25.sp, textAlign = TextAlign.Center)
-                    }
-                    TextButton(
-                        colors = ButtonColors(
-                            containerColor = (if ("O" in palautettuKirjaimet && paikat.size >= 18) {
-                                if ("O" in sana.uppercase()) {
-                                    if (paikat[16].toInt() == paikat[17].toInt()) {
-                                        Color.Green
-                                    } else {
-                                        Color.Yellow
-                                    }
-                                } else {
-                                    Color.Gray
-                                }
-                            } else Color.Blue),
-                            contentColor = White,
-                            disabledContainerColor = Color.Blue,
-                            disabledContentColor = White
-                        ),
-                        modifier = Modifier
-                            .padding(1.dp)
-                            .width(34.dp)
-                            .clip(RoundedCornerShape(0.dp)),
-                        onClick = { addKirjain("O") },
-                    ) {
-                        Text("O", fontSize = 25.sp, textAlign = TextAlign.Center)
-                    }
-                    TextButton(
-                        colors = ButtonColors(
-                            containerColor = (if ("P" in palautettuKirjaimet && paikat.size >= 20) {
-                                if ("P" in sana.uppercase()) {
-                                    if (paikat[18].toInt() == paikat[19].toInt()) {
-                                        Color.Green
-                                    } else {
-                                        Color.Yellow
-                                    }
-                                } else {
-                                    Color.Gray
-                                }
-                            } else Color.Blue),
-                            contentColor = White,
-                            disabledContainerColor = Color.Blue,
-                            disabledContentColor = White
-                        ),
-                        modifier = Modifier
-                            .padding(1.dp)
-                            .width(34.dp)
-                            .clip(RoundedCornerShape(0.dp)),
-                        onClick = { addKirjain("P") },
-                    ) {
-                        Text("P", fontSize = 25.sp, textAlign = TextAlign.Center)
-                    }
-                    TextButton(
-                        colors = ButtonColors(
-                            containerColor = (if ("Å" in palautettuKirjaimet && paikat.size >= 22) {
-                                if ("Å" in sana.uppercase()) {
-                                    if (paikat[20].toInt() == paikat[21].toInt()) {
-                                        Color.Green
-                                    } else {
-                                        Color.Yellow
-                                    }
-                                } else {
-                                    Color.Gray
-                                }
-                            } else Color.Blue),
-                            contentColor = White,
-                            disabledContainerColor = Color.Blue,
-                            disabledContentColor = White
-                        ),
-                        modifier = Modifier
-                            .padding(1.dp)
-                            .width(34.dp)
-                            .clip(RoundedCornerShape(0.dp)),
-                        onClick = { addKirjain("Å") },
-                    ) {
-                        Text("Å", fontSize = 25.sp, textAlign = TextAlign.Center)
-                    }
-                }
-
-                // rivi 2
-                FlowRow(
-                    modifier = Modifier.padding(0.dp).fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Absolute.spacedBy(1.dp),
-                ) {
-                    TextButton(
-                        colors = ButtonColors(
-                            containerColor = (if ("A" in palautettuKirjaimet && paikat.size >= 24) {
-                                if ("A" in sana.uppercase()) {
-                                    if (paikat[22].toInt() == paikat[23].toInt()) {
-                                        Color.Green
-                                    } else {
-                                        Color.Yellow
-                                    }
-                                } else {
-                                    Color.Gray
-                                }
-                            } else Color.Blue),
-                            contentColor = White,
-                            disabledContainerColor = Color.Blue,
-                            disabledContentColor = White
-                        ),
-                        modifier = Modifier
-                            .padding(1.dp)
-                            .width(34.dp)
-                            .clip(RoundedCornerShape(0.dp)),
-                        onClick = { addKirjain("A") },
-                    ) {
-                        Text("A", fontSize = 25.sp, textAlign = TextAlign.Center)
-                    }
-                    TextButton(
-                        colors = ButtonColors(
-                            containerColor = (if ("S" in palautettuKirjaimet && paikat.size >= 26) {
-                                if ("S" in sana.uppercase()) {
-                                    if (paikat[24].toInt() == paikat[25].toInt()) {
-                                        Color.Green
-                                    } else {
-                                        Color.Yellow
-                                    }
-                                } else {
-                                    Color.Gray
-                                }
-                            } else Color.Blue),
-                            contentColor = White,
-                            disabledContainerColor = Color.Blue,
-                            disabledContentColor = White
-                        ),
-                        modifier = Modifier
-                            .padding(1.dp)
-                            .width(34.dp)
-                            .clip(RoundedCornerShape(0.dp)),
-                        onClick = { addKirjain("S") },
-                    ) {
-                        Text("S", fontSize = 25.sp, textAlign = TextAlign.Center)
-                    }
-                    TextButton(
-                        colors = ButtonColors(
-                            containerColor = (if ("D" in palautettuKirjaimet && paikat.size >= 28) {
-                                if ("D" in sana.uppercase()) {
-                                    if (paikat[26].toInt() == paikat[27].toInt()) {
-                                        Color.Green
-                                    } else {
-                                        Color.Yellow
-                                    }
-                                } else {
-                                    Color.Gray
-                                }
-                            } else Color.Blue),
-                            contentColor = White,
-                            disabledContainerColor = Color.Blue,
-                            disabledContentColor = White
-                        ),
-                        modifier = Modifier
-                            .padding(1.dp)
-                            .width(34.dp)
-                            .clip(RoundedCornerShape(0.dp)),
-                        onClick = { addKirjain("D") },
-                    ) {
-                        Text("D", fontSize = 25.sp, textAlign = TextAlign.Center)
-                    }
-                    TextButton(
-                        colors = ButtonColors(
-                            containerColor = (if ("F" in palautettuKirjaimet && paikat.size >= 30) {
-                                if ("F" in sana.uppercase()) {
-                                    if (paikat[28].toInt() == paikat[29].toInt()) {
-                                        Color.Green
-                                    } else {
-                                        Color.Yellow
-                                    }
-                                } else {
-                                    Color.Gray
-                                }
-                            } else Color.Blue),
-                            contentColor = White,
-                            disabledContainerColor = Color.Blue,
-                            disabledContentColor = White
-                        ),
-                        modifier = Modifier
-                            .padding(1.dp)
-                            .width(34.dp)
-                            .clip(RoundedCornerShape(0.dp)),
-                        onClick = { addKirjain("F") },
-                    ) {
-                        Text("F", fontSize = 25.sp, textAlign = TextAlign.Center)
-                    }
-                    TextButton(
-                        colors = ButtonColors(
-                            containerColor = (if ("G" in palautettuKirjaimet && paikat.size >= 32) {
-                                if ("G" in sana.uppercase()) {
-                                    if (paikat[30].toInt() == paikat[31].toInt()) {
-                                        Color.Green
-                                    } else {
-                                        Color.Yellow
-                                    }
-                                } else {
-                                    Color.Gray
-                                }
-                            } else Color.Blue),
-                            contentColor = White,
-                            disabledContainerColor = Color.Blue,
-                            disabledContentColor = White
-                        ),
-                        modifier = Modifier
-                            .padding(1.dp)
-                            .width(34.dp)
-                            .clip(RoundedCornerShape(0.dp)),
-                        onClick = { addKirjain("G") },
-                    ) {
-                        Text("G", fontSize = 25.sp, textAlign = TextAlign.Center)
-                    }
-                    TextButton(
-                        colors = ButtonColors(
-                            containerColor = (if ("H" in palautettuKirjaimet && paikat.size >= 34) {
-                                if ("H" in sana.uppercase()) {
-                                    if (paikat[32].toInt() == paikat[33].toInt()) {
-                                        Color.Green
-                                    } else {
-                                        Color.Yellow
-                                    }
-                                } else {
-                                    Color.Gray
-                                }
-                            } else Color.Blue),
-                            contentColor = White,
-                            disabledContainerColor = Color.Blue,
-                            disabledContentColor = White
-                        ),
-                        modifier = Modifier
-                            .padding(1.dp)
-                            .width(34.dp)
-                            .clip(RoundedCornerShape(0.dp)),
-                        onClick = { addKirjain("H") },
-                    ) {
-                        Text("H", fontSize = 25.sp, textAlign = TextAlign.Center)
-                    }
-                    TextButton(
-                        colors = ButtonColors(
-                            containerColor = (if ("J" in palautettuKirjaimet && paikat.size >= 36) {
-                                if ("J" in sana.uppercase()) {
-                                    if (paikat[34].toInt() == paikat[35].toInt()) {
-                                        Color.Green
-                                    } else {
-                                        Color.Yellow
-                                    }
-                                } else {
-                                    Color.Gray
-                                }
-                            } else Color.Blue),
-                            contentColor = White,
-                            disabledContainerColor = Color.Blue,
-                            disabledContentColor = White
-                        ),
-                        modifier = Modifier
-                            .padding(1.dp)
-                            .width(34.dp)
-                            .clip(RoundedCornerShape(0.dp)),
-                        onClick = { addKirjain("J") },
-                    ) {
-                        Text("J", fontSize = 25.sp, textAlign = TextAlign.Center)
-                    }
-                    TextButton(
-                        colors = ButtonColors(
-                            containerColor = (if ("K" in palautettuKirjaimet && paikat.size >= 38) {
-                                if ("K" in sana.uppercase()) {
-                                    if (paikat[36].toInt() == paikat[37].toInt()) {
-                                        Color.Green
-                                    } else {
-                                        Color.Yellow
-                                    }
-                                } else {
-                                    Color.Gray
-                                }
-                            } else Color.Blue),
-                            contentColor = White,
-                            disabledContainerColor = Color.Blue,
-                            disabledContentColor = White
-                        ),
-                        modifier = Modifier
-                            .padding(1.dp)
-                            .width(34.dp)
-                            .clip(RoundedCornerShape(0.dp)),
-                        onClick = { addKirjain("K") },
-                    ) {
-                        Text("K", fontSize = 25.sp, textAlign = TextAlign.Center)
-                    }
-                    TextButton(
-                        colors = ButtonColors(
-                            containerColor = (if ("L" in palautettuKirjaimet && paikat.size >= 40) {
-                                if ("L" in sana.uppercase()) {
-                                    if (paikat[38].toInt() == paikat[39].toInt()) {
-                                        Color.Green
-                                    } else {
-                                        Color.Yellow
-                                    }
-                                } else {
-                                    Color.Gray
-                                }
-                            } else Color.Blue),
-                            contentColor = White,
-                            disabledContainerColor = Color.Blue,
-                            disabledContentColor = White
-                        ),
-                        modifier = Modifier
-                            .padding(1.dp)
-                            .width(34.dp)
-                            .clip(RoundedCornerShape(0.dp)),
-                        onClick = { addKirjain("L") },
-                    ) {
-                        Text("L", fontSize = 25.sp, textAlign = TextAlign.Center)
-                    }
-                    TextButton(
-                        colors = ButtonColors(
-                            containerColor = (if ("Ö" in palautettuKirjaimet && paikat.size >= 42) {
-                                if ("Ö" in sana.uppercase()) {
-                                    if (paikat[40].toInt() == paikat[41].toInt()) {
-                                        Color.Green
-                                    } else {
-                                        Color.Yellow
-                                    }
-                                } else {
-                                    Color.Gray
-                                }
-                            } else Color.Blue),
-                            contentColor = White,
-                            disabledContainerColor = Color.Blue,
-                            disabledContentColor = White
-                        ),
-                        modifier = Modifier
-                            .padding(1.dp)
-                            .width(34.dp)
-                            .clip(RoundedCornerShape(0.dp)),
-                        onClick = { addKirjain("Ö") },
-                    ) {
-                        Text("Ö", fontSize = 25.sp, textAlign = TextAlign.Center)
-                    }
-                    TextButton(
-                        colors = ButtonColors(
-                            containerColor = (if ("Ä" in palautettuKirjaimet && paikat.size >= 44) {
-                                if ("Ä" in sana.uppercase()) {
-                                    if (paikat[42].toInt() == paikat[43].toInt()) {
-                                        Color.Green
-                                    } else {
-                                        Color.Yellow
-                                    }
-                                } else {
-                                    Color.Gray
-                                }
-                            } else Color.Blue),
-                            contentColor = White,
-                            disabledContainerColor = Color.Blue,
-                            disabledContentColor = White
-                        ),
-                        modifier = Modifier
-                            .padding(1.dp)
-                            .width(34.dp)
-                            .clip(RoundedCornerShape(0.dp)),
-                        onClick = { addKirjain("Ä") },
-                    ) {
-                        Text("Ä", fontSize = 25.sp, textAlign = TextAlign.Center)
-                    }
-                }
-
-                // rivi 3
+                // rows
                 FlowRow(
                     modifier = Modifier.padding(0.dp).fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center,
-                ) {
-                    TextButton(
-                        colors = ButtonColors(
-                            containerColor = (if ("Z" in palautettuKirjaimet && paikat.size >= 46) {
-                                if ("Z" in sana.uppercase()) {
-                                    if (paikat[44].toInt() == paikat[45].toInt()) {
-                                        Color.Green
-                                    } else {
-                                        Color.Yellow
-                                    }
-                                } else {
-                                    Color.Gray
-                                }
-                            } else Color.Blue),
-                            contentColor = White,
-                            disabledContainerColor = Color.Blue,
-                            disabledContentColor = White
-                        ),
-                        modifier = Modifier
-                            .padding(1.dp)
-                            .width(34.dp)
-                            .clip(RoundedCornerShape(0.dp)),
-                        onClick = { addKirjain("Z") },
+                    verticalArrangement = Arrangement.Center,
                     ) {
-                        Text("Z", fontSize = 25.sp, textAlign = TextAlign.Center)
+                    kirjaimet.forEachIndexed { index, item ->
+                        TextButton(
+                            colors = ButtonColors(
+                                containerColor =
+                                    (if (item in palautettuKirjaimet && paikat.size >= 2) {
+                                        if (item in sana.uppercase()) {
+                                            if (paikat[index] == "-1" && paikat[index+1] == "-1") {
+                                                Color.Blue
+                                            }
+                                            if (paikat[index].toInt() == paikat[index+1].toInt()) {
+                                                Color.Green
+                                            } else {
+                                                Color.Yellow
+                                            }
+                                        } else {
+                                            Color.Gray
+                                        }
+                                    } else Color.Blue),
+                                contentColor = White,
+                                disabledContainerColor = Color.Blue,
+                                disabledContentColor = White
+                            ),
+                            modifier = Modifier
+                                .padding(1.dp)
+                                .width(34.dp)
+                                .clip(RoundedCornerShape(0.dp)),
+                            onClick = { addKirjain(item) },
+                        ) {
+                            Text(item, fontSize = 25.sp, textAlign = TextAlign.Center)
+                        }
                     }
-                    TextButton(
-                        colors = ButtonColors(
-                            containerColor = (if ("X" in palautettuKirjaimet && paikat.size >= 48) {
-                                if ("X" in sana.uppercase()) {
-                                    if (paikat[46].toInt() == paikat[47].toInt()) {
-                                        Color.Green
-                                    } else {
-                                        Color.Yellow
-                                    }
-                                } else {
-                                    Color.Gray
-                                }
-                            } else Color.Blue),
-                            contentColor = White,
-                            disabledContainerColor = Color.Blue,
-                            disabledContentColor = White
-                        ),
-                        modifier = Modifier
-                            .padding(1.dp)
-                            .width(34.dp)
-                            .clip(RoundedCornerShape(0.dp)),
-                        onClick = { addKirjain("X") },
-                    ) {
-                        Text("X", fontSize = 25.sp, textAlign = TextAlign.Center)
-                    }
-                    TextButton(
-                        colors = ButtonColors(
-                            containerColor = (if ("C" in palautettuKirjaimet && paikat.size >= 50) {
-                                if ("C" in sana.uppercase()) {
-                                    if (paikat[48].toInt() == paikat[49].toInt()) {
-                                        Color.Green
-                                    } else {
-                                        Color.Yellow
-                                    }
-                                } else {
-                                    Color.Gray
-                                }
-                            } else Color.Blue),
-                            contentColor = White,
-                            disabledContainerColor = Color.Blue,
-                            disabledContentColor = White
-                        ),
-                        modifier = Modifier
-                            .padding(1.dp)
-                            //.height(40.dp)
-                            .width(34.dp)
-                            .clip(RoundedCornerShape(0.dp)),
-                        onClick = { addKirjain("C") },
-                    ) {
-                        Text("C", fontSize = 25.sp, textAlign = TextAlign.Center)
-                    }
-                    TextButton(
-                        colors = ButtonColors(
-                            containerColor = (if ("V" in palautettuKirjaimet && paikat.size >= 52) {
-                                if ("V" in sana.uppercase()) {
-                                    if (paikat[50].toInt() == paikat[51].toInt()) {
-                                        Color.Green
-                                    } else {
-                                        Color.Yellow
-                                    }
-                                } else {
-                                    Color.Gray
-                                }
-                            } else Color.Blue),
-                            contentColor = White,
-                            disabledContainerColor = Color.Blue,
-                            disabledContentColor = White
-                        ),
-                        modifier = Modifier
-                            .padding(1.dp)
-                            .width(34.dp)
-                            .clip(RoundedCornerShape(0.dp)),
-                        onClick = { addKirjain("V") },
-                    ) {
-                        Text("V", fontSize = 25.sp, textAlign = TextAlign.Center)
-                    }
-                    TextButton(
-                        colors = ButtonColors(
-                            containerColor = (if ("B" in palautettuKirjaimet && paikat.size >= 54) {
-                                if ("B" in sana.uppercase()) {
-                                    if (paikat[52].toInt() == paikat[53].toInt()) {
-                                        Color.Green
-                                    } else {
-                                        Color.Yellow
-                                    }
-                                } else {
-                                    Color.Gray
-                                }
-                            } else Color.Blue),
-                            contentColor = White,
-                            disabledContainerColor = Color.Blue,
-                            disabledContentColor = White
-                        ),
-                        modifier = Modifier
-                            .padding(1.dp)
-                            .width(34.dp)
-                            .clip(RoundedCornerShape(0.dp)),
-                        onClick = { addKirjain("B") },
-                    ) {
-                        Text("B", fontSize = 25.sp, textAlign = TextAlign.Center)
-                    }
-                    TextButton(
-                        colors = ButtonColors(
-                            containerColor = (if ("N" in palautettuKirjaimet && paikat.size >= 56) {
-                                if ("N" in sana.uppercase()) {
-                                    if (paikat[54].toInt() == paikat[55].toInt()) {
-                                        Color.Green
-                                    } else {
-                                        Color.Yellow
-                                    }
-                                } else {
-                                    Color.Gray
-                                }
-                            } else Color.Blue),
-                            contentColor = White,
-                            disabledContainerColor = Color.Blue,
-                            disabledContentColor = White
-                        ),
-                        modifier = Modifier
-                            .padding(1.dp)
-                            .width(34.dp)
-                            .clip(RoundedCornerShape(0.dp)),
-                        onClick = { addKirjain("N") },
-                    ) {
-                        Text("N", fontSize = 25.sp, textAlign = TextAlign.Center)
-                    }
-                    TextButton(
-                        colors = ButtonColors(
-                            containerColor = (if ("M" in palautettuKirjaimet && paikat.size >= 58) {
-                                if ("M" in sana.uppercase()) {
-                                    if (paikat[56].toInt() == paikat[57].toInt()) {
-                                        Color.Green
-                                    } else {
-                                        Color.Yellow
-                                    }
-                                } else {
-                                    Color.Gray
-                                }
-                            } else Color.Blue),
-                            contentColor = White,
-                            disabledContainerColor = Color.Blue,
-                            disabledContentColor = White
-                        ),
-                        modifier = Modifier
-                            .padding(1.dp)
-                            .width(34.dp)
-                            .clip(RoundedCornerShape(0.dp)),
-                        onClick = { addKirjain("M") },
-                    ) {
-                        Text("M", fontSize = 25.sp, textAlign = TextAlign.Center)
-                    }
+                    // clear one character at time button
                     Button(
                         modifier = Modifier
                             .padding(1.dp)
@@ -1364,11 +675,11 @@ fun Game(context: Context, modifier: Modifier) {
                         Text("tyh", color = White, fontSize = 20.sp, textAlign = TextAlign.Center)
                     }
                 }
-                // tarkista nappi
                 FlowRow(
                     modifier = Modifier.padding(0.dp).fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceAround,
-                ) {
+                    horizontalArrangement = Arrangement.Center,
+                    ) {
+                    // check button
                     Button(
                         modifier = Modifier
                             .padding(1.dp)
@@ -1395,21 +706,21 @@ fun Game(context: Context, modifier: Modifier) {
             Column(
                 modifier = Modifier.fillMaxWidth().height(500.dp).padding(0.dp, 0.dp, 0.dp, 50.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Bottom,
-            ) {
+                verticalArrangement = Arrangement.Bottom,)
+            {
                 Text("How to play",  color = White, fontSize = 25.sp, textAlign = TextAlign.Center, modifier = Modifier.padding(0.dp, 0.dp, 0.dp, 15.dp))
                 Text(
-                        "All words are finnish words. \n" +
-                        "\n" +
-                        "You have six tries to guess the word correct and the word length is always 5 character.\n" +
-                        "\n" +
-                        "Green on the keyboard key or in the character box means the character is in the right place and it is in the word.\n" +
-                        "\n" +
-                        "Yellow on the keyboard key or in the character box means the character is not in the right place but the character is in the word.\n" +
-                        "\n" +
-                        "Gray on the keyboard key or in the character box means the character is not in the right place and it is not in the word.\n",
-                        color = White, fontSize = 20.sp, textAlign = TextAlign.Center
-                    )
+                    "All words are finnish words. \n" +
+                            "\n" +
+                            "You have six tries to guess the word correct and the word length is always 5 character.\n" +
+                            "\n" +
+                            "Green on the keyboard key or in the character box means the character is in the right place and it is in the word.\n" +
+                            "\n" +
+                            "Yellow on the keyboard key or in the character box means the character is not in the right place but the character is in the word.\n" +
+                            "\n" +
+                            "Gray on the keyboard key or in the character box means the character is not in the right place and it is not in the word.\n",
+                    color = White, fontSize = 20.sp, textAlign = TextAlign.Center
+                )
             }
         }
     }
@@ -1420,11 +731,11 @@ fun Game(context: Context, modifier: Modifier) {
         kaikkiKirjaimet.clear()
         palautettuKirjaimet.clear()
         paikat.clear()
-        palautetut.clear()
         nakyvatKirjaimetKAIKKI.clear()
         for (lisaa in 0..30) {
             nakyvatKirjaimetKAIKKI.add(lisaa, "")
         }
+        palautetut = 0
         arvauksienMaara = 0
         nakyvatKirjaimetKohtaKAKKI = 0
         nakyvatKirjaimetKohta = 0
