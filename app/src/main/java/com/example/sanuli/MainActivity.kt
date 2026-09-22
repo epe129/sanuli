@@ -82,13 +82,26 @@ fun Game(context: Context, modifier: Modifier) {
     val kaikkiKirjaimet = remember { mutableStateListOf<String>() }
     var arvauksienMaara by remember { mutableIntStateOf(0) }
     var nykyKohta by remember { mutableIntStateOf(0) }
-    var palautetut: Int by remember { mutableIntStateOf(0) }
+    var palautetut = remember { mutableStateListOf<String>() }
     val palautettuKirjaimet = remember { mutableStateListOf<String>() }
     val paikat = remember { mutableStateListOf<String>() }
     val kirjaimet = listOf("Q", "W", "E","R","T","Y","U","I","O","P","Å","A","S","D","F","G","H","J","K","L","Ö","Ä","Z","X","C","V","B","N","M")
     val kaydytNumerot = remember { mutableStateListOf<String>() }
     val kaydytKirjaimet = remember { mutableStateListOf<String>() }
     val kayttajaSanat = remember { mutableStateListOf<String>() }
+
+    val kayttajaSanat2 = remember { mutableStateListOf<String>() }
+
+    val kayttajaSanat3 = remember { mutableStateListOf<String>() }
+
+    val kayttajaSanat4 = remember { mutableStateListOf<String>() }
+
+    val kayttajaSanat5 = remember { mutableStateListOf<String>() }
+
+    val kayttajaSanat6 = remember { mutableStateListOf<String>() }
+
+
+
     val nakyvatKirjaimet = remember { mutableStateListOf<String>("","","","","","","","","","","","","","","","","","","","","","","","","","","","","","") }
     val nakyvatKirjaimetKAIKKI = remember { mutableStateListOf<String>("","","","","","","","","","","","","","","","","","","","","","","","","","","","","","") }
     var nakyvatKirjaimetKohtaKAKKI by remember { mutableIntStateOf(0) }
@@ -167,7 +180,7 @@ fun Game(context: Context, modifier: Modifier) {
                 for ((index, value) in sana.withIndex()) {
                     if (value.uppercase() == k && kaikkiKirjaimet[index].uppercase() == k) {
                         paikat[i] = index.toString()
-                        paikat[i+1] = index.toString()
+                        paikat[i + 1] = index.toString()
                         break
                     }
                 }
@@ -180,87 +193,101 @@ fun Game(context: Context, modifier: Modifier) {
             nakyvatKirjaimet.add(kaikki)
         }
         arvauksienMaara += 1
-        palautetut = arvauksienMaara
+        if (arvauksienMaara == 2) {
+            kayttajaSanat2.addAll(kaikkiKirjaimet)
+        }
+        else if (arvauksienMaara == 3) {
+            kayttajaSanat3.addAll(kaikkiKirjaimet)
+        }
+        else if (arvauksienMaara == 4) {
+            kayttajaSanat4.addAll(kaikkiKirjaimet)
+        }
+        else if (arvauksienMaara == 5) {
+            kayttajaSanat5.addAll(kaikkiKirjaimet)
+        }
+        else if (arvauksienMaara == 6) {
+            kayttajaSanat6.addAll(kaikkiKirjaimet)
+        }
+        palautetut.add(arvauksienMaara.toString())
         nykyKohta = 0
         nakyvatKirjaimetKohta = 0
-        // DOESN'T WORK
-        if (palautetut == 1 && kayttajaSanat.isNotEmpty()) {
+        println(palautetut)
+        // SHOULD WORK
+        if ("1" in palautetut  && kayttajaSanat.isNotEmpty()) {
             for (k in 0..4) {
-                println("1")
                 if (kayttajaSanat[k].lowercase() == sana[k].lowercase()) {
-                    varitTextfieldeka.add(k, "vihrea")
+                    varitTextfieldeka.add("vihrea")
                 } else if (kayttajaSanat[k].lowercase() in sana.lowercase()) {
-                    varitTextfieldeka.add(k, "keltanen")
-                } else varitTextfieldeka.add(k, "harmaa")
-                if (k == 4) {break}
-            }
-        }
-        if (palautetut == 2 && kayttajaSanat.isNotEmpty()) {
-            for (l in 5..9) {
-                println("2")
-                for (s in 0..4) {
-                    if (kayttajaSanat[l].lowercase() == sana[s].lowercase()) {
-                        varitTextfieldeka.add(l, "vihrea")
-                    } else if (kayttajaSanat[l].lowercase() in sana.lowercase()) {
-                        varitTextfieldeka.add(l, "keltanen")
-                    } else varitTextfieldeka.add(l, "harmaa")
-                    if (l == 9 || s == 4) { break }
+                    varitTextfieldeka.add("keltanen")
+                } else varitTextfieldeka.add( "harmaa")
+                if (k == 4) {
+                    palautetut.removeAt(0)
+                    break
                 }
             }
         }
-        if (palautetut == 3 && kayttajaSanat.isNotEmpty()) {
-            for (z in 10..14) {
-                for (s in 0..4) {
-                    if (kayttajaSanat[z].lowercase() == sana[s].lowercase()) {
-                        varitTextfieldeka.add(z, "vihrea")
-                    } else if (kayttajaSanat[z].lowercase() in sana.lowercase()) {
-                        varitTextfieldeka.add(z, "keltanen")
-                    } else varitTextfieldeka.add(z, "harmaa")
-                    if (z == 14) {
-                        break
-                    }
+        if ("2" in palautetut && kayttajaSanat2.isNotEmpty()) {
+            for (k in 0..4) {
+                if (kayttajaSanat2[k].lowercase() == sana[k].lowercase()) {
+                    varitTextfieldeka.add("vihrea")
+                } else if (kayttajaSanat2[k].lowercase() in sana.lowercase()) {
+                    varitTextfieldeka.add("keltanen")
+                } else varitTextfieldeka.add("harmaa")
+                if (k == 4) {
+                    palautetut.removeAt(0)
+                    break
                 }
             }
         }
-        if (palautetut == 4 && kayttajaSanat.isNotEmpty()) {
-            for (x in 15..19) {
-                for (s in 0..4) {
-                    if (kayttajaSanat[x].lowercase() == sana[s].lowercase()) {
-                        varitTextfieldeka.add(x, "vihrea")
-                    } else if (kayttajaSanat[x].lowercase() in sana.lowercase()) {
-                        varitTextfieldeka.add(x, "keltanen")
-                    } else varitTextfieldeka.add(x, "harmaa")
-                    if (x == 19) {
-                        break
-                    }
+        if ("3" in palautetut && kayttajaSanat3.isNotEmpty()) {
+            for (k in 0..4) {
+                if (kayttajaSanat3[k].lowercase() == sana[k].lowercase()) {
+                    varitTextfieldeka.add("vihrea")
+                } else if (kayttajaSanat3[k].lowercase() in sana.lowercase()) {
+                    varitTextfieldeka.add("keltanen")
+                } else varitTextfieldeka.add("harmaa")
+                if (k == 4) {
+                    palautetut.removeAt(0)
+                    break
                 }
             }
         }
-        if (palautetut == 5 && kayttajaSanat.isNotEmpty()) {
-            for (c in 20..24) {
-                for (s in 0..4) {
-                    if (kayttajaSanat[c].lowercase() == sana[s].lowercase()) {
-                        varitTextfieldeka.add(c, "vihrea")
-                    } else if (kayttajaSanat[c].lowercase() in sana.lowercase()) {
-                        varitTextfieldeka.add(c, "keltanen")
-                    } else varitTextfieldeka.add(c, "harmaa")
-                    if (c == 24) {
-                        break
-                    }
+        if ("4" in palautetut && kayttajaSanat4.isNotEmpty()) {
+            for (k in 0..4) {
+                if (kayttajaSanat4[k].lowercase() == sana[k].lowercase()) {
+                    varitTextfieldeka.add("vihrea")
+                } else if (kayttajaSanat4[k].lowercase() in sana.lowercase()) {
+                    varitTextfieldeka.add("keltanen")
+                } else varitTextfieldeka.add("harmaa")
+                if (k == 4) {
+                    palautetut.removeAt(0)
+                    break
                 }
             }
         }
-        if (palautetut == 6 && kayttajaSanat.isNotEmpty()) {
-            for (v in 25..29) {
-                for (s in 0..4) {
-                    if (kayttajaSanat[v].lowercase() == sana[s].lowercase()) {
-                        varitTextfieldeka.add(v, "vihrea")
-                    } else if (kayttajaSanat[v].lowercase() in sana.lowercase()) {
-                        varitTextfieldeka.add(v, "keltanen")
-                    } else varitTextfieldeka.add(v, "harmaa")
-                    if (v == 29) {
-                        break
-                    }
+        if ("5" in palautetut && kayttajaSanat5.isNotEmpty()) {
+            for (k in 0..4) {
+                if (kayttajaSanat5[k].lowercase() == sana[k].lowercase()) {
+                    varitTextfieldeka.add("vihrea")
+                } else if (kayttajaSanat5[k].lowercase() in sana.lowercase()) {
+                    varitTextfieldeka.add("keltanen")
+                } else varitTextfieldeka.add("harmaa")
+                if (k == 4) {
+                    palautetut.removeAt(0)
+                    break
+                }
+            }
+        }
+        if ("6" in palautetut && kayttajaSanat6.isNotEmpty()) {
+            for (k in 0..4) {
+                if (kayttajaSanat6[k].lowercase() == sana[k].lowercase()) {
+                    varitTextfieldeka.add("vihrea")
+                } else if (kayttajaSanat6[k].lowercase() in sana.lowercase()) {
+                    varitTextfieldeka.add("keltanen")
+                } else varitTextfieldeka.add("harmaa")
+                if (k == 4) {
+                    palautetut.removeAt(0)
+                    break
                 }
             }
         }
@@ -273,8 +300,6 @@ fun Game(context: Context, modifier: Modifier) {
             arvauksienMaara = 0
         }
         kaikkiKirjaimet.clear()
-        println("VÄRIT:")
-        println(varitTextfieldeka)
     }
     // shows the sanuli game if game is over doesn't show
     if (showContent) {
@@ -735,7 +760,7 @@ fun Game(context: Context, modifier: Modifier) {
         for (lisaa in 0..30) {
             nakyvatKirjaimetKAIKKI.add(lisaa, "")
         }
-        palautetut = 0
+        palautetut.clear()
         arvauksienMaara = 0
         nakyvatKirjaimetKohtaKAKKI = 0
         nakyvatKirjaimetKohta = 0

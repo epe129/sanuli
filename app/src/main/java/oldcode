@@ -2329,3 +2329,62 @@ if (arvauksienMaara == 0) {
                                         ) {
                                             Text("M", fontSize = 25.sp, textAlign = TextAlign.Center)
                                         }*/
+
+
+
+           /* if ("3" in palautetut  && kayttajaSanat.isNotEmpty() && k >= 10 && k <= 14) {
+                for (s in 0..4) {
+                    if (kayttajaSanat[k].lowercase() == sana[s].lowercase()) {
+                        varitTextfieldeka.add(k, "vihrea")
+                    } else if (kayttajaSanat[k].lowercase() in sana.lowercase()) {
+                        varitTextfieldeka.add(k, "keltanen")
+                    } else varitTextfieldeka.add(k, "harmaa")
+                    if (varitTextfieldeka.size <= 15) {break}
+                }
+                if (k == 14) {
+                    palautetut.removeAt(0)
+                    break
+                }
+            }
+            if ("4" in palautetut  && kayttajaSanat.isNotEmpty() && k >= 15 && k <= 19) {
+                for (s in 0..4) {
+                    if (kayttajaSanat[k].lowercase() == sana[s].lowercase()) {
+                        varitTextfieldeka.add(k, "vihrea")
+                    } else if (kayttajaSanat[k].lowercase() in sana.lowercase()) {
+                        varitTextfieldeka.add(k, "keltanen")
+                    } else varitTextfieldeka.add(k, "harmaa")
+                    if (varitTextfieldeka.size <= 20) {break}
+                }
+                if (k == 19) {
+                    palautetut.removeAt(0)
+                    break
+                }
+            }
+            if ("5" in palautetut && kayttajaSanat.isNotEmpty() && k >= 20 && k <= 24) {
+                for (s in 0..4) {
+                    if (kayttajaSanat[k].lowercase() == sana[s].lowercase()) {
+                        varitTextfieldeka.add(k, "vihrea")
+                    } else if (kayttajaSanat[k].lowercase() in sana.lowercase()) {
+                        varitTextfieldeka.add(k, "keltanen")
+                    } else varitTextfieldeka.add(k, "harmaa")
+                    if (varitTextfieldeka.size <= 25) {break}
+                }
+                if (k == 24) {
+                    palautetut.removeAt(0)
+                    break
+                }
+            }
+            if ("6" in palautetut  && kayttajaSanat.isNotEmpty() && k >= 25 && k <= 29) {
+                for (s in 0..4) {
+                    if (kayttajaSanat[k].lowercase() == sana[s].lowercase()) {
+                        varitTextfieldeka.add(k, "vihrea")
+                    } else if (kayttajaSanat[k].lowercase() in sana.lowercase()) {
+                        varitTextfieldeka.add(k, "keltanen")
+                    } else varitTextfieldeka.add(k, "harmaa")
+                    if (varitTextfieldeka.size <= 30) {break}
+                }
+                if (k == 29) {
+                    palautetut.removeAt(0)
+                    break
+                }
+            }*/
