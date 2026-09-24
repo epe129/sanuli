@@ -37,9 +37,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.sanuli.ui.theme.SanuliTheme
-import kotlin.collections.mutableListOf
 import android.content.Context
-import androidx.compose.foundation.gestures.snapping.SnapPosition
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.rememberScrollState
@@ -48,6 +46,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import kotlinx.coroutines.delay
 import kotlin.time.Duration.Companion.milliseconds
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import android.util.Log
+import java.io.IOException
+import kotlin.collections.forEachIndexed
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,6 +64,10 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+data class Sanat(
+    val sanat: Map<String, String>
+)
+
 object DataManager {
     var data = ""
     fun loadAssetsFromFile(context : Context) {
@@ -72,6 +79,20 @@ object DataManager {
         val json = String(buffer, charset = Charsets.UTF_8)
         data = json
     }
+}
+
+/*fun loadAssetsFromFile(context: ERROR, string: String) {
+    return context.assets.open("sanat.json").bufferedReader().use { it.readText() }
+}*/
+fun getJsonDataFromAsset(context: Context, fileName: String): String? {
+    val jsonString: String
+    try {
+        jsonString = context.assets.open(fileName).bufferedReader().use { it.readText() }
+    } catch (ioException: IOException) {
+        ioException.printStackTrace()
+        return null
+    }
+    return jsonString
 }
 
 @Composable
@@ -113,6 +134,26 @@ fun Game(context: Context, modifier: Modifier) {
 
     // makes the json to list and gets the data from json using object data
     DataManager.loadAssetsFromFile(context)
+    // Parse the JSON string
+    /*val jsonString = loadAssetsFromFile(this, "json.json")
+    val gson = Gson()
+    val type = object : TypeToken<List<User>>() {}.type
+    val userList: List<User> = gson.fromJson(jsonString, type)*/
+    //Log.i("data", jsonFileString)
+
+    val jsonFileString = getJsonDataFromAsset(context, "sanat.json")
+
+    val gson = Gson()
+    val data = gson.fromJson(jsonFileString, Sanat::class.java)
+
+    data.sanat.forEach { (id, word) ->
+        println("$id = $word")
+    }
+    //for (m in d.withIndex()) {
+      //  Log.i("data", "> Item $m")
+    //}
+
+
     val sanatTOlist =  remember { DataManager.data.replace("""[{}:"]""".toRegex(), "").replace("sanat", "").replace("]", "").replace("[", "").lowercase().trim().split(",") .map { it.trim() } }
 
     // gets the random word from sanatTOList
