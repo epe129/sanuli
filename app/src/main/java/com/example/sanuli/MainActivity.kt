@@ -49,6 +49,11 @@ import kotlin.time.Duration.Companion.milliseconds
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import android.util.Log
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.CutCornerShape
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.ui.graphics.RectangleShape
 import java.io.IOException
 import kotlin.collections.forEachIndexed
 
@@ -109,19 +114,13 @@ fun Game(context: Context, modifier: Modifier) {
     val kirjaimet = listOf("Q", "W", "E","R","T","Y","U","I","O","P","Å","A","S","D","F","G","H","J","K","L","Ö","Ä","Z","X","C","V","B","N","M")
     val kaydytNumerot = remember { mutableStateListOf<String>() }
     val kaydytKirjaimet = remember { mutableStateListOf<String>() }
+
     val kayttajaSanat = remember { mutableStateListOf<String>() }
-
     val kayttajaSanat2 = remember { mutableStateListOf<String>() }
-
     val kayttajaSanat3 = remember { mutableStateListOf<String>() }
-
     val kayttajaSanat4 = remember { mutableStateListOf<String>() }
-
     val kayttajaSanat5 = remember { mutableStateListOf<String>() }
-
     val kayttajaSanat6 = remember { mutableStateListOf<String>() }
-
-
 
     val nakyvatKirjaimet = remember { mutableStateListOf<String>("","","","","","","","","","","","","","","","","","","","","","","","","","","","","","") }
     val nakyvatKirjaimetKAIKKI = remember { mutableStateListOf<String>("","","","","","","","","","","","","","","","","","","","","","","","","","","","","","") }
@@ -678,9 +677,9 @@ fun Game(context: Context, modifier: Modifier) {
             ) {
                 // rows
                 FlowRow(
-                    modifier = Modifier.padding(0.dp).fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center,
-                    verticalArrangement = Arrangement.Center,
+                    modifier = Modifier.padding(0.dp).width(420.dp),
+                    horizontalArrangement = Arrangement.spacedBy(1.dp, Alignment.CenterHorizontally),
+                    verticalArrangement = Arrangement.spacedBy(1.dp, Alignment.CenterVertically),
                     ) {
                     kirjaimet.forEachIndexed { index, item ->
                         TextButton(
@@ -704,10 +703,11 @@ fun Game(context: Context, modifier: Modifier) {
                                 disabledContainerColor = Color.Blue,
                                 disabledContentColor = White
                             ),
+                            shape = RectangleShape,
                             modifier = Modifier
                                 .padding(1.dp)
-                                .width(34.dp)
-                                .clip(RoundedCornerShape(0.dp)),
+                                .width(34.dp),
+                                //.clip(shape = CircleShape),
                             onClick = { addKirjain(item) },
                         ) {
                             Text(item, fontSize = 25.sp, textAlign = TextAlign.Center)
@@ -741,6 +741,7 @@ fun Game(context: Context, modifier: Modifier) {
                         Text("tyh", color = White, fontSize = 20.sp, textAlign = TextAlign.Center)
                     }
                 }
+
                 FlowRow(
                     modifier = Modifier.padding(0.dp).fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center,
