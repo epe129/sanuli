@@ -2388,3 +2388,59 @@ if (arvauksienMaara == 0) {
                     break
                 }
             }*/
+
+
+                // Parse the JSON string
+                /*val jsonString = loadAssetsFromFile(this, "json.json")
+                val gson = Gson()
+                val type = object : TypeToken<List<User>>() {}.type
+                val userList: List<User> = gson.fromJson(jsonString, type)*/
+                //Log.i("data", jsonFileString)
+
+
+//for (m in d.withIndex()) {
+      //  Log.i("data", "> Item $m")
+    //}
+
+
+
+
+
+    /*fun loadAssetsFromFile(context: ERROR, string: String) {
+        return context.assets.open("sanat.json").bufferedReader().use { it.readText() }
+    }*/
+
+
+
+
+    /*
+    object DataManager {
+        var data = ""
+        fun loadAssetsFromFile(context : Context) {
+            val inputStream = context.assets.open("sanat.json")
+            val size : Int = inputStream.available()
+            val buffer = ByteArray(size)
+            inputStream.read(buffer)
+            inputStream.close()
+            val json = String(buffer, charset = Charsets.UTF_8)
+            data = json
+        }
+    }*/
+
+
+
+
+    // makes the json to list and gets the data from json using object data
+    //DataManager.loadAssetsFromFile(context)
+
+
+
+
+
+    ///val sanatTOlist =  remember { DataManager.data.replace("""[{}:"]""".toRegex(), "").replace("sanat", "").replace("]", "").replace("[", "").lowercase().trim().split(",") .map { it.trim() } }
+
+
+
+
+
+

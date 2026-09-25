@@ -68,27 +68,12 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
+// data object that is uset to get the json the right way
 data class Sanat(
     val sanat: Map<String, String>
 )
 
-object DataManager {
-    var data = ""
-    fun loadAssetsFromFile(context : Context) {
-        val inputStream = context.assets.open("sanat.json")
-        val size : Int = inputStream.available()
-        val buffer = ByteArray(size)
-        inputStream.read(buffer)
-        inputStream.close()
-        val json = String(buffer, charset = Charsets.UTF_8)
-        data = json
-    }
-}
-
-/*fun loadAssetsFromFile(context: ERROR, string: String) {
-    return context.assets.open("sanat.json").bufferedReader().use { it.readText() }
-}*/
+// GETS THE DATA FROM THE JSON
 fun getJsonDataFromAsset(context: Context, fileName: String): String? {
     val jsonString: String
     try {
@@ -108,7 +93,7 @@ fun Game(context: Context, modifier: Modifier) {
     val kaikkiKirjaimet = remember { mutableStateListOf<String>() }
     var arvauksienMaara by remember { mutableIntStateOf(0) }
     var nykyKohta by remember { mutableIntStateOf(0) }
-    var palautetut = remember { mutableStateListOf<String>() }
+    val palautetut = remember { mutableStateListOf<String>() }
     val palautettuKirjaimet = remember { mutableStateListOf<String>() }
     val paikat = remember { mutableStateListOf<String>() }
     val kirjaimet = listOf("Q", "W", "E","R","T","Y","U","I","O","P","Å","A","S","D","F","G","H","J","K","L","Ö","Ä","Z","X","C","V","B","N","M")
@@ -131,32 +116,24 @@ fun Game(context: Context, modifier: Modifier) {
     var checkClickt by remember { mutableStateOf(false) }
     val varitTextfieldeka = remember { mutableStateListOf<String>() }
 
-    // makes the json to list and gets the data from json using object data
-    DataManager.loadAssetsFromFile(context)
-    // Parse the JSON string
-    /*val jsonString = loadAssetsFromFile(this, "json.json")
-    val gson = Gson()
-    val type = object : TypeToken<List<User>>() {}.type
-    val userList: List<User> = gson.fromJson(jsonString, type)*/
-    //Log.i("data", jsonFileString)
-
+    val yleisetSanat = remember { mutableStateListOf<String>() }
+    val muutSanat = remember { mutableStateListOf<String>() }
+    // gets the json data
     val jsonFileString = getJsonDataFromAsset(context, "sanat.json")
-
     val gson = Gson()
     val data = gson.fromJson(jsonFileString, Sanat::class.java)
-
+    // loops trought json and adds common words into yleisensanat list and other words to muusanat list
     data.sanat.forEach { (id, word) ->
-        println("$id = $word")
+        if ("y" in id) {
+            yleisetSanat.add(word)
+            //println("$id = $word")
+        } else {
+            muutSanat.add(word)
+        }
     }
-    //for (m in d.withIndex()) {
-      //  Log.i("data", "> Item $m")
-    //}
-
-
-    val sanatTOlist =  remember { DataManager.data.replace("""[{}:"]""".toRegex(), "").replace("sanat", "").replace("]", "").replace("[", "").lowercase().trim().split(",") .map { it.trim() } }
 
     // gets the random word from sanatTOList
-    var sana by remember(sanatTOlist) { mutableStateOf(sanatTOlist.random().trim()) }
+    var sana by remember(yleisetSanat) { mutableStateOf(yleisetSanat.random().trim()) }
 
     // adds kirjain to the list's
     fun addKirjain(kirjain: String) {
@@ -179,7 +156,7 @@ fun Game(context: Context, modifier: Modifier) {
             return
         }
         val sub = kaikkiKirjaimet.joinToString("").lowercase().trim()
-        if (sub !in sanatTOlist) {
+        if (sub !in yleisetSanat && sub !in muutSanat) {
             checkClickt = true
             return
         }
@@ -792,7 +769,7 @@ fun Game(context: Context, modifier: Modifier) {
         }
     }
     if (isPopupOpen) {
-        Popup(onDismissRequest = { isPopupOpen = false; showContent = true; sana = sanatTOlist.random().trim() }, isRight, sana)
+        Popup(onDismissRequest = { isPopupOpen = false; showContent = true; sana = yleisetSanat.random().trim() }, isRight, sana)
         kayttajaSanat.clear()
         kayttajaSanat2.clear()
         kayttajaSanat3.clear()
