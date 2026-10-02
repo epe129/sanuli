@@ -68,6 +68,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
 // data object that is uset to get the json the right way
 data class Sanat(
     val sanat: Map<String, String>
@@ -97,8 +98,6 @@ fun Game(context: Context, modifier: Modifier) {
     val palautettuKirjaimet = remember { mutableStateListOf<String>() }
     val paikat = remember { mutableStateListOf<String>() }
     val kirjaimet = listOf("Q", "W", "E","R","T","Y","U","I","O","P","Å","A","S","D","F","G","H","J","K","L","Ö","Ä","Z","X","C","V","B","N","M")
-    val kaydytNumerot = remember { mutableStateListOf<String>() }
-    val kaydytKirjaimet = remember { mutableStateListOf<String>() }
 
     val kayttajaSanat = remember { mutableStateListOf<String>() }
     val kayttajaSanat2 = remember { mutableStateListOf<String>() }
@@ -118,15 +117,16 @@ fun Game(context: Context, modifier: Modifier) {
 
     val yleisetSanat = remember { mutableStateListOf<String>() }
     val muutSanat = remember { mutableStateListOf<String>() }
+
     // gets the json data
     val jsonFileString = getJsonDataFromAsset(context, "sanat.json")
     val gson = Gson()
     val data = gson.fromJson(jsonFileString, Sanat::class.java)
+
     // loops trought json and adds common words into yleisensanat list and other words to muusanat list
     data.sanat.forEach { (id, word) ->
         if ("y" in id) {
             yleisetSanat.add(word)
-            //println("$id = $word")
         } else {
             muutSanat.add(word)
         }
@@ -161,8 +161,7 @@ fun Game(context: Context, modifier: Modifier) {
             return
         }
         kayttajaSanat.addAll(kaikkiKirjaimet)
-        kaydytNumerot.clear()
-        kaydytKirjaimet.clear()
+
         // check if right
         if (sub.length < 5) {
             return
@@ -178,38 +177,51 @@ fun Game(context: Context, modifier: Modifier) {
                 showContent = false
             }
         }
-        // adds every characters index to the paikat list even if it's -1
-        if (paikat.isEmpty()) {
-            for (g in kirjaimet) {
-                paikat.add(sana.uppercase().indexOf(g).toString())
-                paikat.add(kaikkiKirjaimet.indexOf(g).toString())
+
+        // adds empty characters to the paikat list
+       if (paikat.isEmpty()) {
+            for (g in 0..29) {
+                paikat.add(g, "")
             }
         }
+
         // checks if character is in sana and user has typed the character adds the index of the character to the list
-        for (i in 0..57) {
-            for (k in kirjaimet) {
-                // if a letter has been checked, move on to the next letter
-                if (i.toString() in kaydytNumerot || (i + 1).toString() in kaydytNumerot || k in kaydytKirjaimet) {
-                    continue
-                }
-                // loops trough sana and check if kirjaimet are in same place in sana and what user has typed
-                // if are adds index's to the paikat list
+        for ((i, k) in kirjaimet.withIndex()) {
+            if (k in kaikkiKirjaimet) {
+                var vihrea = false
                 for ((index, value) in sana.withIndex()) {
-                    if (value.uppercase() == k && kaikkiKirjaimet[index].uppercase() == k) {
-                        paikat[i] = index.toString()
-                        paikat[i + 1] = index.toString()
+                    if (
+                        kaikkiKirjaimet[index].uppercase() == value.uppercase() &&
+                        kaikkiKirjaimet[index].uppercase() == k.uppercase()
+                    ) {
+                        vihrea = true
                         break
                     }
                 }
-                kaydytNumerot.add(i.toString())
-                kaydytNumerot.add((i + 1).toString())
-                kaydytKirjaimet.add(k)
+                if (paikat[i] == "vihrea") {
+                    continue
+                }
+                if (vihrea) {
+                    paikat[i] = "vihrea"
+                } else if (k.lowercase() in sana.lowercase()) {
+                    paikat[i] = "keltainen"
+                } else {
+                    paikat[i] = "harmaa"
+                }
+            } else {
+                if (paikat[i] == "sininen" || paikat[i] == "") {
+                    paikat[i] = "sininen"
+                }
             }
         }
+
+        println(paikat)
         for (kaikki in nakyvatKirjaimetKAIKKI) {
             nakyvatKirjaimet.add(kaikki)
         }
+
         arvauksienMaara += 1
+
         if (arvauksienMaara == 2) {
             kayttajaSanat2.addAll(kaikkiKirjaimet)
         }
@@ -225,10 +237,11 @@ fun Game(context: Context, modifier: Modifier) {
         else if (arvauksienMaara == 6) {
             kayttajaSanat6.addAll(kaikkiKirjaimet)
         }
+
         palautetut.add(arvauksienMaara.toString())
         nykyKohta = 0
         nakyvatKirjaimetKohta = 0
-        println(palautetut)
+
         // SHOULD WORK
         if ("1" in palautetut  && kayttajaSanat.isNotEmpty()) {
             for (k in 0..4) {
@@ -317,7 +330,9 @@ fun Game(context: Context, modifier: Modifier) {
             arvauksienMaara = 0
         }
         kaikkiKirjaimet.clear()
+
     }
+
     // shows the sanuli game if game is over doesn't show
     if (showContent) {
         Column(
@@ -645,7 +660,6 @@ fun Game(context: Context, modifier: Modifier) {
                     Text("Ei sanulistalla.", color = White, fontSize = 25.sp)
                 }
             }
-            // KEYBOARD COLORS DOESN'T WORK
             // KEYBOARD /////////////////////////////////////////////////////////////////////////////////////////////////////////////
             Column(
                 modifier = Modifier.fillMaxWidth().height(250.dp).offset(0.dp, (-75).dp),
@@ -662,20 +676,17 @@ fun Game(context: Context, modifier: Modifier) {
                         TextButton(
                             colors = ButtonColors(
                                 containerColor =
-                                    (if (item in palautettuKirjaimet && paikat.size >= 2) {
-                                        if (item in sana.uppercase()) {
-                                            if (paikat[index] == "-1" && paikat[index+1] == "-1") {
-                                                Color.Blue
-                                            }
-                                            if (paikat[index].toInt() == paikat[index+1].toInt()) {
-                                                Color.Green
-                                            } else {
-                                                Color.Yellow
-                                            }
-                                        } else {
-                                            Color.Gray
+                                    if (item in palautettuKirjaimet) {
+                                        when (paikat[index]) {
+                                            "vihrea" -> Color.Green
+                                            "keltainen" -> Color.Yellow
+                                            "sininen" -> Color.Blue
+                                            "harmaa" -> Color.Gray
+                                            else -> Color.Blue
                                         }
-                                    } else Color.Blue),
+                                    } else {
+                                        Color.Blue
+                                    },
                                 contentColor = White,
                                 disabledContainerColor = Color.Blue,
                                 disabledContentColor = White
@@ -768,6 +779,8 @@ fun Game(context: Context, modifier: Modifier) {
             }
         }
     }
+
+    // opens pop up if correct word or has tryit six times, clears all the values
     if (isPopupOpen) {
         Popup(onDismissRequest = { isPopupOpen = false; showContent = true; sana = yleisetSanat.random().trim() }, isRight, sana)
         kayttajaSanat.clear()
@@ -790,4 +803,5 @@ fun Game(context: Context, modifier: Modifier) {
         nakyvatKirjaimetKohta = 0
         varitTextfieldeka.clear()
     }
+
 }
