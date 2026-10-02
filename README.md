@@ -58,18 +58,18 @@ Allow Android Studio to download the required dependencies and finish the Gradle
 ### 4. Run the application
 Connect an Android device or start an Android Emulator.
 
-#### Then press:
+### Then press:
 
 Run ▶
 
 The Sanuli application should now launch on your device or emulator.
 
-### 🔤 Word List
+## 🔤 Word List
 The game uses a JSON file to store the Finnish words used by Sanuli.
 
 The application separates the words into commonly used words and other words when loading the JSON data.
 
-### ✨ Features
+## ✨ Features
 - Finnish word guessing game
 
 - 5-letter words
@@ -86,7 +86,7 @@ The application separates the words into commonly used words and other words whe
 
 - Built entirely with Kotlin and Jetpack Compose
 
-### 📄 License
+## 📄 License
 This project is open source.
 
 Feel free to study, modify, and improve the project.
